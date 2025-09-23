@@ -38,6 +38,19 @@
             overflow: hidden;
             transition: max-height 0.3s ease-out;
         }
+        #scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        #scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
@@ -369,7 +382,7 @@
                 <a href="https://t.me/SanjabVPN2_Bot" target="_blank" rel="noopener noreferrer" aria-label="Sanjab VPN on Telegram">
                     <span class="text-4xl">🐿️</span>
                 </a>
-                <a href="https://t.me/SanjabVPN2_Bot" target="_blank" rel="noopener noreferrer" aria-label="Sanjab VPN Telegram Bot">
+                <a href="https://t.me/SanjabVPN2_Bot?start=site" target="_blank" rel="noopener noreferrer" aria-label="Sanjab VPN Telegram Bot">
                     <svg class="w-8 h-8 text-white hover:text-blue-500 transition-colors"><use href="#icon-telegram"></use></svg>
                 </a>
             </div>
@@ -381,6 +394,11 @@
             </p>
         </div>
     </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-to-top" class="w-12 h-12 bg-orange-500 rounded-full text-white flex items-center justify-center shadow-lg hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">
+        <span class="text-2xl mt-0.5">▲</span>
+    </button>
 
     <!-- JavaScript for smooth scrolling and FAQ accordion -->
     <script>
@@ -411,6 +429,23 @@
                     content.style.maxHeight = content.scrollHeight + "px";
                     icon.style.transform = 'rotate(180deg)';
                 }
+            });
+        });
+
+        // Scroll-to-top button functionality
+        const scrollToTopButton = document.getElementById('scroll-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollToTopButton.classList.add('visible');
+            } else {
+                scrollToTopButton.classList.remove('visible');
+            }
+        });
+
+        scrollToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
         });
     </script>
