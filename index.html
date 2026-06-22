@@ -45,15 +45,20 @@
             50% { transform: scale(1.05); opacity: 0.9; }
         }
 
+        /* Mobile Menu Slide Animation */
+        #mobile-menu {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+        }
+        #mobile-menu.open {
+            transform: translateX(0);
+        }
+
         /* Accordion Transitions */
         .accordion-content {
-            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
             max-height: 0;
-            opacity: 0;
             overflow: hidden;
-        }
-        .accordion-content.active {
-            opacity: 1;
+            transition: max-height 0.3s ease-in-out;
         }
 
         /* Toast & Social Proof Notifications */
@@ -89,7 +94,7 @@
 
         .social-proof-toast {
             position: fixed;
-            bottom: 90px; /* Above Sticky CTA */
+            bottom: 90px;
             right: 20px;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(5px);
@@ -185,7 +190,7 @@
     <!-- Toast Notifications -->
     <div id="toast-container"></div>
     <div id="social-proof" class="social-proof-toast">
-        <span class="text-lg">🔥</span> <span id="social-proof-text">کاربری پلن ۳۰ گیگ را خرید</span>
+        <span class="text-lg">🔥</span> <span id="social-proof-text">یک کاربر پلن ۳۰ گیگ را خریداری کرد 🚀</span>
     </div>
 
     <!-- Sticky CTA (Mobile) -->
@@ -219,8 +224,8 @@
             </button>
         </nav>
 
-        <!-- Full Screen Mobile Menu (Fixed background bug) -->
-        <div id="mobile-menu" class="hidden fixed inset-0 bg-white z-40 pt-24 px-6 flex flex-col space-y-6 text-center shadow-2xl h-screen">
+        <!-- Full Screen Mobile Menu with Slide-in Animation -->
+        <div id="mobile-menu" class="fixed inset-0 bg-white z-40 pt-24 px-6 flex flex-col space-y-6 text-center shadow-2xl h-screen">
             <a href="#status-checker" class="text-gray-800 text-lg py-3 rounded-2xl bg-gray-50 border border-gray-100 font-bold active:bg-gray-100">📡 استعلام سرویس</a>
             <a href="#pricing" class="text-orange-600 text-lg py-3 rounded-2xl bg-orange-50 font-black active:bg-orange-100">🛒 خرید اشتراک</a>
             <a href="#apps" class="text-gray-700 text-lg py-2 font-bold active:text-orange-500">دانلود برنامه</a>
@@ -352,10 +357,10 @@
                         <h3 class="text-white font-black text-lg flex items-center gap-2">
                             <span>🎁 اعمال کد تخفیف</span>
                         </h3>
-                        <!-- Countdown Timer -->
-                        <div class="bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-1 rounded-lg font-mono text-sm font-bold flex items-center gap-1">
-                            <span id="countdown">23:59:59</span>
-                            <span class="text-[10px] text-red-300 ml-1">فرصت باقی‌مانده</span>
+                        <!-- Corrected Aligned Timer Pill -->
+                        <div class="bg-red-500/10 border border-red-500/20 px-3 py-1.5 rounded-xl flex items-center gap-2">
+                            <div class="text-[10px] text-red-400 font-bold leading-tight text-right pt-0.5">فرصت<br>باقی‌مانده</div>
+                            <div id="countdown" class="text-red-400 font-mono text-lg font-bold tracking-widest">23:59:59</div>
                         </div>
                     </div>
                     <p class="text-gray-400 text-xs mb-4">کد تخفیف <strong class="text-yellow-400 select-all">SANJAB_OFFER</strong> را وارد کنید تا ۲۰٪ از تمام پلن‌ها کسر شود.</p>
@@ -363,7 +368,7 @@
                     <div class="flex flex-col gap-3">
                         <input type="text" id="promo-input" placeholder="کد تخفیف را اینجا بنویسید" 
                                class="w-full bg-white/10 border border-white/20 text-white text-center px-4 py-3.5 rounded-xl focus:ring-2 focus:ring-orange-500 outline-none font-mono font-bold tracking-widest uppercase transition-all" dir="ltr">
-                        <button onclick="applyDiscountEngine()" id="apply-btn"
+                        <button onclick="applyDiscountEngine(false)" id="apply-btn"
                                 class="w-full bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-black py-3.5 rounded-xl shadow-[0_0_15px_rgba(249,115,22,0.4)] transition-all">
                             فعال‌سازی تخفیف
                         </button>
@@ -477,9 +482,6 @@
             <!-- Trust Signals -->
             <div class="mt-8 flex flex-col gap-3">
                 <div class="flex items-center gap-3 justify-center text-gray-600 bg-gray-50 py-2 rounded-xl border border-gray-100">
-                    <span class="text-lg">💳</span> <span class="text-xs font-bold">پرداخت آسان (کارت‌به‌کارت در ربات)</span>
-                </div>
-                <div class="flex items-center gap-3 justify-center text-gray-600 bg-gray-50 py-2 rounded-xl border border-gray-100">
                     <span class="text-lg">⚡</span> <span class="text-xs font-bold">آپتایم ۹۹.۹٪ سرورها</span>
                 </div>
                 <div class="flex items-center gap-3 justify-center text-gray-600 bg-gray-50 py-2 rounded-xl border border-gray-100">
@@ -563,7 +565,7 @@
         </div>
     </section>
 
-    <!-- FAQ Section -->
+    <!-- FAQ Section (Corrected functionality) -->
     <section id="faq" class="py-16 bg-white border-t border-gray-200">
         <div class="container mx-auto px-4 w-full max-w-md mx-auto">
             <h2 class="text-2xl font-black text-center text-gray-900 mb-8">سوالات متداول</h2>
@@ -571,7 +573,7 @@
                 <div class="bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden">
                     <button class="accordion-header w-full p-4 text-right flex justify-between items-center font-bold text-sm text-gray-800">
                         <span>چطور حجم باقی‌مانده را ببینم؟</span>
-                        <span class="transform transition-transform text-orange-500">▼</span>
+                        <span class="transform transition-transform duration-300 text-orange-500">▼</span>
                     </button>
                     <div class="accordion-content">
                         <div class="p-4 pt-0 text-gray-600 text-xs leading-relaxed border-t border-gray-100 mt-2">
@@ -582,7 +584,7 @@
                 <div class="bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden">
                     <button class="accordion-header w-full p-4 text-right flex justify-between items-center font-bold text-sm text-gray-800">
                         <span>چگونه با پشتیبانی ارتباط بگیرم؟</span>
-                        <span class="transform transition-transform text-orange-500">▼</span>
+                        <span class="transform transition-transform duration-300 text-orange-500">▼</span>
                     </button>
                     <div class="accordion-content">
                         <div class="p-4 pt-0 text-gray-600 text-xs leading-relaxed border-t border-gray-100 mt-2">
@@ -606,7 +608,7 @@
 
     <!-- Scripts -->
     <script>
-        // 1. Mobile Menu
+        // 1. Mobile Menu with Smooth Sliding
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuIcon = document.getElementById('menu-icon');
@@ -615,11 +617,11 @@
         function toggleMenu() {
             isMenuOpen = !isMenuOpen;
             if (isMenuOpen) {
-                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('open');
                 menuIcon.innerHTML = '<use href="#icon-close"></use>';
                 document.body.style.overflow = 'hidden';
             } else {
-                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('open');
                 menuIcon.innerHTML = '<use href="#icon-menu"></use>';
                 document.body.style.overflow = '';
             }
@@ -642,36 +644,44 @@
             }, 800);
         }
 
-        // 3. Discount Engine (The Core Logic)
+        // 3. Discount Engine with localStorage Memory
         let isDiscountApplied = false;
-        function applyDiscountEngine() {
+        
+        // Check memory on load
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('sanjab_discount') === 'active') {
+                document.getElementById('promo-input').value = 'SANJAB_OFFER';
+                applyDiscountEngine(true); // true = silent apply
+            }
+        });
+
+        function applyDiscountEngine(isSilent = false) {
             const input = document.getElementById('promo-input').value.trim().toUpperCase();
             const btn = document.getElementById('apply-btn');
             
             if (input === 'SANJAB_OFFER') {
-                if(isDiscountApplied) return; // Prevent double trigger
+                if(isDiscountApplied) return;
                 
-                showToast('تخفیف ۲۰٪ با موفقیت روی قیمت‌ها اعمال شد! 🎁', 'success');
+                if(!isSilent) showToast('تخفیف ۲۰٪ با موفقیت روی قیمت‌ها اعمال شد! 🎁', 'success');
+                
+                // Save to memory
+                localStorage.setItem('sanjab_discount', 'active');
+
                 btn.innerHTML = '✔️ تخفیف فعال شد';
                 btn.classList.replace('bg-orange-500', 'bg-green-500');
                 btn.classList.replace('hover:bg-orange-600', 'hover:bg-green-600');
                 btn.classList.add('shadow-[0_0_15px_rgba(16,185,129,0.4)]');
                 document.getElementById('promo-input').disabled = true;
 
-                // Animate Cards
                 document.querySelectorAll('.pricing-card').forEach(card => {
                     const origPriceEl = card.querySelector('.price-original');
                     const newPriceEl = card.querySelector('.price-new');
                     const buyBtn = card.querySelector('.buy-btn');
                     
-                    // Add strikethrough animation
                     origPriceEl.classList.add('striked');
                     origPriceEl.innerHTML = origPriceEl.innerHTML.replace('تومان', '');
-                    
-                    // Show new price
                     newPriceEl.classList.add('active');
                     
-                    // Swap Button Href & Text
                     buyBtn.href = card.getAttribute('data-discount-link');
                     buyBtn.innerHTML = '🚀 خرید با تخفیف';
                     buyBtn.classList.replace('bg-gray-100', 'bg-orange-500');
@@ -679,56 +689,58 @@
                     buyBtn.classList.add('shadow-lg');
                     
                     if(buyBtn.classList.contains('bg-gray-800')) {
-                        // For the popular plan
                         buyBtn.classList.replace('bg-gray-800', 'bg-red-500');
                     }
                     if(buyBtn.classList.contains('bg-white')) {
-                        // For the 100GB plan
                         buyBtn.classList.replace('bg-white', 'bg-orange-500');
                         buyBtn.classList.replace('text-gray-900', 'text-white');
                     }
                 });
-
                 isDiscountApplied = true;
             } else {
-                showToast('کد تخفیف نامعتبر است!', 'error');
+                if(!isSilent) showToast('کد تخفیف نامعتبر است!', 'error');
             }
         }
 
-        // 4. Urgency Countdown
-        function startCountdown() {
-            let hours = 23, minutes = 59, seconds = 59;
+        // 4. Persistent Urgency Countdown (24h Loop stored in localStorage)
+        function startPersistentCountdown() {
             const display = document.getElementById('countdown');
+            const timerDuration = 24 * 60 * 60 * 1000; 
+            let endTime = localStorage.getItem('sanjab_timer_end');
+
+            if (!endTime || Date.now() > parseInt(endTime)) {
+                endTime = Date.now() + timerDuration;
+                localStorage.setItem('sanjab_timer_end', endTime);
+            }
+
             setInterval(() => {
-                seconds--;
-                if(seconds < 0) { seconds = 59; minutes--; }
-                if(minutes < 0) { minutes = 59; hours--; }
-                if(hours < 0) hours = 23; // Loop artificially
+                let remaining = parseInt(endTime) - Date.now();
+                if (remaining < 0) remaining = 0; // Or reset logic
+
+                let hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
+                let minutes = Math.floor((remaining / 1000 / 60) % 60);
+                let seconds = Math.floor((remaining / 1000) % 60);
+
                 display.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }, 1000);
         }
-        startCountdown();
+        startPersistentCountdown();
 
-        // 5. Social Proof Fake Notifications
+        // 5. Privacy-Focused Social Proof
         const fakeEvents = [
-            'کاربری از اصفهان پلن ۳۰ گیگ را خرید 🚀',
-            'یک کد تخفیف با موفقیت فعال شد 🎁',
+            'یک کاربر پلن ۳۰ گیگ را خریداری کرد 🚀',
+            'یک کد تخفیف با موفقیت اعمال شد 🎁',
             'یک سرویس ۵۰ گیگ تمدید شد 🔄',
-            'کاربری از تهران به سنجاب پیوست 🐿️',
-            'پرداخت کارت‌به‌کارت با موفقیت تأیید شد ✅'
+            'پرداخت یک کاربر با موفقیت تأیید شد ✅',
+            'یک کاربر به جمع سنجاب‌ها پیوست 🐿️'
         ];
         function triggerSocialProof() {
             const toast = document.getElementById('social-proof');
             const text = document.getElementById('social-proof-text');
-            
-            // Pick random event
             text.innerText = fakeEvents[Math.floor(Math.random() * fakeEvents.length)];
             toast.classList.add('show');
-            
-            // Hide after 4 seconds
             setTimeout(() => { toast.classList.remove('show'); }, 4000);
         }
-        // Start after 10s, then random interval between 15s and 25s
         setTimeout(() => {
             triggerSocialProof();
             setInterval(triggerSocialProof, 15000 + Math.random() * 10000);
@@ -745,7 +757,7 @@
             }
         });
 
-        // Toast Helper
+        // Helper: Toast
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -759,17 +771,20 @@
             }, 3000);
         }
 
-        // Accordion
+        // 7. Fixed Accordion Logic
         document.querySelectorAll('.accordion-header').forEach(acc => {
             acc.addEventListener('click', function() {
                 const content = this.nextElementSibling;
                 const icon = this.querySelector('span:last-child');
-                document.querySelectorAll('.accordion-header').forEach(other => {
-                    if (other !== this) {
-                        other.nextElementSibling.style.maxHeight = null;
-                        other.querySelector('span:last-child').style.transform = 'rotate(0deg)';
+                
+                // Close others
+                document.querySelectorAll('.accordion-content').forEach(otherContent => {
+                    if (otherContent !== content) {
+                        otherContent.style.maxHeight = null;
+                        otherContent.previousElementSibling.querySelector('span:last-child').style.transform = 'rotate(0deg)';
                     }
                 });
+
                 if (content.style.maxHeight) {
                     content.style.maxHeight = null;
                     icon.style.transform = 'rotate(0deg)';
