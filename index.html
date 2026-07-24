@@ -204,7 +204,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Improved Text Shadow for 3D Contrast */
         .text-glow-contrast {
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 20px rgba(7, 10, 17, 0.8);
         }
@@ -214,7 +213,7 @@
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="icon-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></symbol>
-        <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></symbol>
+        <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10z"></path></symbol>
         <symbol id="icon-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></symbol>
         <symbol id="icon-headset" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a9 9 0 0 0-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7a9 9 0 0 0-9-9z"/></symbol>
         <symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></symbol>
@@ -401,14 +400,17 @@
                     <h3 class="text-white font-black text-xs flex items-center gap-1.5">
                         <span>🎁 کد تخفیف ویژه</span>
                     </h3>
-                    <div class="bg-red-500/10 border border-red-500/20 px-2.5 py-0.5 rounded-lg flex items-center gap-1.5">
-                        <span class="text-[9px] text-red-400 font-bold">فرصت باقی‌مانده:</span>
-                        <span id="countdown" class="text-red-400 font-mono text-xs font-bold tracking-wider">23:59:59</span>
+                    
+                    <!-- COUNTDOWN CONTAINER: HIDDEN BY DEFAULT, SHOWS ONLY AFTER CODE IS ENTERED -->
+                    <div id="countdown-container" class="hidden bg-red-500/10 border border-red-500/20 px-2.5 py-0.5 rounded-lg items-center gap-1.5">
+                        <span class="text-[9px] text-red-400 font-bold">مهلت استفاده:</span>
+                        <span id="countdown" class="text-red-400 font-mono text-xs font-bold tracking-wider">24:00:00</span>
                     </div>
                 </div>
-                <p class="text-gray-400 text-[10px] mb-3">اگر کد تخفیف دارید، آن را در کادر زیر وارد کنید تا ۱۰٪ از قیمت کسر شود.</p>
                 
-                <div class="flex flex-col gap-2">
+                <p id="discount-desc" class="text-gray-400 text-[10px] mb-3">اگر کد تخفیف دارید، آن را در کادر زیر وارد کنید تا ۱۰٪ از قیمت کسر شود.</p>
+                
+                <div id="discount-form" class="flex flex-col gap-2">
                     <input type="text" id="promo-input" placeholder="کد تخفیف را وارد کنید" 
                            class="w-full bg-black/40 border border-white/15 text-white text-center py-2.5 rounded-xl focus:ring-2 focus:ring-orange-500 outline-none font-mono font-bold text-xs uppercase tracking-widest placeholder:text-gray-600" dir="ltr">
                     <button onclick="applyDiscountEngine(false)" id="apply-btn"
@@ -678,20 +680,20 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // THREE.JS 3D CANVAS (HIGH READABILITY ADJUSTMENTS)
+        // THREE.JS 3D CANVAS (SMOOTH & HIGH READABILITY)
         function init3DHero() {
             const container = document.getElementById('hero');
             const canvas = document.getElementById('webgl-hero-canvas');
             
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-            camera.position.z = 4.3; // Camera pushed further back for text clearance
+            camera.position.z = 4.3;
 
             const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
             renderer.setSize(container.clientWidth, container.clientHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
-            const particlesCount = 300; // Reduced count for lower noise
+            const particlesCount = 280; // Optimized for 60fps mobile stability
             const geometry = new THREE.BufferGeometry();
             const positions = new Float32Array(particlesCount * 3);
             const colors = new Float32Array(particlesCount * 3);
@@ -720,10 +722,10 @@
             geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
             const material = new THREE.PointsMaterial({
-                size: 0.03, // Smaller size for crispness
+                size: 0.03,
                 vertexColors: true,
                 transparent: true,
-                opacity: 0.45 // Lower opacity behind text
+                opacity: 0.4
             });
 
             const pointCloud = new THREE.Points(geometry, material);
@@ -834,11 +836,6 @@
                 ease: "power2.out"
             });
         }
-        
-        window.addEventListener('DOMContentLoaded', () => {
-            init3DHero();
-            initGSAPAnimations();
-        });
 
         // 1. Mobile Menu Logic
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -876,53 +873,78 @@
             }, 800);
         }
 
-        // 3. Discount Engine & REAL 24-HOUR TIMER EXPIRATION LOGIC
+        // 3. STRICT DISCOUNT ENGINE & ACCURATE NON-LAG TIMER
         let isDiscountApplied = false;
         let isTimerExpired = false;
+        let timerInterval = null;
 
-        function startPersistentCountdown() {
+        function startDiscountTimer() {
+            const container = document.getElementById('countdown-container');
             const display = document.getElementById('countdown');
+            
+            // Unhide countdown badge
+            if (container) {
+                container.classList.remove('hidden');
+                container.classList.add('flex');
+            }
+
             const timerDuration = 24 * 60 * 60 * 1000; 
             let endTime = localStorage.getItem('sanjab_timer_end');
 
             if (!endTime) {
                 endTime = Date.now() + timerDuration;
-                localStorage.setItem('sanjab_timer_end', endTime);
+                localStorage.setItem('sanjab_timer_end', endTime.toString());
+            } else {
+                endTime = parseInt(endTime, 10);
             }
 
-            const timerInterval = setInterval(() => {
-                let remaining = parseInt(endTime) - Date.now();
+            function updateTimerDisplay() {
+                const now = Date.now();
+                const remainingMs = endTime - now;
 
-                if (remaining <= 0) {
-                    clearInterval(timerInterval);
+                if (remainingMs <= 0) {
+                    if (timerInterval) clearInterval(timerInterval);
                     display.textContent = "00:00:00";
-                    expireDiscountProcess(); // EXPIRE DISCOUNT REAL TIME!
+                    expireDiscountProcess();
                     return;
                 }
 
-                let hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
-                let minutes = Math.floor((remaining / 1000 / 60) % 60);
-                let seconds = Math.floor((remaining / 1000) % 60);
+                const totalSeconds = Math.floor(remainingMs / 1000);
+                const hours = Math.floor(totalSeconds / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
 
                 display.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }, 1000);
+            }
+
+            // Call immediately to avoid initial 1-second gap/lag
+            updateTimerDisplay();
+            
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimerDisplay, 1000);
         }
 
-        // Expire Discount & Reset to Base Prices
         function expireDiscountProcess() {
             isTimerExpired = true;
             localStorage.removeItem('sanjab_discount');
 
             const widget = document.getElementById('discount-widget');
             if (widget) {
-                widget.classList.add('opacity-60');
-                widget.querySelector('button').disabled = true;
-                widget.querySelector('button').innerText = 'مهلت تخفیف منقضی شد';
-                widget.querySelector('button').classList.replace('bg-orange-500', 'bg-gray-700');
-                widget.querySelector('input').disabled = true;
+                const desc = document.getElementById('discount-desc');
+                if (desc) desc.innerText = 'مهلت ۲۴ ساعته استفاده از تخفیف به پایان رسید.';
+                
+                const btn = document.getElementById('apply-btn');
+                if (btn) {
+                    btn.disabled = true;
+                    btn.innerText = 'مهلت تخفیف منقضی شد';
+                    btn.classList.replace('bg-orange-500', 'bg-gray-700');
+                    btn.classList.replace('hover:bg-orange-600', 'hover:bg-gray-700');
+                }
+                const input = document.getElementById('promo-input');
+                if (input) input.disabled = true;
             }
 
-            // Force Revert all pricing cards to BASE PRICES
+            // Revert all pricing cards to BASE PRICES
             document.querySelectorAll('.pricing-card').forEach(card => {
                 const origPriceEl = card.querySelector('.price-original');
                 const newPriceEl = card.querySelector('.price-new');
@@ -939,21 +961,26 @@
         }
 
         function applyDiscountEngine(isSilent = false) {
-            if (isTimerExpired) {
-                if(!isSilent) showToast('مهلت تخفیف ۲۴ ساعته شما به پایان رسیده است.', 'error');
+            let endTime = localStorage.getItem('sanjab_timer_end');
+            if (endTime && Date.now() > parseInt(endTime, 10)) {
+                if(!isSilent) showToast('مهلت ۲۴ ساعته تخفیف شما به پایان رسیده است.', 'error');
+                expireDiscountProcess();
                 return;
             }
 
             const input = document.getElementById('promo-input').value.trim().toUpperCase();
             const btn = document.getElementById('apply-btn');
             
-            // Code works silently behind the scenes
-            if (input === 'SANJAB_OFFER' || input === 'SANJAB') {
+            // STRICT CODE VALIDATION: ONLY SANJAB_OFFER IS VALID
+            if (input === 'SANJAB_OFFER') {
                 if(isDiscountApplied) return;
                 
                 if(!isSilent) showToast('تخفیف ۱۰٪ با موفقیت اعمال شد! 🎁', 'success');
                 
                 localStorage.setItem('sanjab_discount', 'active');
+
+                // Start timer ONLY after successful discount application
+                startDiscountTimer();
 
                 btn.innerHTML = '✔️ تخفیف ۱۰٪ فعال شد';
                 btn.classList.replace('bg-orange-500', 'bg-emerald-600');
@@ -979,11 +1006,12 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            startPersistentCountdown();
-            
-            // Check if timer already expired in previous visit
+            init3DHero();
+            initGSAPAnimations();
+
+            // Restore state safely on page refresh
             let endTime = localStorage.getItem('sanjab_timer_end');
-            if (endTime && Date.now() > parseInt(endTime)) {
+            if (endTime && Date.now() > parseInt(endTime, 10)) {
                 expireDiscountProcess();
             } else if (localStorage.getItem('sanjab_discount') === 'active') {
                 document.getElementById('promo-input').value = 'SANJAB_OFFER';
@@ -991,7 +1019,7 @@
             }
         });
 
-        // 4. Subtle, Natural Social Proof (Occurs much less frequently)
+        // 4. Subtle & Rare Social Proof Notifications
         const fakeEvents = [
             'یک کاربر اشتراک ۳۰ گیگ را تمدید کرد',
             'سرویس یک کاربر پس از تایید رسید فعال شد',
@@ -1007,7 +1035,7 @@
         }
         setTimeout(() => {
             triggerSocialProof();
-            setInterval(triggerSocialProof, 35000 + Math.random() * 20000); // Rare interval (35-55 sec)
+            setInterval(triggerSocialProof, 40000 + Math.random() * 20000);
         }, 15000);
 
         // 5. Sticky CTA Scroll Logic
