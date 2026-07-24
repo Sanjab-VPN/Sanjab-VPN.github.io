@@ -25,6 +25,7 @@
         * {
             -webkit-tap-highlight-color: transparent;
             user-select: none;
+            box-sizing: border-box;
         }
 
         body {
@@ -57,7 +58,6 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            will-change: transform, opacity;
         }
 
         .glass-card-glow {
@@ -66,7 +66,6 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1.5px solid rgba(249, 115, 22, 0.55);
             box-shadow: 0 0 30px rgba(249, 115, 22, 0.25);
-            will-change: transform, opacity;
         }
 
         /* Animations */
@@ -83,8 +82,8 @@
             animation: pulse-glow 2s infinite;
         }
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
-            50% { box-shadow: 0 0 25px rgba(59, 130, 246, 0.8); }
+            0%, 100% { box-shadow: 0 0 15px rgba(37, 99, 235, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(37, 99, 235, 0.9); }
         }
 
         /* Mobile Menu Slide */
@@ -236,10 +235,10 @@
         </a>
     </div>
 
-    <!-- Support Floating Button -->
+    <!-- Support Floating Button (Fixed Perfect Circle UI) -->
     <div class="fab-container">
-        <a href="https://t.me/SanjabVPN2_Bot?start=B_b659b2" target="_blank" class="w-13 h-13 bg-blue-600 text-white rounded-2xl shadow-xl pulse-glow flex items-center justify-center focus:outline-none z-50 border border-blue-400/30">
-            <svg class="w-6 h-6"><use href="#icon-headset"></use></svg>
+        <a href="https://t.me/SanjabVPN2_Bot?start=B_b659b2" target="_blank" class="w-14 h-14 bg-blue-600 text-white rounded-full shadow-2xl pulse-glow flex items-center justify-center focus:outline-none z-50 border border-blue-400/30 shrink-0">
+            <svg class="w-7 h-7"><use href="#icon-headset"></use></svg>
         </a>
     </div>
 
@@ -519,7 +518,7 @@
         </div>
     </section>
 
-    <!-- APPS DOWNLOAD -->
+    <!-- APPS DOWNLOAD (FIXED OVERFLOW & ALIGNMENT) -->
     <section id="apps" class="py-12 border-t border-white/10">
         <div class="px-4 w-full max-w-sm mx-auto">
             <div class="text-center mb-6">
@@ -534,7 +533,7 @@
                     <div class="h-px bg-white/10 flex-1"></div>
                 </div>
 
-                <a href="https://play.google.com/store/apps/details?id=com.happproxy" target="_blank" class="flex items-center justify-between p-3.5 glass-card border border-emerald-500/30 rounded-2xl active:scale-[0.98] transition-transform">
+                <a href="https://play.google.com/store/apps/details?id=com.happproxy" target="_blank" class="app-card flex items-center justify-between p-3.5 glass-card border border-emerald-500/30 rounded-2xl active:scale-[0.98] transition-transform w-full">
                     <div class="flex items-center gap-3">
                         <div class="w-9 h-9 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-xl flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5"><use href="#icon-android-logo"></use></svg>
@@ -543,10 +542,10 @@
                             <h4 class="font-black text-white text-sm">Happ <span class="text-[9px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded ml-1">پیشنهاد ما</span></h4>
                         </div>
                     </div>
-                    <span class="text-blue-400 text-xs font-bold">دانلود</span>
+                    <span class="text-blue-400 text-xs font-bold shrink-0">دانلود</span>
                 </a>
 
-                <a href="https://github.com/2dust/v2rayNG/releases" target="_blank" class="flex items-center justify-between p-3.5 glass-card rounded-2xl active:scale-[0.98] transition-transform">
+                <a href="https://github.com/2dust/v2rayNG/releases" target="_blank" class="app-card flex items-center justify-between p-3.5 glass-card rounded-2xl active:scale-[0.98] transition-transform w-full">
                     <div class="flex items-center gap-3">
                         <div class="w-9 h-9 bg-white/5 text-gray-400 border border-white/10 rounded-xl flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5"><use href="#icon-android-logo"></use></svg>
@@ -555,7 +554,7 @@
                             <h4 class="font-bold text-white text-sm">v2rayNG</h4>
                         </div>
                     </div>
-                    <span class="text-blue-400 text-xs font-bold">دانلود</span>
+                    <span class="text-blue-400 text-xs font-bold shrink-0">دانلود</span>
                 </a>
 
                 <div class="flex items-center gap-2 my-1">
@@ -564,7 +563,7 @@
                     <div class="h-px bg-white/10 flex-1"></div>
                 </div>
 
-                <a href="https://apps.apple.com/us/app/happ-proxy-utility/id6504287215" target="_blank" class="flex items-center justify-between p-3.5 glass-card border border-blue-500/30 rounded-2xl active:scale-[0.98] transition-transform">
+                <a href="https://apps.apple.com/us/app/happ-proxy-utility/id6504287215" target="_blank" class="app-card flex items-center justify-between p-3.5 glass-card border border-blue-500/30 rounded-2xl active:scale-[0.98] transition-transform w-full">
                     <div class="flex items-center gap-3">
                         <div class="w-9 h-9 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-xl flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5"><use href="#icon-apple-logo"></use></svg>
@@ -573,10 +572,10 @@
                             <h4 class="font-black text-white text-sm">Happ <span class="text-[9px] bg-blue-500/20 text-blue-300 px-1.5 py-0.5 rounded ml-1">پیشنهاد ما</span></h4>
                         </div>
                     </div>
-                    <span class="text-blue-400 text-xs font-bold">App Store</span>
+                    <span class="text-blue-400 text-xs font-bold shrink-0">App Store</span>
                 </a>
 
-                <a href="https://apps.apple.com/app/id6450534064" target="_blank" class="flex items-center justify-between p-3.5 glass-card rounded-2xl active:scale-[0.98] transition-transform">
+                <a href="https://apps.apple.com/app/id6450534064" target="_blank" class="app-card flex items-center justify-between p-3.5 glass-card rounded-2xl active:scale-[0.98] transition-transform w-full">
                     <div class="flex items-center gap-3">
                         <div class="w-9 h-9 bg-white/5 text-gray-400 border border-white/10 rounded-xl flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5"><use href="#icon-apple-logo"></use></svg>
@@ -585,36 +584,36 @@
                             <h4 class="font-bold text-white text-sm">Streisand</h4>
                         </div>
                     </div>
-                    <span class="text-blue-400 text-xs font-bold">App Store</span>
+                    <span class="text-blue-400 text-xs font-bold shrink-0">App Store</span>
                 </a>
             </div>
             <a href="https://t.me/SanjabVPN2_Bot?start=B_e2e8b8" target="_blank" class="block text-center text-xs font-bold text-gray-400 underline mt-5 py-1">مشاهده سایر نرم‌افزارها در ربات</a>
         </div>
     </section>
 
-    <!-- FAQ -->
+    <!-- FAQ (FIXED TEXT PADDING & CENTERED SPACING) -->
     <section id="faq" class="py-12 border-t border-white/10">
         <div class="px-4 w-full max-w-sm mx-auto">
             <h2 class="text-xl font-black text-center text-white mb-6">سوالات متداول</h2>
             <div class="space-y-2.5">
                 <div class="glass-card rounded-2xl overflow-hidden">
-                    <button class="accordion-header w-full p-3.5 text-right flex justify-between items-center font-bold text-xs text-gray-200">
+                    <button class="accordion-header w-full p-4 text-right flex justify-between items-center font-bold text-xs text-gray-200">
                         <span>چطور حجم باقی‌مانده را ببینم؟</span>
                         <span class="transform transition-transform duration-300 text-orange-400 text-[10px]">▼</span>
                     </button>
                     <div class="accordion-content">
-                        <div class="p-3.5 pt-0 text-gray-400 text-[11px] leading-relaxed border-t border-white/5 mt-1">
+                        <div class="px-4 py-3.5 text-gray-300 text-[11px] leading-relaxed border-t border-white/10 bg-black/20">
                             در بالای همین صفحه، نام سرویس خود را در بخش "استعلام وضعیت" وارد کنید و وارد پنل شوید.
                         </div>
                     </div>
                 </div>
                 <div class="glass-card rounded-2xl overflow-hidden">
-                    <button class="accordion-header w-full p-3.5 text-right flex justify-between items-center font-bold text-xs text-gray-200">
+                    <button class="accordion-header w-full p-4 text-right flex justify-between items-center font-bold text-xs text-gray-200">
                         <span>چگونه با پشتیبانی ارتباط بگیرم؟</span>
                         <span class="transform transition-transform duration-300 text-orange-400 text-[10px]">▼</span>
                     </button>
                     <div class="accordion-content">
-                        <div class="p-3.5 pt-0 text-gray-400 text-[11px] leading-relaxed border-t border-white/5 mt-1">
+                        <div class="px-4 py-3.5 text-gray-300 text-[11px] leading-relaxed border-t border-white/10 bg-black/20">
                             روی دکمه آبی‌رنگ پایین صفحه کلیک کنید یا مستقیماً وارد <a href="https://t.me/SanjabVPN2_Bot?start=B_b659b2" target="_blank" class="text-blue-400 font-bold underline">ربات پشتیبانی</a> شوید.
                         </div>
                     </div>
@@ -718,11 +717,10 @@
             });
         }
 
-        // GSAP & SCROLLTRIGGER MOTION ENGINE
+        // GSAP MOTION ENGINE (FIXED STABILITY FOR MOBILE RTL)
         function initGSAPAnimations() {
             gsap.registerPlugin(ScrollTrigger);
 
-            // 1. Hero Entrance Timeline
             const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
             
             heroTl.from("#hero-badge", { y: -20, opacity: 0, duration: 0.6, delay: 0.1 })
@@ -731,7 +729,6 @@
                   .from("#hero-subtitle", { y: 20, opacity: 0, duration: 0.6 }, "-=0.4")
                   .from("#hero-cta-box > *", { y: 20, opacity: 0, duration: 0.5, stagger: 0.12 }, "-=0.4");
 
-            // 2. Status Checker Reveal
             gsap.from("#status-checker .glass-card", {
                 scrollTrigger: {
                     trigger: "#status-checker",
@@ -743,7 +740,6 @@
                 ease: "power2.out"
             });
 
-            // 3. Features Stagger Reveal
             gsap.from("#features .glass-card", {
                 scrollTrigger: {
                     trigger: "#features",
@@ -756,7 +752,6 @@
                 ease: "power2.out"
             });
 
-            // 4. Pricing Cards & Discount Box Reveal
             gsap.from("#pricing .glass-card, #pricing .glass-card-glow", {
                 scrollTrigger: {
                     trigger: "#pricing",
@@ -769,20 +764,20 @@
                 ease: "power3.out"
             });
 
-            // 5. Apps Download Cards Stagger Reveal
-            gsap.from("#apps a.glass-card", {
+            // FIXED: Vertical Reveal Only to prevents Horizontal Cutoffs on Mobile
+            gsap.from("#apps .app-card", {
                 scrollTrigger: {
                     trigger: "#apps",
                     start: "top 85%",
                 },
-                x: -30,
+                y: 25,
                 opacity: 0,
                 duration: 0.55,
                 stagger: 0.08,
-                ease: "power2.out"
+                ease: "power2.out",
+                clearProps: "transform"
             });
 
-            // 6. FAQ Stagger Reveal
             gsap.from("#faq .glass-card", {
                 scrollTrigger: {
                     trigger: "#faq",
