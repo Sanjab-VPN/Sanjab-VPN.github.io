@@ -35,8 +35,9 @@
             color: #f3f4f6;
         }
         
+        /* Adjusted scroll padding for fixed header offset */
         html {
-            scroll-padding-top: 75px;
+            scroll-padding-top: 95px;
             overflow-x: hidden;
         }
 
@@ -327,7 +328,7 @@
     </section>
 
     <!-- STATUS CHECKER -->
-    <section id="status-checker" class="relative -mt-6 z-20 px-4 w-full max-w-sm mx-auto">
+    <section id="status-checker" class="relative -mt-6 z-20 px-4 w-full max-w-sm mx-auto scroll-mt-24">
         <div class="glass-card rounded-3xl p-5 border border-white/10 flex flex-col gap-3.5">
             <div class="flex items-center gap-3 border-b border-white/10 pb-3">
                 <div class="w-9 h-9 bg-blue-500/10 text-blue-400 rounded-xl flex items-center justify-center border border-blue-500/20 shrink-0">
@@ -340,8 +341,8 @@
             </div>
             
             <div class="flex flex-col gap-2.5">
-                <label for="service-name" class="text-[11px] font-bold text-gray-300">نام سرویس یا شناسه اشتراک:</label>
-                <input type="text" id="service-name" placeholder="مثال: sanjab_123456" 
+                <label for="service-name" class="text-[11px] font-bold text-gray-300">نام سرویس شما:</label>
+                <input type="text" id="service-name" placeholder="مثال: sanjab0123" 
                        class="w-full bg-black/40 border border-white/15 text-white text-left px-4 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none font-mono text-xs placeholder:text-gray-600" dir="ltr">
                 <button onclick="checkServiceStatus()" 
                         class="w-full bg-blue-600 active:bg-blue-700 text-white font-bold py-3 rounded-xl transition-transform active:scale-95 text-xs shadow-lg shadow-blue-600/30">
@@ -352,7 +353,7 @@
     </section>
 
     <!-- FEATURES -->
-    <section id="features" class="py-12 mt-4">
+    <section id="features" class="py-12 mt-4 scroll-mt-24">
         <div class="px-4 w-full max-w-sm mx-auto">
             <div class="text-center mb-6">
                 <h2 class="text-xl font-black text-white">چرا سنجاب؟</h2>
@@ -393,8 +394,8 @@
         </div>
     </section>
 
-    <!-- RE-CALIBRATED SMART CALCULATOR SECTION -->
-    <section id="calculator" class="py-10 border-t border-white/10 scroll-mt-16">
+    <!-- SMART CALCULATOR SECTION (PERFECTLY ALIGNED SCROLL OFFSET) -->
+    <section id="calculator" class="py-10 border-t border-white/10 scroll-mt-24">
         <div class="px-4 w-full max-w-sm mx-auto">
             <div class="text-center mb-6">
                 <div class="inline-flex items-center gap-1.5 bg-orange-500/10 border border-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-[10px] font-bold mb-2">
@@ -463,8 +464,8 @@
         </div>
     </section>
 
-    <!-- PRICING SECTION -->
-    <section id="pricing" class="py-12 scroll-mt-16 border-t border-white/10">
+    <!-- PRICING SECTION (PERFECTLY ALIGNED SCROLL OFFSET) -->
+    <section id="pricing" class="py-12 border-t border-white/10 scroll-mt-24">
         <div class="px-4 w-full max-w-sm mx-auto">
             
             <div class="text-center mb-6">
@@ -500,7 +501,7 @@
                 </div>
             </div>
             
-            <!-- Cards Container (ALWAYS VISIBLE & HIGH CONTRAST) -->
+            <!-- Cards Container -->
             <div class="flex flex-col gap-4">
                 
                 <!-- 10GB -->
@@ -621,7 +622,7 @@
     </section>
 
     <!-- APPS DOWNLOAD -->
-    <section id="apps" class="py-12 border-t border-white/10">
+    <section id="apps" class="py-12 border-t border-white/10 scroll-mt-24">
         <div class="px-4 w-full max-w-sm mx-auto">
             <div class="text-center mb-6">
                 <h2 class="text-xl font-black text-white mb-1">دانلود برنامه‌های اتصال</h2>
@@ -694,7 +695,7 @@
     </section>
 
     <!-- FAQ -->
-    <section id="faq" class="py-12 border-t border-white/10">
+    <section id="faq" class="py-12 border-t border-white/10 scroll-mt-24">
         <div class="px-4 w-full max-w-sm mx-auto">
             <h2 class="text-xl font-black text-center text-white mb-6">سوالات متداول</h2>
             <div class="space-y-2.5">
@@ -844,7 +845,7 @@
             });
         }
 
-        // GSAP MOTION ENGINE (SAFE & NON-LOCKING)
+        // GSAP MOTION ENGINE
         function initGSAPAnimations() {
             gsap.registerPlugin(ScrollTrigger);
 
@@ -968,10 +969,6 @@
             document.getElementById('dl-val').innerText = `${dlGbWeekly} گیگ / هفته`;
 
             // Realistic VPN Data Overhead Math
-            // Insta/Reels: ~0.4 GB/hr
-            // YouTube: ~0.6 GB/hr
-            // Web/TG: ~0.05 GB/hr
-            // Downloads: Weekly GB * 4.3 weeks
             const totalGb = (instaHours * 0.4 * 30) + (ytHours * 0.6 * 30) + (webHours * 0.05 * 30) + (dlGbWeekly * 4.3);
             const formattedTotal = totalGb.toFixed(1);
 
