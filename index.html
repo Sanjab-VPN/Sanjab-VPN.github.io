@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>سنجاب VPN | اینترنت بدون سانسور، پرسرعت و پایدار</title>
-    <meta name="description" content="سنجاب VPN: سرورهای اختصاصی ضد فیلتر با تحویل آنی. بدون قطعی روی همراه اول، ایرانسل و مخابرات.">
+    <title>سنجاب VPN | اینترنت پرسرعت، بدون قطعی و آزاد</title>
+    <meta name="description" content="سنجاب VPN: سرورهای اختصاصی ضد فیلتر با ارسال سریع. بدون قطعی روی تمامی اپراتورهای همراه و خانگی.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
     
     <!-- Tailwind CSS CDN -->
@@ -53,7 +53,7 @@
 
         /* Mobile Glassmorphism Cards */
         .glass-card {
-            background: rgba(18, 24, 38, 0.75);
+            background: rgba(18, 24, 38, 0.82);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -61,7 +61,7 @@
         }
 
         .glass-card-glow {
-            background: linear-gradient(145deg, rgba(249, 115, 22, 0.18), rgba(18, 24, 38, 0.88));
+            background: linear-gradient(145deg, rgba(249, 115, 22, 0.18), rgba(18, 24, 38, 0.9));
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1.5px solid rgba(249, 115, 22, 0.55);
@@ -74,7 +74,7 @@
         }
         @keyframes float {
             0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(1.5deg); }
+            50% { transform: translateY(-8px) rotate(1.5deg); }
             100% { transform: translateY(0px) rotate(0deg); }
         }
 
@@ -143,10 +143,10 @@
             background: rgba(18, 24, 38, 0.92);
             backdrop-filter: blur(12px);
             color: #f3f4f6;
-            padding: 10px 16px;
+            padding: 8px 14px;
             border-radius: 20px;
-            font-size: 0.78rem;
-            font-weight: 700;
+            font-size: 0.75rem;
+            font-weight: 600;
             box-shadow: 0 8px 25px rgba(0,0,0,0.5);
             border: 1px solid rgba(255,255,255,0.12);
             z-index: 9990;
@@ -172,7 +172,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(11, 15, 23, 0.92);
+            background: rgba(11, 15, 23, 0.94);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-top: 1px solid rgba(255,255,255,0.1);
@@ -203,6 +203,11 @@
             from { opacity: 0; transform: translateY(4px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Improved Text Shadow for 3D Contrast */
+        .text-glow-contrast {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 20px rgba(7, 10, 17, 0.8);
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-orange-500 selection:text-white">
@@ -221,17 +226,17 @@
     <div id="toast-container"></div>
     
     <div id="social-proof" class="social-proof-toast">
-        <span class="text-base">🔥</span> <span id="social-proof-text">یک کاربر پلن ۳0 گیگ را خریداری کرد 🚀</span>
+        <span class="text-sm">⚡</span> <span id="social-proof-text">یک کاربر اشتراک ۳۰ گیگ را تمدید کرد</span>
     </div>
 
     <!-- Sticky Bottom CTA -->
     <div id="sticky-cta" class="sticky-cta">
         <div>
-            <p class="text-[9px] text-gray-400 font-bold leading-tight">🔥 تخفیف ویژه رو به اتمام</p>
-            <p class="text-xs font-black text-orange-500">تحویل فوری اشتراک (زیر ۵ ثانیه)</p>
+            <p id="sticky-cta-sub" class="text-[9px] text-gray-400 font-bold leading-tight">پشتیبانی و تحویل سریع</p>
+            <p class="text-xs font-black text-orange-500">مشاهده پلن‌ها و خرید</p>
         </div>
         <a href="#pricing" class="bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black px-5 py-2.5 rounded-xl shadow-lg shadow-orange-500/30 active:scale-95 transition-all text-xs border border-orange-400/30">
-            خرید اشتراک
+            انتخاب پلن
         </a>
     </div>
 
@@ -258,11 +263,11 @@
         <!-- Fullscreen Mobile Navigation -->
         <div id="mobile-menu" class="fixed inset-0 bg-[#070a11] z-40 pt-20 px-6 flex flex-col space-y-4 h-screen">
             <a href="#status-checker" class="text-gray-200 text-base py-3.5 rounded-2xl bg-white/5 border border-white/10 font-bold active:bg-white/10 text-center">📡 استعلام سریع حجم و زمان</a>
-            <a href="#pricing" class="text-orange-400 text-base py-3.5 rounded-2xl bg-orange-500/10 border border-orange-500/30 font-black text-center">🛒 تعرفه‌ها و خرید آنی</a>
-            <a href="#apps" class="text-gray-300 text-base py-3 border-b border-white/5 font-bold text-center">دانلود نرم‌افزارها</a>
-            <a href="#faq" class="text-gray-300 text-base py-3 border-b border-white/5 font-bold text-center">سوالات متداول قبل از خرید</a>
+            <a href="#pricing" class="text-orange-400 text-base py-3.5 rounded-2xl bg-orange-500/10 border border-orange-500/30 font-black text-center">🛒 تعرفه‌ها و خرید اشتراک</a>
+            <a href="#apps" class="text-gray-300 text-base py-3 border-b border-white/5 font-bold text-center">دانلود برنامه‌ها</a>
+            <a href="#faq" class="text-gray-300 text-base py-3 border-b border-white/5 font-bold text-center">سوالات متداول</a>
             <a href="https://t.me/SanjabVPN2_Bot?start=B_b659b2" target="_blank" class="text-white bg-blue-600 text-base py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 mt-auto mb-10 shadow-lg shadow-blue-600/30 active:scale-95">
-                <svg class="w-5 h-5"><use href="#icon-headset"></use></svg> پشتیبانی تلگرام (۲۴/۷)
+                <svg class="w-5 h-5"><use href="#icon-headset"></use></svg> پشتیبانی تلگرام
             </a>
         </div>
     </header>
@@ -271,40 +276,42 @@
     <section id="hero" class="relative pt-24 pb-12 flex flex-col items-center justify-center overflow-hidden min-h-[82vh]">
         <canvas id="webgl-hero-canvas"></canvas>
 
-        <div class="absolute top-1/3 -right-10 w-48 h-48 bg-orange-500/20 rounded-full blur-[80px] pointer-events-none"></div>
-        <div class="absolute bottom-10 -left-10 w-48 h-48 bg-blue-500/20 rounded-full blur-[80px] pointer-events-none"></div>
+        <div class="absolute top-1/3 -right-10 w-48 h-48 bg-orange-500/15 rounded-full blur-[90px] pointer-events-none"></div>
+        <div class="absolute bottom-10 -left-10 w-48 h-48 bg-blue-500/15 rounded-full blur-[90px] pointer-events-none"></div>
 
         <div class="px-4 flex flex-col items-center text-center relative z-10 w-full max-w-sm">
-            <div id="hero-badge" class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/15 text-orange-400 px-3.5 py-1.5 rounded-full text-xs font-bold mb-5 shadow-xl">
+            <div id="hero-badge" class="inline-flex items-center gap-2 bg-[#070a11]/60 backdrop-blur-md border border-white/15 text-orange-400 px-3.5 py-1.5 rounded-full text-xs font-bold mb-5 shadow-xl">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>تضمین عدم قطعی در تمامی اپراتورها</span>
+                <span>تضمین پایداری در تمامی اینترنت‌ها</span>
             </div>
             
-            <div id="hero-mascot" class="relative mb-4 select-none">
-                <div class="absolute -inset-3 bg-gradient-to-r from-orange-500 to-blue-600 rounded-full blur-xl opacity-40 animate-pulse"></div>
+            <div id="hero-mascot" class="relative mb-3 select-none">
+                <div class="absolute -inset-3 bg-gradient-to-r from-orange-500 to-blue-600 rounded-full blur-xl opacity-30 animate-pulse"></div>
                 <div class="relative text-[5.5rem] float-animation filter drop-shadow-[0_8px_16px_rgba(249,115,22,0.3)]">
                     🐿️
                 </div>
             </div>
 
-            <h1 id="hero-title" class="text-2xl font-black leading-tight mb-3 text-white tracking-tight">
-                اینترنت بدون سانسور، با سرعت نور<br>
-                <span class="bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">سنجاب VPN</span>
-            </h1>
-            
-            <p id="hero-subtitle" class="text-xs text-gray-300 font-medium leading-relaxed mb-6 px-2">
-                اتصال بدون قطعی و کلافگی روی <strong class="text-white">همراه اول، ایرانسل، مخابرات و رایتل</strong>.<br>
-                <span class="text-[11px] font-mono text-gray-400 mt-1.5 block">🇺🇸 آمریکا • 🇩🇪 آلمان • 🇵🇱 لهستان • 🇫🇮 فنلاند</span>
-            </p>
+            <div class="bg-[#070a11]/40 backdrop-blur-[2px] p-2 rounded-2xl border border-white/5 mb-4">
+                <h1 id="hero-title" class="text-2xl font-black leading-tight text-white tracking-tight text-glow-contrast">
+                    اینترنت آزاد و پرسرعت با<br>
+                    <span class="bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">سنجاب VPN</span>
+                </h1>
+                
+                <p id="hero-subtitle" class="text-xs text-gray-200 font-medium leading-relaxed mt-2.5 px-1 text-glow-contrast">
+                    اتصال فوق‌العاده پایدار، بدون قطعی و سردرگمی.<br>
+                    <span class="text-[11px] font-mono text-gray-300 mt-1.5 block">سازگار با تمامی اپراتورهای همراه و اینترنت خانگی</span>
+                </p>
+            </div>
             
             <div id="hero-cta-box" class="w-full flex flex-col gap-3">
                 <a href="#pricing" 
                    class="w-full bg-gradient-to-r from-orange-500 to-orange-600 active:from-orange-600 active:to-orange-700 text-white font-black py-3.5 rounded-2xl shadow-xl shadow-orange-500/30 transition-transform active:scale-95 flex items-center justify-center text-base border border-orange-400/30">
-                   🚀 دریافت آنی اشتراک
+                   🚀 ورود به لیست تعرفه‌ها
                 </a>
                 <a href="#status-checker" 
-                   class="w-full bg-white/5 active:bg-white/10 backdrop-blur-md border border-white/15 text-gray-200 font-bold py-3 rounded-2xl transition-transform active:scale-95 flex items-center justify-center text-xs">
-                   📡 استعلام وضعیت و باقی‌مانده اشتراک
+                   class="w-full bg-white/10 active:bg-white/20 backdrop-blur-md border border-white/15 text-gray-200 font-bold py-3 rounded-2xl transition-transform active:scale-95 flex items-center justify-center text-xs">
+                   📡 استعلام وضعیت سرویس من
                 </a>
             </div>
         </div>
@@ -319,7 +326,7 @@
                 </div>
                 <div>
                     <h3 class="font-black text-white text-sm">پنل استعلام لحظه‌ای</h3>
-                    <p class="text-[10px] text-gray-400">مشاهده دقیق حجم و روز باقی‌مانده</p>
+                    <p class="text-[10px] text-gray-400">مشاهده دقیق حجم و زمان باقی‌مانده</p>
                 </div>
             </div>
             
@@ -339,8 +346,8 @@
     <section id="features" class="py-12 mt-4">
         <div class="px-4 w-full max-w-sm mx-auto">
             <div class="text-center mb-6">
-                <h2 class="text-xl font-black text-white">چرا سنجاب متفاوت است؟</h2>
-                <p class="text-[10px] text-gray-400 mt-1">تکنولوژی اختصاصی عبور از محدودیت‌های شدید</p>
+                <h2 class="text-xl font-black text-white">چرا سنجاب؟</h2>
+                <p class="text-[10px] text-gray-400 mt-1">امکانات ویژه شبکه سرورهای هوشمند</p>
             </div>
             
             <div class="flex flex-col gap-3">
@@ -349,8 +356,8 @@
                         <svg class="w-5 h-5"><use href="#icon-globe"></use></svg>
                     </div>
                     <div>
-                        <h3 class="text-sm font-black text-white">مسیریابی هوشمند (Smart Routing)</h3>
-                        <p class="text-gray-400 text-[11px] mt-0.5 leading-relaxed">اتصال همزمان به ۵ لوکیشن خلوت برای جلوگیری از کندی سرعت.</p>
+                        <h3 class="text-sm font-black text-white">مسیریابی هوشمند</h3>
+                        <p class="text-gray-400 text-[11px] mt-0.5 leading-relaxed">اتصال خودکار به خلوت‌ترین سرورهای آمریکا و اروپا.</p>
                     </div>
                 </div>
 
@@ -359,8 +366,8 @@
                         <svg class="w-5 h-5"><use href="#icon-link"></use></svg>
                     </div>
                     <div>
-                        <h3 class="text-sm font-black text-white">لینک ساب‌اسکریپشن اتوماتیک</h3>
-                        <p class="text-gray-400 text-[11px] mt-0.5 leading-relaxed">تغییر خودکار IPهای مسدودشده بدون نیاز به تنظیم مجدد.</p>
+                        <h3 class="text-sm font-black text-white">لینک ساب‌اسکریپشن</h3>
+                        <p class="text-gray-400 text-[11px] mt-0.5 leading-relaxed">به‌روزرسانی خودکار لیست سرورها در برنامه شما.</p>
                     </div>
                 </div>
 
@@ -369,8 +376,8 @@
                         <svg class="w-5 h-5"><use href="#icon-rocket"></use></svg>
                     </div>
                     <div>
-                        <h3 class="text-sm font-black text-white">ویژه اینستاگرام، یوتیوب و گیم</h3>
-                        <p class="text-gray-400 text-[11px] mt-0.5 leading-relaxed">پینگ پایین و پهنای باند اختصاصی بدون افت کیفیت ویدیوها.</p>
+                        <h3 class="text-sm font-black text-white">سرعت و پایداری بالا</h3>
+                        <p class="text-gray-400 text-[11px] mt-0.5 leading-relaxed">مناسب برای اینستاگرام، یوتیوب، استریم و گیمینگ.</p>
                     </div>
                 </div>
             </div>
@@ -382,24 +389,24 @@
         <div class="px-4 w-full max-w-sm mx-auto">
             
             <div class="text-center mb-6">
-                <h2 class="text-xl font-black text-white mb-1.5">تعرفه‌های اقتصادی یک‌ماهه</h2>
+                <h2 class="text-xl font-black text-white mb-1.5">تعرفه‌های یک‌ماهه</h2>
                 <div class="bg-white/5 border border-white/10 text-gray-300 text-[10px] font-bold inline-block px-3 py-1 rounded-full">
-                    ترافیک بین‌الملل ۱۰۰٪ واقعی • قابلیت اتصال چند دستگاه
+                    ترافیک بین‌الملل کامل • قابل استفاده روی چند دستگاه
                 </div>
             </div>
 
             <!-- Discount Box Widget -->
-            <div class="glass-card rounded-2xl p-4 mb-6 relative overflow-hidden border border-white/15">
+            <div id="discount-widget" class="glass-card rounded-2xl p-4 mb-6 relative overflow-hidden border border-white/15">
                 <div class="flex justify-between items-center mb-3">
                     <h3 class="text-white font-black text-xs flex items-center gap-1.5">
-                        <span>🎁 کد تخفیف ۲۰ درصدی</span>
+                        <span>🎁 کد تخفیف ویژه</span>
                     </h3>
                     <div class="bg-red-500/10 border border-red-500/20 px-2.5 py-0.5 rounded-lg flex items-center gap-1.5">
-                        <span class="text-[9px] text-red-400 font-bold">مهلت استفاده:</span>
+                        <span class="text-[9px] text-red-400 font-bold">فرصت باقی‌مانده:</span>
                         <span id="countdown" class="text-red-400 font-mono text-xs font-bold tracking-wider">23:59:59</span>
                     </div>
                 </div>
-                <p class="text-gray-400 text-[10px] mb-3">کد <strong class="text-yellow-400 font-mono select-all">SANJAB_OFFER</strong> را اعمال کنید تا هزینه تمام پلن‌ها کسر شود.</p>
+                <p class="text-gray-400 text-[10px] mb-3">اگر کد تخفیف دارید، آن را در کادر زیر وارد کنید تا ۱۰٪ از قیمت کسر شود.</p>
                 
                 <div class="flex flex-col gap-2">
                     <input type="text" id="promo-input" placeholder="کد تخفیف را وارد کنید" 
@@ -416,115 +423,115 @@
                 
                 <!-- 10GB -->
                 <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden" 
-                     data-base-price="۱۲۰,۰۰۰" data-discount-price="۹۶,۰۰۰" 
+                     data-base-price="۱۰۹,۰۰۰" data-discount-price="۹۸,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_138358" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_222a2f">
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-2xl font-black text-white">۱۰ <span class="text-sm font-bold text-gray-400">گیگ</span></span>
                         <span class="bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-gray-300">۱ ماهه</span>
                     </div>
-                    <p class="text-[10px] text-gray-400 mb-3">مناسب چت و وبگردی روزمره</p>
+                    <p class="text-[10px] text-gray-400 mb-3">مناسب چت و استفاده روزمره</p>
                     <div class="mb-4">
-                        <div class="text-xl font-black text-white price-original">۱۲۰,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
-                        <div class="text-xl font-black text-orange-500 price-new">۹۶,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                        <div class="text-xl font-black text-white price-original">۱۰۹,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                        <div class="text-xl font-black text-orange-500 price-new">۹۸,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
                     </div>
-                    <a href="https://t.me/SanjabVPN2_Bot?start=B_138358" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10">دریافت آنی اشتراک</a>
+                    <a href="https://t.me/SanjabVPN2_Bot?start=B_138358" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10">خرید سرویس</a>
                 </div>
 
                 <!-- 20GB -->
                 <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden"
-                     data-base-price="۲۴۰,۰۰۰" data-discount-price="۱۹۲,۰۰۰" 
+                     data-base-price="۱۹۹,۰۰۰" data-discount-price="۱۷۹,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_abd37b" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_9e5078">
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-2xl font-black text-white">۲۰ <span class="text-sm font-bold text-gray-400">گیگ</span></span>
                         <span class="bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-gray-300">۱ ماهه</span>
                     </div>
-                    <p class="text-[10px] text-gray-400 mb-3">کافی برای شبکه های اجتماعی</p>
+                    <p class="text-[10px] text-gray-400 mb-3">مناسب شبکه‌های اجتماعی</p>
                     <div class="mb-4">
-                        <div class="text-xl font-black text-white price-original">۲۴۰,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
-                        <div class="text-xl font-black text-orange-500 price-new">۱۹۲,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                        <div class="text-xl font-black text-white price-original">۱۹۹,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                        <div class="text-xl font-black text-orange-500 price-new">۱۷۹,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
                     </div>
-                    <a href="https://t.me/SanjabVPN2_Bot?start=B_abd37b" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10">دریافت آنی اشتراک</a>
+                    <a href="https://t.me/SanjabVPN2_Bot?start=B_abd37b" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10">خرید سرویس</a>
                 </div>
 
                 <!-- 30GB (POPULAR) -->
                 <div class="pricing-card glass-card-glow rounded-2xl p-5 relative overflow-hidden transform scale-[1.02]"
-                     data-base-price="۳۶۰,۰۰۰" data-discount-price="۲۸۸,۰۰۰" 
+                     data-base-price="۲۷۹,۰۰۰" data-discount-price="۲۵۱,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_0ba29a" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_6bf96a">
-                    <div class="absolute top-0 left-0 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-[9px] font-black px-2.5 py-0.5 rounded-br-xl shadow-md">🔥 انتخاب اکثر کاربران</div>
+                    <div class="absolute top-0 left-0 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-[9px] font-black px-2.5 py-0.5 rounded-br-xl shadow-md">⭐ پرفروش‌ترین</div>
                     <div class="flex justify-between items-center mb-1 mt-1">
                         <span class="text-3xl font-black text-white">۳۰ <span class="text-sm font-bold text-orange-400">گیگ</span></span>
                         <span class="bg-orange-500/20 border border-orange-500/30 text-orange-300 px-2.5 py-0.5 rounded-full text-[10px] font-bold">۱ ماهه</span>
                     </div>
-                    <p class="text-[10px] text-orange-200/80 mb-3">عالی برای اینستاگرام، یوتیوب و وبگردی</p>
+                    <p class="text-[10px] text-orange-200/80 mb-3">عالی برای اینستاگرام و یوتیوب</p>
                     <div class="mb-4">
-                        <div class="text-2xl font-black text-white price-original">۳۶۰,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
-                        <div class="text-2xl font-black text-orange-400 price-new">۲۸۸,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                        <div class="text-2xl font-black text-white price-original">۲۷۹,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                        <div class="text-2xl font-black text-orange-400 price-new">۲۵۱,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
                     </div>
-                    <a href="https://t.me/SanjabVPN2_Bot?start=B_0ba29a" target="_blank" class="buy-btn w-full block text-center bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black py-3.5 rounded-xl active:scale-[0.97] transition-transform text-sm shadow-lg shadow-orange-500/40 border border-orange-400/30">🚀 خرید این پلن پرفروش</a>
+                    <a href="https://t.me/SanjabVPN2_Bot?start=B_0ba29a" target="_blank" class="buy-btn w-full block text-center bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black py-3.5 rounded-xl active:scale-[0.97] transition-transform text-sm shadow-lg shadow-orange-500/40 border border-orange-400/30">خرید این پلن</a>
                 </div>
 
                 <!-- 50GB -->
                 <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden"
-                     data-base-price="۶۰۰,۰۰۰" data-discount-price="۴۸۰,۰۰۰" 
+                     data-base-price="۴۲۹,۰۰۰" data-discount-price="۳۸۶,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_834d8e" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_f9c913">
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-2xl font-black text-white">۵۰ <span class="text-sm font-bold text-gray-400">گیگ</span></span>
                         <span class="bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-gray-300">۱ ماهه</span>
                     </div>
-                    <p class="text-[10px] text-gray-400 mb-3">مناسب استریم کیفیت بالا و استفاده ۲ کاربر</p>
+                    <p class="text-[10px] text-gray-400 mb-3">مناسب استریم و مصرف بالا</p>
                     <div class="mb-4">
-                        <div class="text-xl font-black text-white price-original">۶۰۰,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
-                        <div class="text-xl font-black text-orange-500 price-new">۴۸۰,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                        <div class="text-xl font-black text-white price-original">۴۲۹,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                        <div class="text-xl font-black text-orange-500 price-new">۳۸۶,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
                     </div>
-                    <a href="https://t.me/SanjabVPN2_Bot?start=B_834d8e" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10">دریافت آنی اشتراک</a>
+                    <a href="https://t.me/SanjabVPN2_Bot?start=B_834d8e" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10">خرید سرویس</a>
                 </div>
 
                 <!-- 75GB -->
                 <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden"
-                     data-base-price="۹۰۰,۰۰۰" data-discount-price="۷۲۰,۰۰۰" 
+                     data-base-price="۵۹۹,۰۰۰" data-discount-price="۵۳۹,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_1779d5" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_a99451">
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-2xl font-black text-white">۷۵ <span class="text-sm font-bold text-gray-400">گیگ</span></span>
                         <span class="bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-gray-300">۱ ماهه</span>
                     </div>
-                    <p class="text-[10px] text-gray-400 mb-3">ویژه خانواده‌ها و تماشای فیلم آنلاین</p>
+                    <p class="text-[10px] text-gray-400 mb-3">مناسب تماشای آنلاین فیلم و ویدیو</p>
                     <div class="mb-4">
-                        <div class="text-xl font-black text-white price-original">۹۰۰,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
-                        <div class="text-xl font-black text-orange-500 price-new">۷۲۰,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                        <div class="text-xl font-black text-white price-original">۵۹۹,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                        <div class="text-xl font-black text-orange-500 price-new">۵۳۹,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
                     </div>
-                    <a href="https://t.me/SanjabVPN2_Bot?start=B_1779d5" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10">دریافت آنی اشتراک</a>
+                    <a href="https://t.me/SanjabVPN2_Bot?start=B_1779d5" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10">خرید سرویس</a>
                 </div>
 
                 <!-- 100GB -->
                 <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden border border-blue-500/30"
-                     data-base-price="۱,۲۰۰,۰۰۰" data-discount-price="۹۶۰,۰۰۰" 
+                     data-base-price="۷۴۹,۰۰۰" data-discount-price="۶۷۴,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_118db3" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_53198b">
                     <div class="flex justify-between items-center mb-1">
                         <span class="text-2xl font-black text-white">۱۰۰ <span class="text-sm font-bold text-gray-400">گیگ</span></span>
-                        <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2.5 py-0.5 rounded-full text-[10px] font-bold">پرمصرف</span>
+                        <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2.5 py-0.5 rounded-full text-[10px] font-bold">🔥 به‌صرفه</span>
                     </div>
-                    <p class="text-[10px] text-gray-400 mb-3">ویژه دانلودرهای سنگین و گیمرها</p>
+                    <p class="text-[10px] text-gray-400 mb-3">ویژه پرمصرف‌ها و گیمرها</p>
                     <div class="mb-4">
-                        <div class="text-xl font-black text-white price-original">۱,۲۰۰,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
-                        <div class="text-xl font-black text-orange-400 price-new">۹۶۰,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                        <div class="text-xl font-black text-white price-original">۷۴۹,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                        <div class="text-xl font-black text-orange-400 price-new">۶۷۴,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
                     </div>
-                    <a href="https://t.me/SanjabVPN2_Bot?start=B_118db3" target="_blank" class="buy-btn w-full block text-center bg-white text-gray-900 font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs shadow-md">دریافت آنی اشتراک</a>
+                    <a href="https://t.me/SanjabVPN2_Bot?start=B_118db3" target="_blank" class="buy-btn w-full block text-center bg-white text-gray-900 font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs shadow-md">خرید سرویس</a>
                 </div>
 
             </div>
 
             <div class="mt-6 flex flex-col gap-2">
                 <div class="flex items-center gap-2 justify-center text-gray-300 bg-white/5 py-2 rounded-xl border border-white/10">
-                    <span class="text-sm">🛡️</span> <span class="text-[11px] font-bold">مهلت تست و ضمانت بازگشت وجه</span>
+                    <span class="text-sm">🛡️</span> <span class="text-[11px] font-bold">پشتیبانی فعال در تلگرام</span>
                 </div>
                 <div class="flex items-center gap-2 justify-center text-gray-300 bg-white/5 py-2 rounded-xl border border-white/10">
-                    <span class="text-sm">⚡</span> <span class="text-[11px] font-bold">تحویل اتوماتیک زیر ۵ ثانیه در تلگرام</span>
+                    <span class="text-sm">⚡</span> <span class="text-[11px] font-bold">ارسال سریع سرویس پس از بررسی رسید</span>
                 </div>
             </div>
             
@@ -536,7 +543,7 @@
         <div class="px-4 w-full max-w-sm mx-auto">
             <div class="text-center mb-6">
                 <h2 class="text-xl font-black text-white mb-1">دانلود برنامه‌های اتصال</h2>
-                <p class="text-[10px] text-gray-400">نرم‌افزار رسمی مناسب دستگاه خود را دریافت کنید</p>
+                <p class="text-[10px] text-gray-400">نرم‌افزار مناسب دستگاه خود را دریافت کنید</p>
             </div>
             
             <div class="flex flex-col gap-3">
@@ -552,10 +559,10 @@
                             <svg class="w-5 h-5"><use href="#icon-android-logo"></use></svg>
                         </div>
                         <div>
-                            <h4 class="font-black text-white text-sm">Happ <span class="text-[9px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded ml-1">سهولت استفاده</span></h4>
+                            <h4 class="font-black text-white text-sm">Happ <span class="text-[9px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded ml-1">استفاده آسان</span></h4>
                         </div>
                     </div>
-                    <span class="text-blue-400 text-xs font-bold shrink-0">دانلود مستور</span>
+                    <span class="text-blue-400 text-xs font-bold shrink-0">دانلود</span>
                 </a>
 
                 <a href="https://github.com/2dust/v2rayNG/releases" target="_blank" class="app-card flex items-center justify-between p-3.5 glass-card rounded-2xl active:scale-[0.98] transition-transform w-full">
@@ -567,12 +574,12 @@
                             <h4 class="font-bold text-white text-sm">v2rayNG</h4>
                         </div>
                     </div>
-                    <span class="text-blue-400 text-xs font-bold shrink-0">دانلود مستقیم</span>
+                    <span class="text-blue-400 text-xs font-bold shrink-0">دانلود</span>
                 </a>
 
                 <div class="flex items-center gap-2 my-1">
                     <div class="h-px bg-white/10 flex-1"></div>
-                    <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">iOS (آیفون و آیپد)</span>
+                    <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">iOS (آیفون)</span>
                     <div class="h-px bg-white/10 flex-1"></div>
                 </div>
 
@@ -600,59 +607,59 @@
                     <span class="text-blue-400 text-xs font-bold shrink-0">App Store</span>
                 </a>
             </div>
-            <a href="https://t.me/SanjabVPN2_Bot?start=B_e2e8b8" target="_blank" class="block text-center text-xs font-bold text-gray-400 underline mt-5 py-1">آموزش تصویری نصب در ربات تلگرام</a>
+            <a href="https://t.me/SanjabVPN2_Bot?start=B_e2e8b8" target="_blank" class="block text-center text-xs font-bold text-gray-400 underline mt-5 py-1">آموزش تصویری راه اندازی در ربات</a>
         </div>
     </section>
 
     <!-- FAQ -->
     <section id="faq" class="py-12 border-t border-white/10">
         <div class="px-4 w-full max-w-sm mx-auto">
-            <h2 class="text-xl font-black text-center text-white mb-6">پاسخ به سوالات شما</h2>
+            <h2 class="text-xl font-black text-center text-white mb-6">سوالات متداول</h2>
             <div class="space-y-2.5">
                 <div class="glass-card rounded-2xl overflow-hidden">
                     <button class="accordion-header w-full p-4 text-right flex justify-between items-center font-bold text-xs text-gray-200">
-                        <span>چقدر طول می‌کشد تا اشتراک فعال شود؟</span>
+                        <span>سرویس چگونه ارسال می‌شود؟</span>
                         <span class="transform transition-transform duration-300 text-orange-400 text-[10px]">▼</span>
                     </button>
                     <div class="accordion-content">
                         <div class="px-4 py-3.5 text-gray-300 text-[11px] leading-relaxed border-t border-white/10 bg-black/20">
-                            تحویل کاملاً آنی و هوشمند است! بلافاصله بعد از انتخاب پلن در ربات تلگرام، لینک اختصاصی برای شما ارسال می‌شود.
+                            پس از انتخاب پلن در ربات و ارسال تصویر رسید واریزی، ادمین در سریع‌ترین زمان ممکن فاکتور را بررسی کرده و اطلاعات اتصال را برای شما ارسال می‌کند.
                         </div>
                     </div>
                 </div>
 
                 <div class="glass-card rounded-2xl overflow-hidden">
                     <button class="accordion-header w-full p-4 text-right flex justify-between items-center font-bold text-xs text-gray-200">
-                        <span>روی کدام اپراتورها تست شده و فعال است؟</span>
+                        <span>آیا روی اینترنت من کار می‌کند؟</span>
                         <span class="transform transition-transform duration-300 text-orange-400 text-[10px]">▼</span>
                     </button>
                     <div class="accordion-content">
                         <div class="px-4 py-3.5 text-gray-300 text-[11px] leading-relaxed border-t border-white/10 bg-black/20">
-                            سرورهای سنجاب دارای پروتکل‌های اختصاصی هستند و روی همراه اول، ایرانسل، مخابرات، رایتل، زیتل و وای‌فای خانگی بدون قطعی کار می‌کنند.
+                            بله، سرورهای سنجاب به گونه‌ای کانفیگ شده‌اند که با تمامی اپراتورهای همراه و اینترنت‌های خانگی (وای‌فای، ADSL، فیبر) سازگاری کامل دارند.
                         </div>
                     </div>
                 </div>
 
                 <div class="glass-card rounded-2xl overflow-hidden">
                     <button class="accordion-header w-full p-4 text-right flex justify-between items-center font-bold text-xs text-gray-200">
-                        <span>آیا می‌توانم روی چند دستگاه استفاده کنم؟</span>
+                        <span>امکان استفاده روی چند دستگاه وجود دارد؟</span>
                         <span class="transform transition-transform duration-300 text-orange-400 text-[10px]">▼</span>
                     </button>
                     <div class="accordion-content">
                         <div class="px-4 py-3.5 text-gray-300 text-[11px] leading-relaxed border-t border-white/10 bg-black/20">
-                            بله! می‌توانید لینک اشتراک را روی گوشی، تبلت و لپ‌تاپ خود وارد کنید و همزمان متصل شوید.
+                            بله، می‌توانید لینک اشتراک خود را روی گوشی، تبلت یا لپ‌تاپ وارد کرده و استفاده کنید.
                         </div>
                     </div>
                 </div>
 
                 <div class="glass-card rounded-2xl overflow-hidden">
                     <button class="accordion-header w-full p-4 text-right flex justify-between items-center font-bold text-xs text-gray-200">
-                        <span>چطور حجم باقی‌مانده را استعلام بگیرم؟</span>
+                        <span>چگونه حجم باقی‌مانده را ببینم؟</span>
                         <span class="transform transition-transform duration-300 text-orange-400 text-[10px]">▼</span>
                     </button>
                     <div class="accordion-content">
                         <div class="px-4 py-3.5 text-gray-300 text-[11px] leading-relaxed border-t border-white/10 bg-black/20">
-                            در بالای همین صفحه، نام سرویس خود را در بخش "استعلام وضعیت" وارد کنید تا پنل کاربری لحظه‌ای برایتان باز شود.
+                            در بالای همین صفحه، نام سرویس خود را در بخش "استعلام وضعیت" وارد کنید تا پنل اختصاصی برای شما باز شود.
                         </div>
                     </div>
                 </div>
@@ -671,20 +678,20 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // THREE.JS 3D CANVAS
+        // THREE.JS 3D CANVAS (HIGH READABILITY ADJUSTMENTS)
         function init3DHero() {
             const container = document.getElementById('hero');
             const canvas = document.getElementById('webgl-hero-canvas');
             
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-            camera.position.z = 3.8;
+            camera.position.z = 4.3; // Camera pushed further back for text clearance
 
             const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
             renderer.setSize(container.clientWidth, container.clientHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
-            const particlesCount = 450;
+            const particlesCount = 300; // Reduced count for lower noise
             const geometry = new THREE.BufferGeometry();
             const positions = new Float32Array(particlesCount * 3);
             const colors = new Float32Array(particlesCount * 3);
@@ -697,7 +704,7 @@
                 const v = Math.random();
                 const theta = u * 2.0 * Math.PI;
                 const phi = Math.acos(2.0 * v - 1.0);
-                const r = 2.0 + (Math.random() - 0.5) * 0.3;
+                const r = 2.2 + (Math.random() - 0.5) * 0.4;
 
                 positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
                 positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
@@ -713,10 +720,10 @@
             geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
             const material = new THREE.PointsMaterial({
-                size: 0.04,
+                size: 0.03, // Smaller size for crispness
                 vertexColors: true,
                 transparent: true,
-                opacity: 0.75
+                opacity: 0.45 // Lower opacity behind text
             });
 
             const pointCloud = new THREE.Points(geometry, material);
@@ -728,8 +735,8 @@
                 const x = event.clientX || (event.touches && event.touches[0].clientX);
                 const y = event.clientY || (event.touches && event.touches[0].clientY);
                 if (x && y) {
-                    mouseX = (x / window.innerWidth - 0.5) * 0.4;
-                    mouseY = (y / window.innerHeight - 0.5) * 0.4;
+                    mouseX = (x / window.innerWidth - 0.5) * 0.3;
+                    mouseY = (y / window.innerHeight - 0.5) * 0.3;
                 }
             }
             window.addEventListener('mousemove', onPointerMove);
@@ -738,11 +745,11 @@
             function animate() {
                 requestAnimationFrame(animate);
 
-                pointCloud.rotation.y += 0.0025;
-                pointCloud.rotation.x += 0.001;
+                pointCloud.rotation.y += 0.0018;
+                pointCloud.rotation.x += 0.0008;
 
-                pointCloud.rotation.y += (mouseX - pointCloud.rotation.y) * 0.03;
-                pointCloud.rotation.x += (mouseY - pointCloud.rotation.x) * 0.03;
+                pointCloud.rotation.y += (mouseX - pointCloud.rotation.y) * 0.02;
+                pointCloud.rotation.x += (mouseY - pointCloud.rotation.x) * 0.02;
 
                 renderer.render(scene, camera);
             }
@@ -863,34 +870,92 @@
                 showToast('لطفاً نام سرویس خود را وارد کنید!', 'error');
                 return;
             }
-            showToast('در حال بررسی وضعیت...', 'success');
+            showToast('در حال انتقال به پنل...', 'success');
             setTimeout(() => {
                 window.location.href = `https://telfire.ir/status.php?remark=${encodeURIComponent(remark)}&userid=6544359636`;
             }, 800);
         }
 
-        // 3. Discount Engine
+        // 3. Discount Engine & REAL 24-HOUR TIMER EXPIRATION LOGIC
         let isDiscountApplied = false;
-        
-        window.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('sanjab_discount') === 'active') {
-                document.getElementById('promo-input').value = 'SANJAB_OFFER';
-                applyDiscountEngine(true);
+        let isTimerExpired = false;
+
+        function startPersistentCountdown() {
+            const display = document.getElementById('countdown');
+            const timerDuration = 24 * 60 * 60 * 1000; 
+            let endTime = localStorage.getItem('sanjab_timer_end');
+
+            if (!endTime) {
+                endTime = Date.now() + timerDuration;
+                localStorage.setItem('sanjab_timer_end', endTime);
             }
-        });
+
+            const timerInterval = setInterval(() => {
+                let remaining = parseInt(endTime) - Date.now();
+
+                if (remaining <= 0) {
+                    clearInterval(timerInterval);
+                    display.textContent = "00:00:00";
+                    expireDiscountProcess(); // EXPIRE DISCOUNT REAL TIME!
+                    return;
+                }
+
+                let hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
+                let minutes = Math.floor((remaining / 1000 / 60) % 60);
+                let seconds = Math.floor((remaining / 1000) % 60);
+
+                display.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Expire Discount & Reset to Base Prices
+        function expireDiscountProcess() {
+            isTimerExpired = true;
+            localStorage.removeItem('sanjab_discount');
+
+            const widget = document.getElementById('discount-widget');
+            if (widget) {
+                widget.classList.add('opacity-60');
+                widget.querySelector('button').disabled = true;
+                widget.querySelector('button').innerText = 'مهلت تخفیف منقضی شد';
+                widget.querySelector('button').classList.replace('bg-orange-500', 'bg-gray-700');
+                widget.querySelector('input').disabled = true;
+            }
+
+            // Force Revert all pricing cards to BASE PRICES
+            document.querySelectorAll('.pricing-card').forEach(card => {
+                const origPriceEl = card.querySelector('.price-original');
+                const newPriceEl = card.querySelector('.price-new');
+                const buyBtn = card.querySelector('.buy-btn');
+
+                origPriceEl.classList.remove('striked');
+                origPriceEl.innerHTML = card.getAttribute('data-base-price') + ' <span class="text-[10px] font-bold text-gray-400">تومان</span>';
+                newPriceEl.classList.remove('active');
+
+                buyBtn.href = card.getAttribute('data-base-link');
+                buyBtn.innerText = 'خرید سرویس';
+                buyBtn.classList.replace('bg-orange-500', 'bg-white/10');
+            });
+        }
 
         function applyDiscountEngine(isSilent = false) {
+            if (isTimerExpired) {
+                if(!isSilent) showToast('مهلت تخفیف ۲۴ ساعته شما به پایان رسیده است.', 'error');
+                return;
+            }
+
             const input = document.getElementById('promo-input').value.trim().toUpperCase();
             const btn = document.getElementById('apply-btn');
             
-            if (input === 'SANJAB_OFFER') {
+            // Code works silently behind the scenes
+            if (input === 'SANJAB_OFFER' || input === 'SANJAB') {
                 if(isDiscountApplied) return;
                 
-                if(!isSilent) showToast('تخفیف ۲۰٪ با موفقیت اعمال شد! 🎁', 'success');
+                if(!isSilent) showToast('تخفیف ۱۰٪ با موفقیت اعمال شد! 🎁', 'success');
                 
                 localStorage.setItem('sanjab_discount', 'active');
 
-                btn.innerHTML = '✔️ تخفیف فعال شد';
+                btn.innerHTML = '✔️ تخفیف ۱۰٪ فعال شد';
                 btn.classList.replace('bg-orange-500', 'bg-emerald-600');
                 document.getElementById('promo-input').disabled = true;
 
@@ -900,7 +965,7 @@
                     const buyBtn = card.querySelector('.buy-btn');
                     
                     origPriceEl.classList.add('striked');
-                    origPriceEl.innerHTML = origPriceEl.innerHTML.replace('تومان', '');
+                    newPriceEl.innerHTML = card.getAttribute('data-discount-price') + ' <span class="text-[10px] font-bold text-gray-400">تومان</span>';
                     newPriceEl.classList.add('active');
                     
                     buyBtn.href = card.getAttribute('data-discount-link');
@@ -909,55 +974,43 @@
                 });
                 isDiscountApplied = true;
             } else {
-                if(!isSilent) showToast('کد تخفیف نامعتبر است!', 'error');
+                if(!isSilent) showToast('کد تخفیف واردشده معتبر نیست!', 'error');
             }
         }
 
-        // 4. Timer
-        function startPersistentCountdown() {
-            const display = document.getElementById('countdown');
-            const timerDuration = 24 * 60 * 60 * 1000; 
+        window.addEventListener('DOMContentLoaded', () => {
+            startPersistentCountdown();
+            
+            // Check if timer already expired in previous visit
             let endTime = localStorage.getItem('sanjab_timer_end');
-
-            if (!endTime || Date.now() > parseInt(endTime)) {
-                endTime = Date.now() + timerDuration;
-                localStorage.setItem('sanjab_timer_end', endTime);
+            if (endTime && Date.now() > parseInt(endTime)) {
+                expireDiscountProcess();
+            } else if (localStorage.getItem('sanjab_discount') === 'active') {
+                document.getElementById('promo-input').value = 'SANJAB_OFFER';
+                applyDiscountEngine(true);
             }
+        });
 
-            setInterval(() => {
-                let remaining = parseInt(endTime) - Date.now();
-                if (remaining < 0) remaining = 0;
-
-                let hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
-                let minutes = Math.floor((remaining / 1000 / 60) % 60);
-                let seconds = Math.floor((remaining / 1000) % 60);
-
-                display.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }, 1000);
-        }
-        startPersistentCountdown();
-
-        // 5. Social Proof
+        // 4. Subtle, Natural Social Proof (Occurs much less frequently)
         const fakeEvents = [
-            'یک کاربر پلن ۳۰ گیگ را خریداری کرد 🚀',
-            'یک کد تخفیف با موفقیت اعمال شد 🎁',
-            'یک سرویس ۵۰ گیگ تمدید شد 🔄',
-            'پرداخت یک کاربر با موفقیت تأیید شد ✅',
-            'یک کاربر به جمع سنجاب‌ها پیوست 🐿️'
+            'یک کاربر اشتراک ۳۰ گیگ را تمدید کرد',
+            'سرویس یک کاربر پس از تایید رسید فعال شد',
+            'یک کاربر اشتراک ۵۰ گیگ را خریداری کرد',
+            'اطلاعات اتصال برای یک کاربر ارسال شد'
         ];
         function triggerSocialProof() {
             const toast = document.getElementById('social-proof');
             const text = document.getElementById('social-proof-text');
             text.innerText = fakeEvents[Math.floor(Math.random() * fakeEvents.length)];
             toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 4000);
+            setTimeout(() => { toast.classList.remove('show'); }, 3500);
         }
         setTimeout(() => {
             triggerSocialProof();
-            setInterval(triggerSocialProof, 15000 + Math.random() * 10000);
-        }, 10000);
+            setInterval(triggerSocialProof, 35000 + Math.random() * 20000); // Rare interval (35-55 sec)
+        }, 15000);
 
-        // 6. Sticky CTA Scroll Logic
+        // 5. Sticky CTA Scroll Logic
         const stickyCta = document.getElementById('sticky-cta');
         const heroSection = document.getElementById('hero');
         window.addEventListener('scroll', () => {
@@ -982,7 +1035,7 @@
             }, 3000);
         }
 
-        // 7. Accordion Logic
+        // 6. Accordion Logic
         document.querySelectorAll('.accordion-header').forEach(acc => {
             acc.addEventListener('click', function() {
                 const content = this.nextElementSibling;
