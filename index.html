@@ -86,6 +86,15 @@
             50% { box-shadow: 0 0 25px rgba(37, 99, 235, 0.9); }
         }
 
+        /* Highlight animation for recommended card */
+        .highlight-card {
+            animation: borderHighlight 1.5s ease-in-out 2;
+        }
+        @keyframes borderHighlight {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(249,115,22,0.2); }
+            50% { transform: scale(1.04); box-shadow: 0 0 30px rgba(249,115,22,0.8); border-color: #f97316; }
+        }
+
         /* Mobile Menu Slide */
         #mobile-menu {
             transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -261,6 +270,7 @@
 
         <!-- Fullscreen Mobile Navigation -->
         <div id="mobile-menu" class="fixed inset-0 bg-[#070a11] z-40 pt-20 px-6 flex flex-col space-y-4 h-screen">
+            <a href="#calculator" class="text-gray-200 text-base py-3.5 rounded-2xl bg-white/5 border border-white/10 font-bold active:bg-white/10 text-center">🧮 محاسبه‌گر هوشمند حجم</a>
             <a href="#status-checker" class="text-gray-200 text-base py-3.5 rounded-2xl bg-white/5 border border-white/10 font-bold active:bg-white/10 text-center">📡 استعلام سریع حجم و زمان</a>
             <a href="#pricing" class="text-orange-400 text-base py-3.5 rounded-2xl bg-orange-500/10 border border-orange-500/30 font-black text-center">🛒 تعرفه‌ها و خرید اشتراک</a>
             <a href="#apps" class="text-gray-300 text-base py-3 border-b border-white/5 font-bold text-center">دانلود برنامه‌ها</a>
@@ -308,9 +318,9 @@
                    class="w-full bg-gradient-to-r from-orange-500 to-orange-600 active:from-orange-600 active:to-orange-700 text-white font-black py-3.5 rounded-2xl shadow-xl shadow-orange-500/30 transition-transform active:scale-95 flex items-center justify-center text-base border border-orange-400/30">
                    🚀 ورود به لیست تعرفه‌ها
                 </a>
-                <a href="#status-checker" 
+                <a href="#calculator" 
                    class="w-full bg-white/10 active:bg-white/20 backdrop-blur-md border border-white/15 text-gray-200 font-bold py-3 rounded-2xl transition-transform active:scale-95 flex items-center justify-center text-xs">
-                   📡 استعلام وضعیت سرویس من
+                   🧮 تخمین هوشمند حجم مصرفی شما
                 </a>
             </div>
         </div>
@@ -383,8 +393,78 @@
         </div>
     </section>
 
+    <!-- SMART CALCULATOR SECTION -->
+    <section id="calculator" class="py-10 border-t border-white/10 scroll-mt-16">
+        <div class="px-4 w-full max-w-sm mx-auto">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center gap-1.5 bg-orange-500/10 border border-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-[10px] font-bold mb-2">
+                    <span>🧮 محاسبه‌گر هوشمند حجم</span>
+                </div>
+                <h2 class="text-xl font-black text-white">چقدر حجم نیاز داری؟</h2>
+                <p class="text-[10px] text-gray-400 mt-1">میزان استفاده روزانه‌ات را مشخص کن تا دقیق‌ترین پلن پیشنهاد شود</p>
+            </div>
+
+            <div class="glass-card rounded-3xl p-5 border border-white/10 flex flex-col gap-4">
+                <!-- Slider 1: Instagram & Reels -->
+                <div>
+                    <div class="flex justify-between items-center mb-1 text-xs">
+                        <span class="font-bold text-gray-200">📷 اینستاگرام و ریلز:</span>
+                        <span id="insta-val" class="font-mono text-orange-400 font-bold">۱ ساعت / روز</span>
+                    </div>
+                    <input type="range" id="insta-slider" min="0" max="6" step="0.5" value="1" oninput="updateUsageCalculation()"
+                           class="w-full accent-orange-500 bg-black/40 h-2 rounded-lg cursor-pointer">
+                </div>
+
+                <!-- Slider 2: YouTube & Video -->
+                <div>
+                    <div class="flex justify-between items-center mb-1 text-xs">
+                        <span class="font-bold text-gray-200">▶️ یوتیوب و تماشای فیلم:</span>
+                        <span id="yt-val" class="font-mono text-orange-400 font-bold">۱ ساعت / روز</span>
+                    </div>
+                    <input type="range" id="yt-slider" min="0" max="6" step="0.5" value="1" oninput="updateUsageCalculation()"
+                           class="w-full accent-orange-500 bg-black/40 h-2 rounded-lg cursor-pointer">
+                </div>
+
+                <!-- Slider 3: Telegram & Web -->
+                <div>
+                    <div class="flex justify-between items-center mb-1 text-xs">
+                        <span class="font-bold text-gray-200">💬 تلگرام و وبگردی:</span>
+                        <span id="web-val" class="font-mono text-orange-400 font-bold">۲ ساعت / روز</span>
+                    </div>
+                    <input type="range" id="web-slider" min="0" max="10" step="1" value="2" oninput="updateUsageCalculation()"
+                           class="w-full accent-orange-500 bg-black/40 h-2 rounded-lg cursor-pointer">
+                </div>
+
+                <!-- Slider 4: Heavy Downloads -->
+                <div>
+                    <div class="flex justify-between items-center mb-1 text-xs">
+                        <span class="font-bold text-gray-200">📥 دانلود سنگین و گیم:</span>
+                        <span id="dl-val" class="font-mono text-orange-400 font-bold">۲ گیگ / هفته</span>
+                    </div>
+                    <input type="range" id="dl-slider" min="0" max="20" step="1" value="2" oninput="updateUsageCalculation()"
+                           class="w-full accent-orange-500 bg-black/40 h-2 rounded-lg cursor-pointer">
+                </div>
+
+                <!-- Calculation Result Box -->
+                <div class="bg-black/50 rounded-2xl p-4 border border-orange-500/30 text-center mt-1 flex flex-col gap-2 relative overflow-hidden">
+                    <div class="text-[10px] text-gray-400 font-bold">مصرف تخمینی ماهانه شما:</div>
+                    <div class="text-2xl font-black text-white"><span id="calc-total-gb" class="text-orange-400 font-mono text-3xl">۷۱.۶</span> <span class="text-xs text-gray-400">گیگابایت</span></div>
+                    
+                    <div class="h-px bg-white/10 my-1"></div>
+                    
+                    <div class="text-[10px] text-gray-300 font-bold">🎯 پلن پیشنهادی هوشمند سنجاب:</div>
+                    <div id="recommended-plan-name" class="text-base font-black text-emerald-400">۷۵ گیگابایت (۱ ماهه)</div>
+                    
+                    <button onclick="scrollToRecommendedPlan()" id="calc-cta-btn" class="mt-1 w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black py-3 rounded-xl text-xs shadow-lg shadow-orange-500/30 active:scale-95 transition-all border border-orange-400/30">
+                        مشاهده و خرید پلن ۷۵ گیگ 🚀
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- PRICING -->
-    <section id="pricing" class="py-12 scroll-mt-16">
+    <section id="pricing" class="py-12 scroll-mt-16 border-t border-white/10">
         <div class="px-4 w-full max-w-sm mx-auto">
             
             <div class="text-center mb-6">
@@ -401,7 +481,7 @@
                         <span>🎁 کد تخفیف ویژه</span>
                     </h3>
                     
-                    <!-- COUNTDOWN CONTAINER: HIDDEN BY DEFAULT, SHOWS ONLY AFTER CODE IS ENTERED -->
+                    <!-- COUNTDOWN CONTAINER: HIDDEN BY DEFAULT -->
                     <div id="countdown-container" class="hidden bg-red-500/10 border border-red-500/20 px-2.5 py-0.5 rounded-lg items-center gap-1.5">
                         <span class="text-[9px] text-red-400 font-bold">مهلت استفاده:</span>
                         <span id="countdown" class="text-red-400 font-mono text-xs font-bold tracking-wider">24:00:00</span>
@@ -424,7 +504,7 @@
             <div class="flex flex-col gap-4">
                 
                 <!-- 10GB -->
-                <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden" 
+                <div id="plan-10gb" class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden transition-all duration-300" 
                      data-base-price="۱۰۹,۰۰۰" data-discount-price="۹۸,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_138358" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_222a2f">
@@ -441,7 +521,7 @@
                 </div>
 
                 <!-- 20GB -->
-                <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden"
+                <div id="plan-20gb" class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden transition-all duration-300"
                      data-base-price="۱۹۹,۰۰۰" data-discount-price="۱۷۹,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_abd37b" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_9e5078">
@@ -458,7 +538,7 @@
                 </div>
 
                 <!-- 30GB (POPULAR) -->
-                <div class="pricing-card glass-card-glow rounded-2xl p-5 relative overflow-hidden transform scale-[1.02]"
+                <div id="plan-30gb" class="pricing-card glass-card-glow rounded-2xl p-5 relative overflow-hidden transform scale-[1.02] transition-all duration-300"
                      data-base-price="۲۷۹,۰۰۰" data-discount-price="۲۵۱,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_0ba29a" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_6bf96a">
@@ -476,7 +556,7 @@
                 </div>
 
                 <!-- 50GB -->
-                <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden"
+                <div id="plan-50gb" class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden transition-all duration-300"
                      data-base-price="۴۲۹,۰۰۰" data-discount-price="۳۸۶,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_834d8e" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_f9c913">
@@ -493,7 +573,7 @@
                 </div>
 
                 <!-- 75GB -->
-                <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden"
+                <div id="plan-75gb" class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden transition-all duration-300"
                      data-base-price="۵۹۹,۰۰۰" data-discount-price="۵۳۹,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_1779d5" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_a99451">
@@ -510,7 +590,7 @@
                 </div>
 
                 <!-- 100GB -->
-                <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden border border-blue-500/30"
+                <div id="plan-100gb" class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden border border-blue-500/30 transition-all duration-300"
                      data-base-price="۷۴۹,۰۰۰" data-discount-price="۶۷۴,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_118db3" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_53198b">
@@ -680,7 +760,7 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // THREE.JS 3D CANVAS (SMOOTH & HIGH READABILITY)
+        // THREE.JS 3D CANVAS
         function init3DHero() {
             const container = document.getElementById('hero');
             const canvas = document.getElementById('webgl-hero-canvas');
@@ -693,7 +773,7 @@
             renderer.setSize(container.clientWidth, container.clientHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
-            const particlesCount = 280; // Optimized for 60fps mobile stability
+            const particlesCount = 280;
             const geometry = new THREE.BufferGeometry();
             const positions = new Float32Array(particlesCount * 3);
             const colors = new Float32Array(particlesCount * 3);
@@ -799,6 +879,17 @@
                 ease: "power2.out"
             });
 
+            gsap.from("#calculator .glass-card", {
+                scrollTrigger: {
+                    trigger: "#calculator",
+                    start: "top 82%",
+                },
+                y: 35,
+                opacity: 0,
+                duration: 0.7,
+                ease: "power2.out"
+            });
+
             gsap.from("#pricing .glass-card, #pricing .glass-card-glow", {
                 scrollTrigger: {
                     trigger: "#pricing",
@@ -873,7 +964,76 @@
             }, 800);
         }
 
-        // 3. STRICT DISCOUNT ENGINE & ACCURATE NON-LAG TIMER
+        // 3. SMART CALCULATOR LOGIC
+        let recommendedPlanId = 'plan-75gb';
+
+        function updateUsageCalculation() {
+            const instaHours = parseFloat(document.getElementById('insta-slider').value);
+            const ytHours = parseFloat(document.getElementById('yt-slider').value);
+            const webHours = parseFloat(document.getElementById('web-slider').value);
+            const dlGbWeekly = parseFloat(document.getElementById('dl-slider').value);
+
+            // Update Labels
+            document.getElementById('insta-val').innerText = `${instaHours} ساعت / روز`;
+            document.getElementById('yt-val').innerText = `${ytHours} ساعت / روز`;
+            document.getElementById('web-val').innerText = `${webHours} ساعت / روز`;
+            document.getElementById('dl-val').innerText = `${dlGbWeekly} گیگ / هفته`;
+
+            // Accurate Formula Calculation (Monthly GB)
+            // Insta/Reels: ~1.2 GB/hr
+            // YT/Streams: ~0.9 GB/hr
+            // Web/TG: ~0.12 GB/hr
+            // DL: Weekly GB * 4.3 weeks
+            const totalGb = (instaHours * 1.2 * 30) + (ytHours * 0.9 * 30) + (webHours * 0.12 * 30) + (dlGbWeekly * 4.3);
+            const formattedTotal = totalGb.toFixed(1);
+
+            document.getElementById('calc-total-gb').innerText = formattedTotal;
+
+            // Plan Recommendation Logic
+            let planName = '';
+            let btnText = '';
+
+            if (totalGb <= 12) {
+                recommendedPlanId = 'plan-10gb';
+                planName = '۱۰ گیگابایت (۱ ماهه)';
+                btnText = 'مشاهده و خرید پلن ۱۰ گیگ 🚀';
+            } else if (totalGb <= 22) {
+                recommendedPlanId = 'plan-20gb';
+                planName = '۲۰ گیگابایت (۱ ماهه)';
+                btnText = 'مشاهده و خرید پلن ۲۰ گیگ 🚀';
+            } else if (totalGb <= 35) {
+                recommendedPlanId = 'plan-30gb';
+                planName = '۳۰ گیگابایت (۱ ماهه)';
+                btnText = 'مشاهده و خرید پلن ۳۰ گیگ 🚀';
+            } else if (totalGb <= 55) {
+                recommendedPlanId = 'plan-50gb';
+                planName = '۵۰ گیگابایت (۱ ماهه)';
+                btnText = 'مشاهده و خرید پلن ۵۰ گیگ 🚀';
+            } else if (totalGb <= 80) {
+                recommendedPlanId = 'plan-75gb';
+                planName = '۷۵ گیگابایت (۱ ماهه)';
+                btnText = 'مشاهده و خرید پلن ۷۵ گیگ 🚀';
+            } else {
+                recommendedPlanId = 'plan-100gb';
+                planName = '۱۰۰ گیگابایت (۱ ماهه)';
+                btnText = 'مشاهده و خرید پلن ۱۰۰ گیگ 🚀';
+            }
+
+            document.getElementById('recommended-plan-name').innerText = planName;
+            document.getElementById('calc-cta-btn').innerText = btnText;
+        }
+
+        function scrollToRecommendedPlan() {
+            const planEl = document.getElementById(recommendedPlanId);
+            if (planEl) {
+                planEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                planEl.classList.remove('highlight-card');
+                void planEl.offsetWidth; // Trigger reflow
+                planEl.classList.add('highlight-card');
+            }
+        }
+
+        // 4. STRICT DISCOUNT ENGINE & ACCURATE NON-LAG TIMER
         let isDiscountApplied = false;
         let isTimerExpired = false;
         let timerInterval = null;
@@ -882,7 +1042,6 @@
             const container = document.getElementById('countdown-container');
             const display = document.getElementById('countdown');
             
-            // Unhide countdown badge
             if (container) {
                 container.classList.remove('hidden');
                 container.classList.add('flex');
@@ -917,9 +1076,7 @@
                 display.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }
 
-            // Call immediately to avoid initial 1-second gap/lag
             updateTimerDisplay();
-            
             if (timerInterval) clearInterval(timerInterval);
             timerInterval = setInterval(updateTimerDisplay, 1000);
         }
@@ -944,7 +1101,6 @@
                 if (input) input.disabled = true;
             }
 
-            // Revert all pricing cards to BASE PRICES
             document.querySelectorAll('.pricing-card').forEach(card => {
                 const origPriceEl = card.querySelector('.price-original');
                 const newPriceEl = card.querySelector('.price-new');
@@ -971,15 +1127,12 @@
             const input = document.getElementById('promo-input').value.trim().toUpperCase();
             const btn = document.getElementById('apply-btn');
             
-            // STRICT CODE VALIDATION: ONLY SANJAB_OFFER IS VALID
             if (input === 'SANJAB_OFFER') {
                 if(isDiscountApplied) return;
                 
                 if(!isSilent) showToast('تخفیف ۱۰٪ با موفقیت اعمال شد! 🎁', 'success');
                 
                 localStorage.setItem('sanjab_discount', 'active');
-
-                // Start timer ONLY after successful discount application
                 startDiscountTimer();
 
                 btn.innerHTML = '✔️ تخفیف ۱۰٪ فعال شد';
@@ -1008,8 +1161,8 @@
         window.addEventListener('DOMContentLoaded', () => {
             init3DHero();
             initGSAPAnimations();
+            updateUsageCalculation();
 
-            // Restore state safely on page refresh
             let endTime = localStorage.getItem('sanjab_timer_end');
             if (endTime && Date.now() > parseInt(endTime, 10)) {
                 expireDiscountProcess();
@@ -1019,7 +1172,7 @@
             }
         });
 
-        // 4. Subtle & Rare Social Proof Notifications
+        // 5. Subtle Social Proof Notifications
         const fakeEvents = [
             'یک کاربر اشتراک ۳۰ گیگ را تمدید کرد',
             'سرویس یک کاربر پس از تایید رسید فعال شد',
@@ -1038,7 +1191,7 @@
             setInterval(triggerSocialProof, 40000 + Math.random() * 20000);
         }, 15000);
 
-        // 5. Sticky CTA Scroll Logic
+        // 6. Sticky CTA Scroll Logic
         const stickyCta = document.getElementById('sticky-cta');
         const heroSection = document.getElementById('hero');
         window.addEventListener('scroll', () => {
@@ -1063,7 +1216,7 @@
             }, 3000);
         }
 
-        // 6. Accordion Logic
+        // 7. Accordion Logic
         document.querySelectorAll('.accordion-header').forEach(acc => {
             acc.addEventListener('click', function() {
                 const content = this.nextElementSibling;
