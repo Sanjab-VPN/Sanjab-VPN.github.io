@@ -53,18 +53,18 @@
 
         /* Mobile Glassmorphism Cards */
         .glass-card {
-            background: rgba(18, 24, 38, 0.82);
+            background: rgba(18, 24, 38, 0.88);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
         }
 
         .glass-card-glow {
-            background: linear-gradient(145deg, rgba(249, 115, 22, 0.18), rgba(18, 24, 38, 0.9));
+            background: linear-gradient(145deg, rgba(249, 115, 22, 0.22), rgba(18, 24, 38, 0.92));
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1.5px solid rgba(249, 115, 22, 0.55);
+            border: 1.5px solid rgba(249, 115, 22, 0.6);
             box-shadow: 0 0 30px rgba(249, 115, 22, 0.25);
         }
 
@@ -92,7 +92,7 @@
         }
         @keyframes borderHighlight {
             0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(249,115,22,0.2); }
-            50% { transform: scale(1.04); box-shadow: 0 0 30px rgba(249,115,22,0.8); border-color: #f97316; }
+            50% { transform: scale(1.03); box-shadow: 0 0 30px rgba(249,115,22,0.9); border-color: #f97316; }
         }
 
         /* Mobile Menu Slide */
@@ -340,7 +340,7 @@
             </div>
             
             <div class="flex flex-col gap-2.5">
-                <label for="service-name" class="text-[11px] font-bold text-gray-300">نام سرویس شما (Remark):</label>
+                <label for="service-name" class="text-[11px] font-bold text-gray-300">نام سرویس یا شناسه اشتراک:</label>
                 <input type="text" id="service-name" placeholder="مثال: sanjab_123456" 
                        class="w-full bg-black/40 border border-white/15 text-white text-left px-4 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none font-mono text-xs placeholder:text-gray-600" dir="ltr">
                 <button onclick="checkServiceStatus()" 
@@ -393,35 +393,35 @@
         </div>
     </section>
 
-    <!-- SMART CALCULATOR SECTION -->
+    <!-- RE-CALIBRATED SMART CALCULATOR SECTION -->
     <section id="calculator" class="py-10 border-t border-white/10 scroll-mt-16">
         <div class="px-4 w-full max-w-sm mx-auto">
             <div class="text-center mb-6">
                 <div class="inline-flex items-center gap-1.5 bg-orange-500/10 border border-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-[10px] font-bold mb-2">
-                    <span>🧮 محاسبه‌گر هوشمند حجم</span>
+                    <span>🧮 محاسبه‌گر دقیق مصرف ماهانه</span>
                 </div>
                 <h2 class="text-xl font-black text-white">چقدر حجم نیاز داری؟</h2>
-                <p class="text-[10px] text-gray-400 mt-1">میزان استفاده روزانه‌ات را مشخص کن تا دقیق‌ترین پلن پیشنهاد شود</p>
+                <p class="text-[10px] text-gray-400 mt-1">بر اساس الگوی مصرفت، بهترین پلن را پیدا کن</p>
             </div>
 
             <div class="glass-card rounded-3xl p-5 border border-white/10 flex flex-col gap-4">
-                <!-- Slider 1: Instagram & Reels -->
+                <!-- Slider 1: Instagram -->
                 <div>
                     <div class="flex justify-between items-center mb-1 text-xs">
                         <span class="font-bold text-gray-200">📷 اینستاگرام و ریلز:</span>
                         <span id="insta-val" class="font-mono text-orange-400 font-bold">۱ ساعت / روز</span>
                     </div>
-                    <input type="range" id="insta-slider" min="0" max="6" step="0.5" value="1" oninput="updateUsageCalculation()"
+                    <input type="range" id="insta-slider" min="0" max="4" step="0.5" value="1" oninput="updateUsageCalculation()"
                            class="w-full accent-orange-500 bg-black/40 h-2 rounded-lg cursor-pointer">
                 </div>
 
-                <!-- Slider 2: YouTube & Video -->
+                <!-- Slider 2: YouTube -->
                 <div>
                     <div class="flex justify-between items-center mb-1 text-xs">
-                        <span class="font-bold text-gray-200">▶️ یوتیوب و تماشای فیلم:</span>
+                        <span class="font-bold text-gray-200">▶️ یوتیوب و ویدیو:</span>
                         <span id="yt-val" class="font-mono text-orange-400 font-bold">۱ ساعت / روز</span>
                     </div>
-                    <input type="range" id="yt-slider" min="0" max="6" step="0.5" value="1" oninput="updateUsageCalculation()"
+                    <input type="range" id="yt-slider" min="0" max="4" step="0.5" value="1" oninput="updateUsageCalculation()"
                            class="w-full accent-orange-500 bg-black/40 h-2 rounded-lg cursor-pointer">
                 </div>
 
@@ -431,39 +431,39 @@
                         <span class="font-bold text-gray-200">💬 تلگرام و وبگردی:</span>
                         <span id="web-val" class="font-mono text-orange-400 font-bold">۲ ساعت / روز</span>
                     </div>
-                    <input type="range" id="web-slider" min="0" max="10" step="1" value="2" oninput="updateUsageCalculation()"
+                    <input type="range" id="web-slider" min="0" max="6" step="1" value="2" oninput="updateUsageCalculation()"
                            class="w-full accent-orange-500 bg-black/40 h-2 rounded-lg cursor-pointer">
                 </div>
 
                 <!-- Slider 4: Heavy Downloads -->
                 <div>
                     <div class="flex justify-between items-center mb-1 text-xs">
-                        <span class="font-bold text-gray-200">📥 دانلود سنگین و گیم:</span>
-                        <span id="dl-val" class="font-mono text-orange-400 font-bold">۲ گیگ / هفته</span>
+                        <span class="font-bold text-gray-200">📥 دانلود و آپدیت:</span>
+                        <span id="dl-val" class="font-mono text-orange-400 font-bold">۱ گیگ / هفته</span>
                     </div>
-                    <input type="range" id="dl-slider" min="0" max="20" step="1" value="2" oninput="updateUsageCalculation()"
+                    <input type="range" id="dl-slider" min="0" max="10" step="1" value="1" oninput="updateUsageCalculation()"
                            class="w-full accent-orange-500 bg-black/40 h-2 rounded-lg cursor-pointer">
                 </div>
 
                 <!-- Calculation Result Box -->
                 <div class="bg-black/50 rounded-2xl p-4 border border-orange-500/30 text-center mt-1 flex flex-col gap-2 relative overflow-hidden">
                     <div class="text-[10px] text-gray-400 font-bold">مصرف تخمینی ماهانه شما:</div>
-                    <div class="text-2xl font-black text-white"><span id="calc-total-gb" class="text-orange-400 font-mono text-3xl">۷۱.۶</span> <span class="text-xs text-gray-400">گیگابایت</span></div>
+                    <div class="text-2xl font-black text-white"><span id="calc-total-gb" class="text-orange-400 font-mono text-3xl">۳۷.۳</span> <span class="text-xs text-gray-400">گیگابایت</span></div>
                     
                     <div class="h-px bg-white/10 my-1"></div>
                     
-                    <div class="text-[10px] text-gray-300 font-bold">🎯 پلن پیشنهادی هوشمند سنجاب:</div>
-                    <div id="recommended-plan-name" class="text-base font-black text-emerald-400">۷۵ گیگابایت (۱ ماهه)</div>
+                    <div class="text-[10px] text-gray-300 font-bold">🎯 پلن پیشنهادی برای شما:</div>
+                    <div id="recommended-plan-name" class="text-base font-black text-emerald-400">۵۰ گیگابایت (۱ ماهه)</div>
                     
                     <button onclick="scrollToRecommendedPlan()" id="calc-cta-btn" class="mt-1 w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black py-3 rounded-xl text-xs shadow-lg shadow-orange-500/30 active:scale-95 transition-all border border-orange-400/30">
-                        مشاهده و خرید پلن ۷۵ گیگ 🚀
+                        مشاهده و خرید پلن ۵۰ گیگ 🚀
                     </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PRICING -->
+    <!-- PRICING SECTION -->
     <section id="pricing" class="py-12 scroll-mt-16 border-t border-white/10">
         <div class="px-4 w-full max-w-sm mx-auto">
             
@@ -481,7 +481,7 @@
                         <span>🎁 کد تخفیف ویژه</span>
                     </h3>
                     
-                    <!-- COUNTDOWN CONTAINER: HIDDEN BY DEFAULT -->
+                    <!-- COUNTDOWN CONTAINER -->
                     <div id="countdown-container" class="hidden bg-red-500/10 border border-red-500/20 px-2.5 py-0.5 rounded-lg items-center gap-1.5">
                         <span class="text-[9px] text-red-400 font-bold">مهلت استفاده:</span>
                         <span id="countdown" class="text-red-400 font-mono text-xs font-bold tracking-wider">24:00:00</span>
@@ -500,7 +500,7 @@
                 </div>
             </div>
             
-            <!-- Cards Container -->
+            <!-- Cards Container (ALWAYS VISIBLE & HIGH CONTRAST) -->
             <div class="flex flex-col gap-4">
                 
                 <!-- 10GB -->
@@ -844,7 +844,7 @@
             });
         }
 
-        // GSAP MOTION ENGINE
+        // GSAP MOTION ENGINE (SAFE & NON-LOCKING)
         function initGSAPAnimations() {
             gsap.registerPlugin(ScrollTrigger);
 
@@ -888,18 +888,6 @@
                 opacity: 0,
                 duration: 0.7,
                 ease: "power2.out"
-            });
-
-            gsap.from("#pricing .glass-card, #pricing .glass-card-glow", {
-                scrollTrigger: {
-                    trigger: "#pricing",
-                    start: "top 80%",
-                },
-                y: 40,
-                opacity: 0,
-                duration: 0.7,
-                stagger: 0.1,
-                ease: "power3.out"
             });
 
             gsap.from("#apps .app-card", {
@@ -964,8 +952,8 @@
             }, 800);
         }
 
-        // 3. SMART CALCULATOR LOGIC
-        let recommendedPlanId = 'plan-75gb';
+        // 3. RE-CALIBRATED ACCURATE CALCULATOR LOGIC
+        let recommendedPlanId = 'plan-50gb';
 
         function updateUsageCalculation() {
             const instaHours = parseFloat(document.getElementById('insta-slider').value);
@@ -973,49 +961,49 @@
             const webHours = parseFloat(document.getElementById('web-slider').value);
             const dlGbWeekly = parseFloat(document.getElementById('dl-slider').value);
 
-            // Update Labels
+            // Update Text Labels
             document.getElementById('insta-val').innerText = `${instaHours} ساعت / روز`;
             document.getElementById('yt-val').innerText = `${ytHours} ساعت / روز`;
             document.getElementById('web-val').innerText = `${webHours} ساعت / روز`;
             document.getElementById('dl-val').innerText = `${dlGbWeekly} گیگ / هفته`;
 
-            // Accurate Formula Calculation (Monthly GB)
-            // Insta/Reels: ~1.2 GB/hr
-            // YT/Streams: ~0.9 GB/hr
-            // Web/TG: ~0.12 GB/hr
-            // DL: Weekly GB * 4.3 weeks
-            const totalGb = (instaHours * 1.2 * 30) + (ytHours * 0.9 * 30) + (webHours * 0.12 * 30) + (dlGbWeekly * 4.3);
+            // Realistic VPN Data Overhead Math
+            // Insta/Reels: ~0.4 GB/hr
+            // YouTube: ~0.6 GB/hr
+            // Web/TG: ~0.05 GB/hr
+            // Downloads: Weekly GB * 4.3 weeks
+            const totalGb = (instaHours * 0.4 * 30) + (ytHours * 0.6 * 30) + (webHours * 0.05 * 30) + (dlGbWeekly * 4.3);
             const formattedTotal = totalGb.toFixed(1);
 
             document.getElementById('calc-total-gb').innerText = formattedTotal;
 
-            // Plan Recommendation Logic
+            // Plan Matcher Logic
             let planName = '';
             let btnText = '';
 
-            if (totalGb <= 12) {
+            if (totalGb <= 14) {
                 recommendedPlanId = 'plan-10gb';
                 planName = '۱۰ گیگابایت (۱ ماهه)';
                 btnText = 'مشاهده و خرید پلن ۱۰ گیگ 🚀';
-            } else if (totalGb <= 22) {
+            } else if (totalGb <= 24) {
                 recommendedPlanId = 'plan-20gb';
                 planName = '۲۰ گیگابایت (۱ ماهه)';
                 btnText = 'مشاهده و خرید پلن ۲۰ گیگ 🚀';
-            } else if (totalGb <= 35) {
+            } else if (totalGb <= 38) {
                 recommendedPlanId = 'plan-30gb';
                 planName = '۳۰ گیگابایت (۱ ماهه)';
                 btnText = 'مشاهده و خرید پلن ۳۰ گیگ 🚀';
-            } else if (totalGb <= 55) {
+            } else if (totalGb <= 60) {
                 recommendedPlanId = 'plan-50gb';
                 planName = '۵۰ گیگابایت (۱ ماهه)';
                 btnText = 'مشاهده و خرید پلن ۵۰ گیگ 🚀';
-            } else if (totalGb <= 80) {
+            } else if (totalGb <= 85) {
                 recommendedPlanId = 'plan-75gb';
                 planName = '۷۵ گیگابایت (۱ ماهه)';
                 btnText = 'مشاهده و خرید پلن ۷۵ گیگ 🚀';
             } else {
                 recommendedPlanId = 'plan-100gb';
-                planName = '۱۰۰ گیگابایت (۱ ماهه)';
+                planName = '+۱۰۰ گیگابایت (پرمصرف)';
                 btnText = 'مشاهده و خرید پلن ۱۰۰ گیگ 🚀';
             }
 
@@ -1028,7 +1016,7 @@
             if (planEl) {
                 planEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 planEl.classList.remove('highlight-card');
-                void planEl.offsetWidth; // Trigger reflow
+                void planEl.offsetWidth; // Trigger DOM reflow
                 planEl.classList.add('highlight-card');
             }
         }
