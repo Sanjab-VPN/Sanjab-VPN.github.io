@@ -6,7 +6,13 @@
     <title>سنجاب VPN | اینترنت پرسرعت، بدون قطعی و آزاد</title>
     <meta name="description" content="سنجاب VPN: سرورهای مولتی‌لوکیشن با لینک ساب‌اسکریپشن هوشمند. استعلام لحظه‌ای و اتصال پرسرعت.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Three.js Library for 3D Graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -15,7 +21,9 @@
         body {
             font-family: 'Vazirmatn', sans-serif;
             -webkit-tap-highlight-color: transparent;
-            padding-bottom: 70px; /* Space for sticky CTA */
+            padding-bottom: 70px;
+            background-color: #0b0f17; /* Dark Cyber Base */
+            color: #f3f4f6;
         }
         
         html {
@@ -23,14 +31,25 @@
             overflow-x: hidden;
         }
 
-        /* Custom Animations */
+        /* 3D Canvas Styling */
+        #webgl-hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none; /* Allows interaction with elements on top */
+        }
+
+        /* Animations */
         .float-animation {
             animation: float 4s ease-in-out infinite;
         }
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
         }
 
         .pulse-soft {
@@ -41,7 +60,7 @@
             50% { transform: scale(1.05); opacity: 0.9; }
         }
 
-        /* Mobile Menu Slide Animation */
+        /* Mobile Menu */
         #mobile-menu {
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateX(100%);
@@ -57,7 +76,7 @@
             transition: max-height 0.3s ease-in-out;
         }
 
-        /* Toast & Social Proof Notifications */
+        /* Toast Notifications */
         #toast-container {
             position: fixed;
             top: 20px;
@@ -79,7 +98,7 @@
             font-weight: 600;
             font-size: 0.9rem;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             opacity: 0;
             transform: translateY(-20px);
             transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -92,15 +111,15 @@
             position: fixed;
             bottom: 90px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-            color: #1f2937;
+            background: rgba(17, 24, 39, 0.9);
+            backdrop-filter: blur(8px);
+            color: #f3f4f6;
             padding: 10px 16px;
             border-radius: 50px;
             font-size: 0.8rem;
             font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 1px solid #f3f4f6;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
             z-index: 9990;
             opacity: 0;
             transform: translateY(20px);
@@ -112,47 +131,40 @@
         }
         .social-proof-toast.show { opacity: 1; transform: translateY(0); }
 
-        /* Floating Support Button */
         .fab-container {
             position: fixed;
             bottom: 90px;
             left: 20px;
             z-index: 50;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
         }
 
-        /* Sticky CTA Bar */
         .sticky-cta {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid #f3f4f6;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255,255,255,0.1);
             padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 9998;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 -4px 25px rgba(0,0,0,0.5);
             transform: translateY(100%);
             transition: transform 0.3s ease;
         }
         .sticky-cta.visible { transform: translateY(0); }
 
-        /* Price Strikethrough Animation */
         .price-original.striked {
             text-decoration: line-through;
-            color: #9ca3af;
+            color: #6b7280;
             font-size: 0.875rem;
-            transition: all 0.3s ease;
         }
         .price-new {
             display: none;
-            color: #ea580c;
+            color: #f97316;
             animation: fadeIn 0.5s ease forwards;
         }
         .price-new.active { display: inline-block; }
@@ -161,21 +173,15 @@
             from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        @media (max-width: 768px) {
-            .hero-bg-orbs { filter: blur(60px); }
-        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 antialiased">
+<body class="antialiased">
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="icon-rocket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></symbol>
         <symbol id="icon-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></symbol>
         <symbol id="icon-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></symbol>
-        <symbol id="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></symbol>
         <symbol id="icon-headset" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a9 9 0 0 0-9 9v7c0 1.66 1.34 3 3 3h3v-8H5v-2c0-3.87 3.13-7 7-7s7 3.13 7 7v2h-4v8h3c1.66 0 3-1.34 3-3v-7a9 9 0 0 0-9-9z"/></symbol>
-        <symbol id="icon-telegram" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></symbol>
         <symbol id="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></symbol>
         <symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></symbol>
         <symbol id="icon-android-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4483-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993.0004.5511-.4482.9997-.9993.9997zm-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997zm11.4045-6.02l1.9973-3.4592c.1158-.2014.0471-.4587-.1546-.5745-.2017-.1158-.4586-.0468-.5744.1546l-2.0369 3.527c-1.4651-.6644-3.141-.1165-5.1129-.1165-1.9715 0-3.6474-.5479-5.1125.1165l-2.0373-3.527c-.1158-.2014-.3727-.2704-.5744-.1546-.2017.1158-.2704.3731-.1546.5745l1.9973 3.4592C2.658 11.2035.1915 15.2284.0322 19.866h23.9356c-.1593-4.6376-2.6258-8.6625-6.0403-10.5446z"/></symbol>
@@ -187,173 +193,186 @@
         <span class="text-lg">🔥</span> <span id="social-proof-text">یک کاربر پلن ۳۰ گیگ را خریداری کرد 🚀</span>
     </div>
 
-    <div id="sticky-cta" class="sticky-cta shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+    <div id="sticky-cta" class="sticky-cta">
         <div>
-            <p class="text-xs text-gray-500 font-bold mb-0.5">زمان تخفیف محدود است</p>
-            <p class="text-sm font-black text-orange-600">همین حالا اقدام کنید</p>
+            <p class="text-[10px] text-gray-400 font-bold mb-0.5">زمان تخفیف محدود است</p>
+            <p class="text-sm font-black text-orange-500">همین حالا اقدام کنید</p>
         </div>
-        <a href="#pricing" class="bg-gray-900 text-white font-bold px-5 py-2.5 rounded-xl shadow-md active:scale-95 transition-transform text-sm">
+        <a href="#pricing" class="bg-orange-500 hover:bg-orange-600 text-white font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-orange-500/30 active:scale-95 transition-all text-sm">
             مشاهده پلن‌ها
         </a>
     </div>
 
     <div class="fab-container">
-        <a href="https://t.me/SanjabVPN2_Bot?start=B_b659b2" target="_blank" class="w-14 h-14 bg-blue-500 text-white rounded-full shadow-xl flex items-center justify-center pulse-soft focus:outline-none z-50">
+        <a href="https://t.me/SanjabVPN2_Bot?start=B_b659b2" target="_blank" class="w-14 h-14 bg-blue-600 text-white rounded-full shadow-2xl shadow-blue-500/50 flex items-center justify-center pulse-soft focus:outline-none z-50 border border-blue-400/30">
             <svg class="w-7 h-7"><use href="#icon-headset"></use></svg>
         </a>
     </div>
 
-    <header class="bg-white/95 backdrop-blur-md shadow-sm fixed w-full top-0 z-40 transition-all border-b border-gray-100">
-        <nav class="container mx-auto px-4 py-3 flex justify-between items-center relative z-50">
-            <a href="#hero" class="flex items-center gap-2 text-lg md:text-xl font-bold text-orange-600 transition-transform active:scale-95">
+    <header class="bg-[#0b0f17]/80 backdrop-blur-lg border-b border-white/10 fixed w-full top-0 z-40 transition-all">
+        <nav class="container mx-auto px-4 py-3.5 flex justify-between items-center relative z-50">
+            <a href="#hero" class="flex items-center gap-2 text-lg md:text-xl font-bold text-orange-500 transition-transform active:scale-95">
                 <span class="text-2xl md:text-3xl">🐿️</span>
-                <span>سنجاب VPN</span>
+                <span class="tracking-tight font-black text-white">سنجاب <span class="text-orange-500">VPN</span></span>
             </a>
             
-            <button id="mobile-menu-btn" class="text-gray-700 p-2 focus:outline-none" aria-label="Toggle Menu">
+            <button id="mobile-menu-btn" class="text-gray-300 p-2 focus:outline-none" aria-label="Toggle Menu">
                 <svg id="menu-icon" class="w-7 h-7"><use href="#icon-menu"></use></svg>
             </button>
         </nav>
 
-        <div id="mobile-menu" class="fixed inset-0 bg-white z-40 pt-24 px-6 flex flex-col space-y-6 text-center shadow-2xl h-screen">
-            <a href="#status-checker" class="text-gray-800 text-lg py-3 rounded-2xl bg-gray-50 border border-gray-100 font-bold active:bg-gray-100">📡 استعلام سرویس</a>
-            <a href="#pricing" class="text-orange-600 text-lg py-3 rounded-2xl bg-orange-50 font-black active:bg-orange-100">🛒 خرید اشتراک</a>
-            <a href="#apps" class="text-gray-700 text-lg py-2 font-bold active:text-orange-500">دانلود برنامه</a>
-            <a href="#faq" class="text-gray-700 text-lg py-2 font-bold active:text-orange-500">سوالات متداول</a>
-            <a href="https://t.me/SanjabVPN2_Bot?start=B_b659b2" target="_blank" class="text-white bg-blue-500 text-lg py-3 rounded-2xl font-bold flex items-center justify-center gap-2 mt-auto mb-10 active:scale-95 transition-transform">
+        <div id="mobile-menu" class="fixed inset-0 bg-[#0b0f17] z-40 pt-24 px-6 flex flex-col space-y-6 text-center h-screen">
+            <a href="#status-checker" class="text-gray-200 text-lg py-3 rounded-2xl bg-white/5 border border-white/10 font-bold active:bg-white/10">📡 استعلام سرویس</a>
+            <a href="#pricing" class="text-orange-400 text-lg py-3 rounded-2xl bg-orange-500/10 border border-orange-500/20 font-black">🛒 خرید اشتراک</a>
+            <a href="#apps" class="text-gray-300 text-lg py-2 font-bold">دانلود برنامه</a>
+            <a href="#faq" class="text-gray-300 text-lg py-2 font-bold">سوالات متداول</a>
+            <a href="https://t.me/SanjabVPN2_Bot?start=B_b659b2" target="_blank" class="text-white bg-blue-600 text-lg py-3 rounded-2xl font-bold flex items-center justify-center gap-2 mt-auto mb-10 shadow-lg shadow-blue-600/30">
                 <svg class="w-5 h-5"><use href="#icon-headset"></use></svg> پشتیبانی آنلاین
             </a>
         </div>
     </header>
 
-    <section id="hero" class="relative bg-gradient-to-b from-gray-900 to-gray-800 text-white pt-24 pb-12 flex flex-col items-center justify-center overflow-hidden min-h-[85vh]">
-        <div class="absolute top-10 right-0 w-64 h-64 bg-orange-500/20 rounded-full blur-[80px] hero-bg-orbs pointer-events-none"></div>
-        <div class="absolute bottom-10 left-0 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px] hero-bg-orbs pointer-events-none"></div>
+    <!-- HERO SECTION WITH 3D CANVAS BACKGROUND -->
+    <section id="hero" class="relative pt-32 pb-20 flex flex-col items-center justify-center overflow-hidden min-h-[90vh]">
+        <!-- Three.js Canvas Container -->
+        <canvas id="webgl-hero-canvas"></canvas>
 
-        <div class="container mx-auto px-4 flex flex-col items-center text-center relative z-10 w-full">
-            <div class="inline-block bg-white/10 backdrop-blur-md border border-white/20 text-orange-400 px-4 py-1.5 rounded-full text-xs md:text-sm font-bold mb-6 animate-pulse shadow-xl">
-                🚀 سرورهای مولتی‌لوکیشن فعال شد
+        <!-- Ambient Background Glows -->
+        <div class="absolute top-1/4 right-5 w-72 h-72 bg-orange-500/15 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute bottom-10 left-5 w-72 h-72 bg-blue-500/15 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-4 flex flex-col items-center text-center relative z-10 w-full max-w-2xl">
+            <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/15 text-orange-400 px-4 py-1.5 rounded-full text-xs md:text-sm font-bold mb-6 shadow-2xl">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>شبکه نسل جدید سرورهای مولتی‌لوکیشن</span>
             </div>
             
-            <div class="text-[6rem] md:text-[8rem] float-animation drop-shadow-2xl mb-4 leading-none select-none">
-                🐿️
+            <!-- Hero Mascot / Symbol Container -->
+            <div class="relative mb-6 select-none">
+                <div class="absolute -inset-4 bg-gradient-to-r from-orange-500 to-blue-600 rounded-full blur-2xl opacity-40 animate-pulse"></div>
+                <div class="relative text-[6.5rem] md:text-[8.5rem] float-animation filter drop-shadow-[0_10px_20px_rgba(249,115,22,0.3)]">
+                    🐿️
+                </div>
             </div>
 
-            <h1 class="text-3xl md:text-5xl font-black leading-tight mb-4 drop-shadow-lg">
-                <span class="text-orange-500">سنجاب</span> VPN
+            <h1 class="text-3xl md:text-5xl font-black leading-tight mb-4 tracking-tight text-white drop-shadow-md">
+                اینترنت آزاد و پرسرعت با <span class="bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">سنجاب VPN</span>
             </h1>
             
-            <p class="text-base md:text-lg mb-8 text-gray-300 font-medium px-2 leading-relaxed">
-                اینترنت بدون قطعی با لینک ساب‌اسکریپشن.<br>
-                <span class="text-sm opacity-80 mt-2 block">آمریکا 🇺🇸 • آلمان 🇩🇪 • لهستان 🇵🇱 • فنلاند 🇫🇮</span>
+            <p class="text-base md:text-lg mb-8 text-gray-300 font-medium leading-relaxed max-w-lg">
+                اتصال هوشمند پایدار با لینک ساب‌اسکریپشن اتوماتیک.<br>
+                <span class="text-xs md:text-sm text-gray-400 mt-2 block font-mono">🇺🇸 USA • 🇩🇪 GERMANY • 🇵🇱 POLAND • 🇫🇮 FINLAND</span>
             </p>
             
-            <div class="w-full max-w-sm flex flex-col gap-4 px-2">
+            <div class="w-full max-w-sm flex flex-col gap-3.5 px-2">
                 <a href="#pricing" 
-                   class="w-full bg-gradient-to-r from-orange-500 to-orange-600 active:from-orange-600 active:to-orange-700 text-white font-black py-4 rounded-2xl shadow-lg shadow-orange-500/40 transition-transform active:scale-95 flex items-center justify-center gap-3 text-lg">
+                   class="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black py-4 rounded-2xl shadow-xl shadow-orange-500/30 transition-all active:scale-95 flex items-center justify-center gap-3 text-lg border border-orange-400/30">
                    خرید و دریافت آنی
                 </a>
                 <a href="#status-checker" 
-                   class="w-full bg-white/10 active:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold py-3.5 rounded-2xl transition-all active:scale-95 flex items-center justify-center text-sm">
+                   class="w-full bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/15 text-gray-200 font-bold py-3.5 rounded-2xl transition-all active:scale-95 flex items-center justify-center text-sm">
                    استعلام وضعیت سرویس من
                 </a>
             </div>
         </div>
     </section>
 
-    <section id="status-checker" class="relative -mt-6 z-20 px-4 w-full max-w-md mx-auto">
-        <div class="bg-white rounded-3xl p-6 shadow-2xl border border-gray-100 flex flex-col gap-4">
-            <div class="flex items-center gap-3 border-b border-gray-100 pb-4">
-                <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center">
+    <!-- STATUS CHECKER -->
+    <section id="status-checker" class="relative -mt-8 z-20 px-4 w-full max-w-md mx-auto">
+        <div class="bg-[#131926]/90 backdrop-blur-xl rounded-3xl p-6 shadow-2xl border border-white/10 flex flex-col gap-4">
+            <div class="flex items-center gap-3 border-b border-white/10 pb-4">
+                <div class="w-10 h-10 bg-blue-500/10 text-blue-400 rounded-xl flex items-center justify-center border border-blue-500/20">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
                 <div>
-                    <h3 class="font-black text-gray-800 text-lg">استعلام وضعیت سرویس</h3>
-                    <p class="text-xs text-gray-500">حجم و زمان باقی‌مانده را ببینید</p>
+                    <h3 class="font-black text-white text-base">استعلام وضعیت سرویس</h3>
+                    <p class="text-xs text-gray-400">حجم و زمان باقی‌مانده را ببینید</p>
                 </div>
             </div>
             
             <div class="flex flex-col gap-3">
-                <label for="service-name" class="text-sm font-bold text-gray-700">نام سرویس شما:</label>
+                <label for="service-name" class="text-xs font-bold text-gray-300">نام سرویس شما:</label>
                 <input type="text" id="service-name" placeholder="مثال: sanjab_123456" 
-                       class="w-full bg-gray-50 border border-gray-200 text-gray-900 text-left px-4 py-3.5 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all font-mono" dir="ltr">
+                       class="w-full bg-black/30 border border-white/10 text-white text-left px-4 py-3.5 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all font-mono placeholder:text-gray-600" dir="ltr">
                 <button onclick="checkServiceStatus()" 
-                        class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-3.5 rounded-xl transition-colors shadow-md">
+                        class="w-full bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-blue-600/30">
                     بررسی وضعیت
                 </button>
             </div>
         </div>
     </section>
 
-    <section id="features" class="py-16 bg-gray-50 mt-8">
-        <div class="container mx-auto px-4 w-full max-w-md mx-auto">
+    <!-- FEATURES -->
+    <section id="features" class="py-16 mt-8">
+        <div class="container mx-auto px-4 w-full max-w-md">
             <div class="text-center mb-8">
-                <h2 class="text-2xl font-black text-gray-900">چرا سنجاب؟</h2>
+                <h2 class="text-2xl font-black text-white">چرا سنجاب؟</h2>
             </div>
             
             <div class="flex flex-col gap-4">
-                <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-4">
-                    <div class="w-14 h-14 shrink-0 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center">
-                        <svg class="w-7 h-7"><use href="#icon-globe"></use></svg>
+                <div class="bg-[#131926]/60 backdrop-blur-md p-5 rounded-3xl border border-white/10 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 shrink-0 bg-blue-500/10 text-blue-400 rounded-2xl flex items-center justify-center border border-blue-500/20">
+                        <svg class="w-6 h-6"><use href="#icon-globe"></use></svg>
                     </div>
                     <div>
-                        <h3 class="text-lg font-black text-gray-800">مولتی‌لوکیشن هوشمند</h3>
-                        <p class="text-gray-500 text-xs mt-1 leading-relaxed">اتصال خودکار به قوی‌ترین سرور در آمریکا و اروپا.</p>
+                        <h3 class="text-base font-black text-white">مولتی‌لوکیشن هوشمند</h3>
+                        <p class="text-gray-400 text-xs mt-1 leading-relaxed">اتصال خودکار به قوی‌ترین سرور در آمریکا و اروپا.</p>
                     </div>
                 </div>
 
-                <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-4">
-                    <div class="w-14 h-14 shrink-0 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center">
-                        <svg class="w-7 h-7"><use href="#icon-link"></use></svg>
+                <div class="bg-[#131926]/60 backdrop-blur-md p-5 rounded-3xl border border-white/10 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 shrink-0 bg-orange-500/10 text-orange-400 rounded-2xl flex items-center justify-center border border-orange-500/20">
+                        <svg class="w-6 h-6"><use href="#icon-link"></use></svg>
                     </div>
                     <div>
-                        <h3 class="text-lg font-black text-gray-800">لینک ساب‌اسکریپشن</h3>
-                        <p class="text-gray-500 text-xs mt-1 leading-relaxed">بروزرسانی خودکار لیست سرورها در گوشی شما.</p>
+                        <h3 class="text-base font-black text-white">لینک ساب‌اسکریپشن</h3>
+                        <p class="text-gray-400 text-xs mt-1 leading-relaxed">بروزرسانی خودکار لیست سرورها در گوشی شما.</p>
                     </div>
                 </div>
 
-                <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-sm flex items-center gap-4">
-                    <div class="w-14 h-14 shrink-0 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center">
-                        <svg class="w-7 h-7"><use href="#icon-rocket"></use></svg>
+                <div class="bg-[#131926]/60 backdrop-blur-md p-5 rounded-3xl border border-white/10 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 shrink-0 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center border border-emerald-500/20">
+                        <svg class="w-6 h-6"><use href="#icon-rocket"></use></svg>
                     </div>
                     <div>
-                        <h3 class="text-lg font-black text-gray-800">سرعت بدون مرز</h3>
-                        <p class="text-gray-500 text-xs mt-1 leading-relaxed">تضمین پایداری برای استریم و دانلود.</p>
+                        <h3 class="text-base font-black text-white">سرعت بدون مرز</h3>
+                        <p class="text-gray-400 text-xs mt-1 leading-relaxed">تضمین پایداری برای استریم و دانلود.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="pricing" class="py-16 bg-white border-t border-gray-100 scroll-mt-20">
-        <div class="container mx-auto px-4 w-full max-w-md mx-auto">
+    <!-- PRICING -->
+    <section id="pricing" class="py-16 scroll-mt-20">
+        <div class="container mx-auto px-4 w-full max-w-md">
             
             <div class="text-center mb-8">
-                <h2 class="text-2xl font-black text-gray-900 mb-2">تعرفه‌های یک‌ماهه</h2>
-                <div class="bg-gray-100 text-gray-600 text-xs font-bold inline-block px-3 py-1.5 rounded-lg border border-gray-200 mb-4">
+                <h2 class="text-2xl font-black text-white mb-2">تعرفه‌های یک‌ماهه</h2>
+                <div class="bg-white/5 border border-white/10 text-gray-300 text-xs font-bold inline-block px-3 py-1.5 rounded-lg mb-4">
                     بیس قیمت: ۱۲,۰۰۰ تومان به ازای هر گیگ
                 </div>
             </div>
 
-            <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-3xl p-6 shadow-xl mb-10 relative overflow-hidden">
+            <div class="bg-gradient-to-br from-gray-900 via-[#131926] to-gray-900 border border-white/15 rounded-3xl p-6 shadow-2xl mb-10 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl pointer-events-none"></div>
                 <div class="relative z-10">
                     <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-white font-black text-lg flex items-center gap-2">
+                        <h3 class="text-white font-black text-base flex items-center gap-2">
                             <span>🎁 اعمال کد تخفیف</span>
                         </h3>
-                        <div class="bg-red-500/10 border border-red-500/20 px-3 py-1.5 rounded-xl flex items-center gap-2">
-                            <div class="text-[10px] text-red-400 font-bold leading-tight text-right pt-0.5">فرصت<br>باقی‌مانده</div>
-                            <div id="countdown" class="text-red-400 font-mono text-lg font-bold tracking-widest">23:59:59</div>
+                        <div class="bg-red-500/10 border border-red-500/20 px-3 py-1 rounded-xl flex items-center gap-2">
+                            <div class="text-[9px] text-red-400 font-bold leading-tight text-right">فرصت<br>باقی‌مانده</div>
+                            <div id="countdown" class="text-red-400 font-mono text-base font-bold tracking-wider">23:59:59</div>
                         </div>
                     </div>
-                    <p class="text-gray-400 text-xs mb-4">کد تخفیف <strong class="text-yellow-400 select-all">SANJAB_OFFER</strong> را وارد کنید تا ۲۰٪ از تمام پلن‌ها کسر شود.</p>
+                    <p class="text-gray-400 text-xs mb-4">کد تخفیف <strong class="text-yellow-400 select-all font-mono">SANJAB_OFFER</strong> را وارد کنید تا ۲۰٪ تخفیف اعمال شود.</p>
                     
                     <div class="flex flex-col gap-3">
-                        <input type="text" id="promo-input" placeholder="کد تخفیف را اینجا بنویسید" 
-                               class="w-full bg-white/10 border border-white/20 text-white text-center px-4 py-3.5 rounded-xl focus:ring-2 focus:ring-orange-500 outline-none font-mono font-bold tracking-widest uppercase transition-all" dir="ltr">
+                        <input type="text" id="promo-input" placeholder="کد تخفیف را بنویسید" 
+                               class="w-full bg-black/40 border border-white/15 text-white text-center px-4 py-3.5 rounded-xl focus:ring-2 focus:ring-orange-500 outline-none font-mono font-bold tracking-widest uppercase transition-all placeholder:text-gray-600" dir="ltr">
                         <button onclick="applyDiscountEngine(false)" id="apply-btn"
-                                class="w-full bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-black py-3.5 rounded-xl shadow-[0_0_15px_rgba(249,115,22,0.4)] transition-all">
+                                class="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-3.5 rounded-xl shadow-lg shadow-orange-500/30 transition-all">
                             فعال‌سازی تخفیف
                         </button>
                     </div>
@@ -362,105 +381,104 @@
             
             <div class="flex flex-col gap-5">
                 
-                <div class="pricing-card bg-white rounded-3xl p-5 border border-gray-200 relative overflow-hidden shadow-sm" 
+                <div class="pricing-card bg-[#131926]/80 rounded-3xl p-5 border border-white/10 relative overflow-hidden shadow-lg" 
                      data-base-price="۱۲۰,۰۰۰" data-discount-price="۹۶,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_138358" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_222a2f">
                     <div class="flex justify-between items-center mb-5">
-                        <span class="text-3xl font-black text-gray-900">۱۰ <span class="text-lg font-bold text-gray-500">گیگ</span></span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-xs font-bold text-gray-600">۱ ماهه</span>
+                        <span class="text-3xl font-black text-white">۱۰ <span class="text-base font-bold text-gray-400">گیگ</span></span>
+                        <span class="bg-white/5 border border-white/10 px-3 py-1 rounded-full text-xs font-bold text-gray-300">۱ ماهه</span>
                     </div>
                     <div class="mb-5">
-                        <div class="text-2xl font-black text-gray-900 price-original">۱۲۰,۰۰۰ <span class="text-sm font-bold text-gray-500">تومان</span></div>
-                        <div class="text-2xl font-black text-orange-600 price-new">۹۶,۰۰۰ <span class="text-sm font-bold text-gray-500">تومان</span></div>
+                        <div class="text-2xl font-black text-white price-original">۱۲۰,۰۰۰ <span class="text-xs font-bold text-gray-400">تومان</span></div>
+                        <div class="text-2xl font-black text-orange-500 price-new">۹۶,۰۰۰ <span class="text-xs font-bold text-gray-400">تومان</span></div>
                     </div>
-                    <a href="https://t.me/SanjabVPN2_Bot?start=B_138358" target="_blank" class="buy-btn w-full block text-center bg-gray-100 text-gray-800 font-bold py-3.5 rounded-xl active:scale-[0.98] transition-all text-sm border border-gray-200">خرید سرویس</a>
+                    <a href="https://t.me/SanjabVPN2_Bot?start=B_138358" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3.5 rounded-xl active:scale-[0.98] transition-all text-sm border border-white/10">خرید سرویس</a>
                 </div>
 
-                <div class="pricing-card bg-white rounded-3xl p-5 border border-gray-200 relative overflow-hidden shadow-sm"
+                <div class="pricing-card bg-[#131926]/80 rounded-3xl p-5 border border-white/10 relative overflow-hidden shadow-lg"
                      data-base-price="۲۴۰,۰۰۰" data-discount-price="۱۹۲,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_abd37b" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_9e5078">
                     <div class="flex justify-between items-center mb-5">
-                        <span class="text-3xl font-black text-gray-900">۲۰ <span class="text-lg font-bold text-gray-500">گیگ</span></span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-xs font-bold text-gray-600">۱ ماهه</span>
+                        <span class="text-3xl font-black text-white">۲۰ <span class="text-base font-bold text-gray-400">گیگ</span></span>
+                        <span class="bg-white/5 border border-white/10 px-3 py-1 rounded-full text-xs font-bold text-gray-300">۱ ماهه</span>
                     </div>
                     <div class="mb-5">
-                        <div class="text-2xl font-black text-gray-900 price-original">۲۴۰,۰۰۰ <span class="text-sm font-bold text-gray-500">تومان</span></div>
-                        <div class="text-2xl font-black text-orange-600 price-new">۱۹۲,۰۰۰ <span class="text-sm font-bold text-gray-500">تومان</span></div>
+                        <div class="text-2xl font-black text-white price-original">۲۴۰,۰۰۰ <span class="text-xs font-bold text-gray-400">تومان</span></div>
+                        <div class="text-2xl font-black text-orange-500 price-new">۱۹۲,۰۰۰ <span class="text-xs font-bold text-gray-400">تومان</span></div>
                     </div>
-                    <a href="https://t.me/SanjabVPN2_Bot?start=B_abd37b" target="_blank" class="buy-btn w-full block text-center bg-gray-100 text-gray-800 font-bold py-3.5 rounded-xl active:scale-[0.98] transition-all text-sm border border-gray-200">خرید سرویس</a>
+                    <a href="https://t.me/SanjabVPN2_Bot?start=B_abd37b" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3.5 rounded-xl active:scale-[0.98] transition-all text-sm border border-white/10">خرید سرویس</a>
                 </div>
 
-                <div class="pricing-card bg-orange-50 rounded-3xl p-6 border-2 border-orange-400 relative overflow-hidden shadow-md transform scale-[1.02]"
+                <div class="pricing-card bg-gradient-to-b from-orange-500/20 to-[#131926] rounded-3xl p-6 border-2 border-orange-500/60 relative overflow-hidden shadow-2xl transform scale-[1.02]"
                      data-base-price="۳۶۰,۰۰۰" data-discount-price="۲۸۸,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_0ba29a" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_6bf96a">
-                    <div class="absolute top-0 left-0 bg-red-500 text-white text-[10px] font-black px-3 py-1 rounded-br-xl tracking-wider">پرطرفدارترین</div>
+                    <div class="absolute top-0 left-0 bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-br-xl tracking-wider">پرطرفدارترین</div>
                     <div class="flex justify-between items-center mb-5 mt-2">
-                        <span class="text-4xl font-black text-gray-900">۳۰ <span class="text-lg font-bold text-orange-600">گیگ</span></span>
-                        <span class="bg-orange-200 text-orange-800 px-3 py-1 rounded-full text-xs font-bold">۱ ماهه</span>
+                        <span class="text-4xl font-black text-white">۳۰ <span class="text-base font-bold text-orange-400">گیگ</span></span>
+                        <span class="bg-orange-500/20 border border-orange-500/30 text-orange-300 px-3 py-1 rounded-full text-xs font-bold">۱ ماهه</span>
                     </div>
                     <div class="mb-6">
-                        <div class="text-3xl font-black text-gray-900 price-original">۳۶۰,۰۰۰ <span class="text-sm font-bold text-gray-600">تومان</span></div>
-                        <div class="text-3xl font-black text-orange-600 price-new">۲۸۸,۰۰۰ <span class="text-sm font-bold text-gray-600">تومان</span></div>
+                        <div class="text-3xl font-black text-white price-original">۳۶۰,۰۰۰ <span class="text-xs font-bold text-gray-400">تومان</span></div>
+                        <div class="text-3xl font-black text-orange-400 price-new">۲۸۸,۰۰۰ <span class="text-xs font-bold text-gray-400">تومان</span></div>
                     </div>
-                    <a href="https://t.me/SanjabVPN2_Bot?start=B_0ba29a" target="_blank" class="buy-btn w-full block text-center bg-gray-800 text-white font-black py-4 rounded-xl active:scale-[0.98] transition-all text-base shadow-lg">خرید این پلن</a>
+                    <a href="https://t.me/SanjabVPN2_Bot?start=B_0ba29a" target="_blank" class="buy-btn w-full block text-center bg-orange-500 hover:bg-orange-600 text-white font-black py-4 rounded-xl active:scale-[0.98] transition-all text-base shadow-lg shadow-orange-500/40">خرید این پلن</a>
                 </div>
 
-                <div class="pricing-card bg-white rounded-3xl p-5 border border-gray-200 relative overflow-hidden shadow-sm"
+                <div class="pricing-card bg-[#131926]/80 rounded-3xl p-5 border border-white/10 relative overflow-hidden shadow-lg"
                      data-base-price="۶۰۰,۰۰۰" data-discount-price="۴۸۰,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_834d8e" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_f9c913">
                     <div class="flex justify-between items-center mb-5">
-                        <span class="text-3xl font-black text-gray-900">۵۰ <span class="text-lg font-bold text-gray-500">گیگ</span></span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-xs font-bold text-gray-600">۱ ماهه</span>
+                        <span class="text-3xl font-black text-white">۵۰ <span class="text-base font-bold text-gray-400">گیگ</span></span>
+                        <span class="bg-white/5 border border-white/10 px-3 py-1 rounded-full text-xs font-bold text-gray-300">۱ ماهه</span>
                     </div>
                     <div class="mb-5">
-                        <div class="text-2xl font-black text-gray-900 price-original">۶۰۰,۰۰۰ <span class="text-sm font-bold text-gray-500">تومان</span></div>
-                        <div class="text-2xl font-black text-orange-600 price-new">۴۸۰,۰۰۰ <span class="text-sm font-bold text-gray-500">تومان</span></div>
+                        <div class="text-2xl font-black text-white price-original">۶۰۰,۰۰۰ <span class="text-xs font-bold text-gray-400">تومان</span></div>
+                        <div class="text-2xl font-black text-orange-500 price-new">۴۸۰,۰۰۰ <span class="text-xs font-bold text-gray-400">تومان</span></div>
                     </div>
-                    <a href="https://t.me/SanjabVPN2_Bot?start=B_834d8e" target="_blank" class="buy-btn w-full block text-center bg-gray-100 text-gray-800 font-bold py-3.5 rounded-xl active:scale-[0.98] transition-all text-sm border border-gray-200">خرید سرویس</a>
+                    <a href="https://t.me/SanjabVPN2_Bot?start=B_834d8e" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3.5 rounded-xl active:scale-[0.98] transition-all text-sm border border-white/10">خرید سرویس</a>
                 </div>
 
-                <div class="pricing-card bg-white rounded-3xl p-5 border border-gray-200 relative overflow-hidden shadow-sm"
+                <div class="pricing-card bg-[#131926]/80 rounded-3xl p-5 border border-white/10 relative overflow-hidden shadow-lg"
                      data-base-price="۹۰۰,۰۰۰" data-discount-price="۷۲۰,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_1779d5" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_a99451">
                     <div class="flex justify-between items-center mb-5">
-                        <span class="text-3xl font-black text-gray-900">۷۵ <span class="text-lg font-bold text-gray-500">گیگ</span></span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-xs font-bold text-gray-600">۱ ماهه</span>
+                        <span class="text-3xl font-black text-white">۷۵ <span class="text-base font-bold text-gray-400">گیگ</span></span>
+                        <span class="bg-white/5 border border-white/10 px-3 py-1 rounded-full text-xs font-bold text-gray-300">۱ ماهه</span>
                     </div>
                     <div class="mb-5">
-                        <div class="text-2xl font-black text-gray-900 price-original">۹۰۰,۰۰۰ <span class="text-sm font-bold text-gray-500">تومان</span></div>
-                        <div class="text-2xl font-black text-orange-600 price-new">۷۲۰,۰۰۰ <span class="text-sm font-bold text-gray-500">تومان</span></div>
+                        <div class="text-2xl font-black text-white price-original">۹۰۰,۰۰۰ <span class="text-xs font-bold text-gray-400">تومان</span></div>
+                        <div class="text-2xl font-black text-orange-500 price-new">۷۲۰,۰۰۰ <span class="text-xs font-bold text-gray-400">تومان</span></div>
                     </div>
-                    <a href="https://t.me/SanjabVPN2_Bot?start=B_1779d5" target="_blank" class="buy-btn w-full block text-center bg-gray-100 text-gray-800 font-bold py-3.5 rounded-xl active:scale-[0.98] transition-all text-sm border border-gray-200">خرید سرویس</a>
+                    <a href="https://t.me/SanjabVPN2_Bot?start=B_1779d5" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3.5 rounded-xl active:scale-[0.98] transition-all text-sm border border-white/10">خرید سرویس</a>
                 </div>
 
-                <div class="pricing-card bg-gray-900 rounded-3xl p-5 border border-gray-800 relative overflow-hidden shadow-lg"
+                <div class="pricing-card bg-gradient-to-b from-blue-900/30 to-[#131926] rounded-3xl p-5 border border-blue-500/30 relative overflow-hidden shadow-xl"
                      data-base-price="۱,۲۰۰,۰۰۰" data-discount-price="۹۶۰,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_118db3" 
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_53198b">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-500/10 rounded-full blur-xl pointer-events-none"></div>
-                    <div class="flex justify-between items-center mb-5 relative z-10">
-                        <span class="text-3xl font-black text-white">۱۰۰ <span class="text-lg font-bold text-gray-400">گیگ</span></span>
-                        <span class="bg-gray-800 border border-gray-700 text-gray-300 px-3 py-1 rounded-full text-xs font-bold">پرمصرف</span>
+                    <div class="flex justify-between items-center mb-5">
+                        <span class="text-3xl font-black text-white">۱۰۰ <span class="text-base font-bold text-gray-400">گیگ</span></span>
+                        <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-bold">پرمصرف</span>
                     </div>
-                    <div class="mb-5 relative z-10">
-                        <div class="text-2xl font-black text-white price-original">۱,۲۰۰,۰۰۰ <span class="text-sm font-bold text-gray-500">تومان</span></div>
-                        <div class="text-2xl font-black text-orange-400 price-new">۹۶۰,۰۰۰ <span class="text-sm font-bold text-gray-500">تومان</span></div>
+                    <div class="mb-5">
+                        <div class="text-2xl font-black text-white price-original">۱,۲۰۰,۰۰۰ <span class="text-xs font-bold text-gray-400">تومان</span></div>
+                        <div class="text-2xl font-black text-orange-400 price-new">۹۶۰,۰۰۰ <span class="text-xs font-bold text-gray-400">تومان</span></div>
                     </div>
-                    <a href="https://t.me/SanjabVPN2_Bot?start=B_118db3" target="_blank" class="buy-btn w-full block text-center bg-white text-gray-900 font-bold py-3.5 rounded-xl active:scale-[0.98] transition-all text-sm relative z-10 shadow-md">خرید سرویس</a>
+                    <a href="https://t.me/SanjabVPN2_Bot?start=B_118db3" target="_blank" class="buy-btn w-full block text-center bg-white text-gray-900 font-bold py-3.5 rounded-xl active:scale-[0.98] transition-all text-sm shadow-lg">خرید سرویس</a>
                 </div>
 
             </div>
 
             <div class="mt-8 flex flex-col gap-3">
-                <div class="flex items-center gap-3 justify-center text-gray-600 bg-gray-50 py-2 rounded-xl border border-gray-100">
+                <div class="flex items-center gap-3 justify-center text-gray-300 bg-white/5 py-2.5 rounded-xl border border-white/10">
                     <span class="text-lg">⚡</span> <span class="text-xs font-bold">آپتایم ۹۹.۹٪ سرورها</span>
                 </div>
-                <div class="flex items-center gap-3 justify-center text-gray-600 bg-gray-50 py-2 rounded-xl border border-gray-100">
+                <div class="flex items-center gap-3 justify-center text-gray-300 bg-white/5 py-2.5 rounded-xl border border-white/10">
                     <span class="text-lg">🛡️</span> <span class="text-xs font-bold">حفظ کامل حریم خصوصی</span>
                 </div>
             </div>
@@ -468,101 +486,103 @@
         </div>
     </section>
 
-    <section id="apps" class="py-16 bg-gray-50 border-t border-gray-200">
-        <div class="container mx-auto px-4 w-full max-w-md mx-auto">
+    <!-- APPS -->
+    <section id="apps" class="py-16 border-t border-white/10">
+        <div class="container mx-auto px-4 w-full max-w-md">
             <div class="text-center mb-8">
-                <h2 class="text-2xl font-black text-gray-900 mb-2">دانلود برنامه‌ها</h2>
-                <p class="text-xs text-gray-500">اپلیکیشن‌های استاندارد و تست شده</p>
+                <h2 class="text-2xl font-black text-white mb-2">دانلود برنامه‌ها</h2>
+                <p class="text-xs text-gray-400">اپلیکیشن‌های استاندارد و تست شده</p>
             </div>
             
             <div class="flex flex-col gap-4">
                 <div class="flex items-center gap-2 mt-2">
-                    <div class="h-px bg-gray-300 flex-1"></div>
-                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Android</span>
-                    <div class="h-px bg-gray-300 flex-1"></div>
+                    <div class="h-px bg-white/10 flex-1"></div>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Android</span>
+                    <div class="h-px bg-white/10 flex-1"></div>
                 </div>
 
-                <a href="https://play.google.com/store/apps/details?id=com.happproxy" target="_blank" class="flex items-center justify-between p-4 bg-white border border-green-200 rounded-2xl active:bg-gray-50 shadow-sm">
+                <a href="https://play.google.com/store/apps/details?id=com.happproxy" target="_blank" class="flex items-center justify-between p-4 bg-[#131926]/80 border border-emerald-500/30 rounded-2xl active:bg-white/5 shadow-sm">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-green-50 text-green-600 rounded-xl flex items-center justify-center shrink-0">
+                        <div class="w-10 h-10 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-xl flex items-center justify-center shrink-0">
                             <svg class="w-6 h-6"><use href="#icon-android-logo"></use></svg>
                         </div>
                         <div>
-                            <h4 class="font-black text-gray-800 text-base">Happ <span class="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded ml-1">توصیه شده</span></h4>
+                            <h4 class="font-black text-white text-base">Happ <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded ml-1">توصیه شده</span></h4>
                         </div>
                     </div>
-                    <span class="text-blue-500 text-xs font-bold">دانلود</span>
+                    <span class="text-blue-400 text-xs font-bold">دانلود</span>
                 </a>
 
-                <a href="https://github.com/2dust/v2rayNG/releases" target="_blank" class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-2xl active:bg-gray-50 shadow-sm">
+                <a href="https://github.com/2dust/v2rayNG/releases" target="_blank" class="flex items-center justify-between p-4 bg-[#131926]/80 border border-white/10 rounded-2xl active:bg-white/5 shadow-sm">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-gray-100 text-gray-500 rounded-xl flex items-center justify-center shrink-0">
+                        <div class="w-10 h-10 bg-white/5 text-gray-400 border border-white/10 rounded-xl flex items-center justify-center shrink-0">
                             <svg class="w-6 h-6"><use href="#icon-android-logo"></use></svg>
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-800 text-base">v2rayNG</h4>
+                            <h4 class="font-bold text-white text-base">v2rayNG</h4>
                         </div>
                     </div>
-                    <span class="text-blue-500 text-xs font-bold">دانلود</span>
+                    <span class="text-blue-400 text-xs font-bold">دانلود</span>
                 </a>
 
                 <div class="flex items-center gap-2 mt-4">
-                    <div class="h-px bg-gray-300 flex-1"></div>
-                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">iOS (iPhone)</span>
-                    <div class="h-px bg-gray-300 flex-1"></div>
+                    <div class="h-px bg-white/10 flex-1"></div>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">iOS (iPhone)</span>
+                    <div class="h-px bg-white/10 flex-1"></div>
                 </div>
 
-                <a href="https://apps.apple.com/us/app/happ-proxy-utility/id6504287215" target="_blank" class="flex items-center justify-between p-4 bg-white border border-blue-200 rounded-2xl active:bg-gray-50 shadow-sm">
+                <a href="https://apps.apple.com/us/app/happ-proxy-utility/id6504287215" target="_blank" class="flex items-center justify-between p-4 bg-[#131926]/80 border border-blue-500/30 rounded-2xl active:bg-white/5 shadow-sm">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center shrink-0">
+                        <div class="w-10 h-10 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-xl flex items-center justify-center shrink-0">
                             <svg class="w-6 h-6"><use href="#icon-apple-logo"></use></svg>
                         </div>
                         <div>
-                            <h4 class="font-black text-gray-800 text-base">Happ <span class="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded ml-1">توصیه شده</span></h4>
+                            <h4 class="font-black text-white text-base">Happ <span class="text-[10px] bg-blue-500/20 text-blue-300 px-1.5 py-0.5 rounded ml-1">توصیه شده</span></h4>
                         </div>
                     </div>
-                    <span class="text-blue-500 text-xs font-bold">App Store</span>
+                    <span class="text-blue-400 text-xs font-bold">App Store</span>
                 </a>
 
-                <a href="https://apps.apple.com/app/id6450534064" target="_blank" class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-2xl active:bg-gray-50 shadow-sm">
+                <a href="https://apps.apple.com/app/id6450534064" target="_blank" class="flex items-center justify-between p-4 bg-[#131926]/80 border border-white/10 rounded-2xl active:bg-white/5 shadow-sm">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-gray-100 text-gray-500 rounded-xl flex items-center justify-center shrink-0">
+                        <div class="w-10 h-10 bg-white/5 text-gray-400 border border-white/10 rounded-xl flex items-center justify-center shrink-0">
                             <svg class="w-6 h-6"><use href="#icon-apple-logo"></use></svg>
                         </div>
                         <div>
-                            <h4 class="font-bold text-gray-800 text-base">Streisand</h4>
+                            <h4 class="font-bold text-white text-base">Streisand</h4>
                         </div>
                     </div>
-                    <span class="text-blue-500 text-xs font-bold">App Store</span>
+                    <span class="text-blue-400 text-xs font-bold">App Store</span>
                 </a>
             </div>
-            <a href="https://t.me/SanjabVPN2_Bot?start=B_e2e8b8" target="_blank" class="block text-center text-sm font-bold text-gray-500 underline mt-6 py-2">مشاهده لیست کامل در ربات</a>
+            <a href="https://t.me/SanjabVPN2_Bot?start=B_e2e8b8" target="_blank" class="block text-center text-xs font-bold text-gray-400 underline mt-6 py-2">مشاهده لیست کامل در ربات</a>
         </div>
     </section>
 
-    <section id="faq" class="py-16 bg-white border-t border-gray-200">
-        <div class="container mx-auto px-4 w-full max-w-md mx-auto">
-            <h2 class="text-2xl font-black text-center text-gray-900 mb-8">سوالات متداول</h2>
+    <!-- FAQ -->
+    <section id="faq" class="py-16 border-t border-white/10">
+        <div class="container mx-auto px-4 w-full max-w-md">
+            <h2 class="text-2xl font-black text-center text-white mb-8">سوالات متداول</h2>
             <div class="space-y-3">
-                <div class="bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden">
-                    <button class="accordion-header w-full p-4 text-right flex justify-between items-center font-bold text-sm text-gray-800">
+                <div class="bg-[#131926]/80 rounded-2xl border border-white/10 overflow-hidden">
+                    <button class="accordion-header w-full p-4 text-right flex justify-between items-center font-bold text-sm text-gray-200">
                         <span>چطور حجم باقی‌مانده را ببینم؟</span>
-                        <span class="transform transition-transform duration-300 text-orange-500">▼</span>
+                        <span class="transform transition-transform duration-300 text-orange-400">▼</span>
                     </button>
                     <div class="accordion-content">
-                        <div class="p-4 pt-0 text-gray-600 text-xs leading-relaxed border-t border-gray-100 mt-2">
+                        <div class="p-4 pt-0 text-gray-400 text-xs leading-relaxed border-t border-white/5 mt-2">
                             در بالای همین صفحه، نام سرویس خود را در بخش "استعلام وضعیت" وارد کنید و مستقیماً وارد پنل کاربری خود شوید.
                         </div>
                     </div>
                 </div>
-                <div class="bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden">
-                    <button class="accordion-header w-full p-4 text-right flex justify-between items-center font-bold text-sm text-gray-800">
+                <div class="bg-[#131926]/80 rounded-2xl border border-white/10 overflow-hidden">
+                    <button class="accordion-header w-full p-4 text-right flex justify-between items-center font-bold text-sm text-gray-200">
                         <span>چگونه با پشتیبانی ارتباط بگیرم؟</span>
-                        <span class="transform transition-transform duration-300 text-orange-500">▼</span>
+                        <span class="transform transition-transform duration-300 text-orange-400">▼</span>
                     </button>
                     <div class="accordion-content">
-                        <div class="p-4 pt-0 text-gray-600 text-xs leading-relaxed border-t border-gray-100 mt-2">
-                            روی دکمه آبی رنگ هدفون در صفحه کلیک کنید یا به <a href="https://t.me/SanjabVPN2_Bot?start=B_b659b2" target="_blank" class="text-blue-500 font-bold underline">این لینک</a> مراجعه کنید.
+                        <div class="p-4 pt-0 text-gray-400 text-xs leading-relaxed border-t border-white/5 mt-2">
+                            روی دکمه آبی رنگ هدفون در صفحه کلیک کنید یا به <a href="https://t.me/SanjabVPN2_Bot?start=B_b659b2" target="_blank" class="text-blue-400 font-bold underline">این لینک</a> مراجعه کنید.
                         </div>
                     </div>
                 </div>
@@ -570,17 +590,112 @@
         </div>
     </section>
 
-    <footer class="bg-gray-900 text-gray-400 py-10 border-t border-gray-800 text-center">
-        <div class="container mx-auto px-4 w-full max-w-md mx-auto">
-            <span class="text-4xl block mb-4 opacity-50">🐿️</span>
-            <h3 class="text-white text-xl font-black mb-2">سنجاب VPN</h3>
-            <p class="text-xs mb-6 text-gray-500">اینترنت آزاد، سریع و امن در دستان شما.</p>
+    <footer class="bg-black/60 border-t border-white/10 py-10 text-center text-gray-500">
+        <div class="container mx-auto px-4 w-full max-w-md">
+            <span class="text-4xl block mb-4 opacity-40">🐿️</span>
+            <h3 class="text-white text-lg font-black mb-1">سنجاب VPN</h3>
+            <p class="text-xs mb-6 text-gray-400">اینترنت آزاد، سریع و امن در دستان شما.</p>
             <p class="text-[10px] text-gray-600">© ۲۰۲۶ تمامی حقوق محفوظ است.</p>
         </div>
     </footer>
 
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // 1. Mobile Menu with Smooth Sliding
+        // THREE.JS 3D HERO CANVAS ANIMATION
+        function init3DHero() {
+            const container = document.getElementById('hero');
+            const canvas = document.getElementById('webgl-hero-canvas');
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 4;
+
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Create Interactive Particle Sphere (Network Globe)
+            const particlesCount = 700;
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particlesCount * 3);
+            const colors = new Float32Array(particlesCount * 3);
+
+            const colorOrange = new THREE.Color(0xf97316);
+            const colorBlue = new THREE.Color(0x3b82f6);
+
+            for(let i = 0; i < particlesCount; i++) {
+                // Sphere math
+                const u = Math.random();
+                const v = Math.random();
+                const theta = u * 2.0 * Math.PI;
+                const phi = Math.acos(2.0 * v - 1.0);
+                const r = 2.2 + (Math.random() - 0.5) * 0.4;
+
+                positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+                positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+                positions[i * 3 + 2] = r * Math.cos(phi);
+
+                // Mixed neon color palette
+                const mixedColor = Math.random() > 0.5 ? colorOrange : colorBlue;
+                colors[i * 3] = mixedColor.r;
+                colors[i * 3 + 1] = mixedColor.g;
+                colors[i * 3 + 2] = mixedColor.b;
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            const material = new THREE.PointsMaterial({
+                size: 0.035,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            const pointCloud = new THREE.Points(geometry, material);
+            scene.add(pointCloud);
+
+            // Mouse & Touch interaction logic
+            let mouseX = 0;
+            let mouseY = 0;
+            function onPointerMove(event) {
+                const x = event.clientX || (event.touches && event.touches[0].clientX);
+                const y = event.clientY || (event.touches && event.touches[0].clientY);
+                if (x && y) {
+                    mouseX = (x / window.innerWidth - 0.5) * 0.5;
+                    mouseY = (y / window.innerHeight - 0.5) * 0.5;
+                }
+            }
+            window.addEventListener('mousemove', onPointerMove);
+            window.addEventListener('touchmove', onPointerMove);
+
+            // Animation Loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                pointCloud.rotation.y += 0.002;
+                pointCloud.rotation.x += 0.001;
+
+                // Smooth hover tilt
+                pointCloud.rotation.y += (mouseX - pointCloud.rotation.y) * 0.03;
+                pointCloud.rotation.x += (mouseY - pointCloud.rotation.x) * 0.03;
+
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Resize handling
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        }
+        
+        // Initialize 3D Hero after DOM loads
+        window.addEventListener('DOMContentLoaded', init3DHero);
+
+        // 1. Mobile Menu Logic
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const menuIcon = document.getElementById('menu-icon');
@@ -616,14 +731,13 @@
             }, 800);
         }
 
-        // 3. Discount Engine with localStorage Memory
+        // 3. Discount Engine
         let isDiscountApplied = false;
         
-        // Check memory on load
         window.addEventListener('DOMContentLoaded', () => {
             if (localStorage.getItem('sanjab_discount') === 'active') {
                 document.getElementById('promo-input').value = 'SANJAB_OFFER';
-                applyDiscountEngine(true); // true = silent apply
+                applyDiscountEngine(true);
             }
         });
 
@@ -636,13 +750,10 @@
                 
                 if(!isSilent) showToast('تخفیف ۲۰٪ با موفقیت روی قیمت‌ها اعمال شد! 🎁', 'success');
                 
-                // Save to memory
                 localStorage.setItem('sanjab_discount', 'active');
 
                 btn.innerHTML = '✔️ تخفیف فعال شد';
-                btn.classList.replace('bg-orange-500', 'bg-green-500');
-                btn.classList.replace('hover:bg-orange-600', 'hover:bg-green-600');
-                btn.classList.add('shadow-[0_0_15px_rgba(16,185,129,0.4)]');
+                btn.classList.replace('bg-orange-500', 'bg-emerald-600');
                 document.getElementById('promo-input').disabled = true;
 
                 document.querySelectorAll('.pricing-card').forEach(card => {
@@ -656,17 +767,9 @@
                     
                     buyBtn.href = card.getAttribute('data-discount-link');
                     buyBtn.innerHTML = '🚀 خرید با تخفیف';
-                    buyBtn.classList.replace('bg-gray-100', 'bg-orange-500');
-                    buyBtn.classList.replace('text-gray-800', 'text-white');
+                    buyBtn.classList.replace('bg-white/10', 'bg-orange-500');
+                    buyBtn.classList.replace('text-white', 'text-white');
                     buyBtn.classList.add('shadow-lg');
-                    
-                    if(buyBtn.classList.contains('bg-gray-800')) {
-                        buyBtn.classList.replace('bg-gray-800', 'bg-red-500');
-                    }
-                    if(buyBtn.classList.contains('bg-white')) {
-                        buyBtn.classList.replace('bg-white', 'bg-orange-500');
-                        buyBtn.classList.replace('text-gray-900', 'text-white');
-                    }
                 });
                 isDiscountApplied = true;
             } else {
@@ -674,7 +777,7 @@
             }
         }
 
-        // 4. Persistent Urgency Countdown (24h Loop stored in localStorage)
+        // 4. Timer
         function startPersistentCountdown() {
             const display = document.getElementById('countdown');
             const timerDuration = 24 * 60 * 60 * 1000; 
@@ -687,7 +790,7 @@
 
             setInterval(() => {
                 let remaining = parseInt(endTime) - Date.now();
-                if (remaining < 0) remaining = 0; // Or reset logic
+                if (remaining < 0) remaining = 0;
 
                 let hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
                 let minutes = Math.floor((remaining / 1000 / 60) % 60);
@@ -698,7 +801,7 @@
         }
         startPersistentCountdown();
 
-        // 5. Privacy-Focused Social Proof
+        // 5. Social Proof
         const fakeEvents = [
             'یک کاربر پلن ۳۰ گیگ را خریداری کرد 🚀',
             'یک کد تخفیف با موفقیت اعمال شد 🎁',
@@ -718,7 +821,7 @@
             setInterval(triggerSocialProof, 15000 + Math.random() * 10000);
         }, 10000);
 
-        // 6. Sticky CTA Scroll Logic
+        // 6. Sticky CTA
         const stickyCta = document.getElementById('sticky-cta');
         const heroSection = document.getElementById('hero');
         window.addEventListener('scroll', () => {
@@ -729,7 +832,7 @@
             }
         });
 
-        // Helper: Toast
+        // Toast Helper
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -743,13 +846,12 @@
             }, 3000);
         }
 
-        // 7. Fixed Accordion Logic
+        // 7. Accordion
         document.querySelectorAll('.accordion-header').forEach(acc => {
             acc.addEventListener('click', function() {
                 const content = this.nextElementSibling;
                 const icon = this.querySelector('span:last-child');
                 
-                // Close others
                 document.querySelectorAll('.accordion-content').forEach(otherContent => {
                     if (otherContent !== content) {
                         otherContent.style.maxHeight = null;
