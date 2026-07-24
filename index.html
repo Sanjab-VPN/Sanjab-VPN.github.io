@@ -7,11 +7,15 @@
     <meta name="description" content="سنجاب VPN: سرورهای مولتی‌لوکیشن با لینک ساب‌اسکریپشن هوشمند. استعلام لحظه‌ای و اتصال پرسرعت.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
     
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Three.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- GSAP Animation Engine & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +30,7 @@
         body {
             font-family: 'Vazirmatn', sans-serif;
             padding-bottom: 76px;
-            background-color: #070a11; /* Ultra Deep Cyber Dark */
+            background-color: #070a11;
             color: #f3f4f6;
         }
         
@@ -53,14 +57,16 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            will-change: transform, opacity;
         }
 
         .glass-card-glow {
-            background: linear-gradient(145deg, rgba(249, 115, 22, 0.15), rgba(18, 24, 38, 0.85));
+            background: linear-gradient(145deg, rgba(249, 115, 22, 0.18), rgba(18, 24, 38, 0.88));
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1.5px solid rgba(249, 115, 22, 0.5);
-            box-shadow: 0 0 25px rgba(249, 115, 22, 0.2);
+            border: 1.5px solid rgba(249, 115, 22, 0.55);
+            box-shadow: 0 0 30px rgba(249, 115, 22, 0.25);
+            will-change: transform, opacity;
         }
 
         /* Animations */
@@ -219,7 +225,7 @@
         <span class="text-base">🔥</span> <span id="social-proof-text">یک کاربر پلن ۳۰ گیگ را خریداری کرد 🚀</span>
     </div>
 
-    <!-- Sticky Bottom CTA for Mobile -->
+    <!-- Sticky Bottom CTA -->
     <div id="sticky-cta" class="sticky-cta">
         <div>
             <p class="text-[9px] text-gray-400 font-bold leading-tight">تخفیف محدود است</p>
@@ -262,7 +268,7 @@
         </div>
     </header>
 
-    <!-- HERO SECTION (OPTIMIZED FOR VERTICAL MOBILE) -->
+    <!-- HERO SECTION -->
     <section id="hero" class="relative pt-24 pb-12 flex flex-col items-center justify-center overflow-hidden min-h-[82vh]">
         <canvas id="webgl-hero-canvas"></canvas>
 
@@ -270,29 +276,29 @@
         <div class="absolute bottom-10 -left-10 w-48 h-48 bg-blue-500/20 rounded-full blur-[80px] pointer-events-none"></div>
 
         <div class="px-4 flex flex-col items-center text-center relative z-10 w-full max-w-sm">
-            <div class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/15 text-orange-400 px-3.5 py-1.5 rounded-full text-xs font-bold mb-5 shadow-xl">
+            <div id="hero-badge" class="inline-flex items-center gap-2 bg-white/5 backdrop-blur-md border border-white/15 text-orange-400 px-3.5 py-1.5 rounded-full text-xs font-bold mb-5 shadow-xl">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                 <span>شبکه سرورهای هوشمند ۲۰۲۶</span>
             </div>
             
-            <div class="relative mb-4 select-none">
+            <div id="hero-mascot" class="relative mb-4 select-none">
                 <div class="absolute -inset-3 bg-gradient-to-r from-orange-500 to-blue-600 rounded-full blur-xl opacity-40 animate-pulse"></div>
                 <div class="relative text-[5.5rem] float-animation filter drop-shadow-[0_8px_16px_rgba(249,115,22,0.3)]">
                     🐿️
                 </div>
             </div>
 
-            <h1 class="text-2xl font-black leading-tight mb-3 text-white tracking-tight">
+            <h1 id="hero-title" class="text-2xl font-black leading-tight mb-3 text-white tracking-tight">
                 اینترنت آزاد و بدون قطعی با<br>
                 <span class="bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">سنجاب VPN</span>
             </h1>
             
-            <p class="text-xs text-gray-300 font-medium leading-relaxed mb-6 px-2">
+            <p id="hero-subtitle" class="text-xs text-gray-300 font-medium leading-relaxed mb-6 px-2">
                 اتصال پرسرعت با لینک ساب‌اسکریپشن هوشمند.<br>
                 <span class="text-[11px] font-mono text-gray-400 mt-1 block">🇺🇸 آمریکا • 🇩🇪 آلمان • 🇵🇱 لهستان • 🇫🇮 فنلاند</span>
             </p>
             
-            <div class="w-full flex flex-col gap-3">
+            <div id="hero-cta-box" class="w-full flex flex-col gap-3">
                 <a href="#pricing" 
                    class="w-full bg-gradient-to-r from-orange-500 to-orange-600 active:from-orange-600 active:to-orange-700 text-white font-black py-3.5 rounded-2xl shadow-xl shadow-orange-500/30 transition-transform active:scale-95 flex items-center justify-center text-base border border-orange-400/30">
                    خرید و دریافت آنی
@@ -305,7 +311,7 @@
         </div>
     </section>
 
-    <!-- STATUS CHECKER (MOBILE APP WIDGET STYLE) -->
+    <!-- STATUS CHECKER -->
     <section id="status-checker" class="relative -mt-6 z-20 px-4 w-full max-w-sm mx-auto">
         <div class="glass-card rounded-3xl p-5 border border-white/10 flex flex-col gap-3.5">
             <div class="flex items-center gap-3 border-b border-white/10 pb-3">
@@ -371,7 +377,7 @@
         </div>
     </section>
 
-    <!-- PRICING SECTION (MOBILE STACKED CARDS) -->
+    <!-- PRICING -->
     <section id="pricing" class="py-12 scroll-mt-16">
         <div class="px-4 w-full max-w-sm mx-auto">
             
@@ -408,7 +414,6 @@
             <!-- Cards Container -->
             <div class="flex flex-col gap-4">
                 
-                <!-- Plan 10GB -->
                 <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden" 
                      data-base-price="۱۲۰,۰۰۰" data-discount-price="۹۶,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_138358" 
@@ -424,7 +429,6 @@
                     <a href="https://t.me/SanjabVPN2_Bot?start=B_138358" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10">خرید سرویس</a>
                 </div>
 
-                <!-- Plan 20GB -->
                 <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden"
                      data-base-price="۲۴۰,۰۰۰" data-discount-price="۱۹۲,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_abd37b" 
@@ -440,7 +444,6 @@
                     <a href="https://t.me/SanjabVPN2_Bot?start=B_abd37b" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10">خرید سرویس</a>
                 </div>
 
-                <!-- POPULAR PLAN (30GB - GLOW) -->
                 <div class="pricing-card glass-card-glow rounded-2xl p-5 relative overflow-hidden transform scale-[1.02]"
                      data-base-price="۳۶۰,۰۰۰" data-discount-price="۲۸۸,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_0ba29a" 
@@ -457,7 +460,6 @@
                     <a href="https://t.me/SanjabVPN2_Bot?start=B_0ba29a" target="_blank" class="buy-btn w-full block text-center bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black py-3.5 rounded-xl active:scale-[0.97] transition-transform text-sm shadow-lg shadow-orange-500/40 border border-orange-400/30">خرید این پلن</a>
                 </div>
 
-                <!-- Plan 50GB -->
                 <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden"
                      data-base-price="۶۰۰,۰۰۰" data-discount-price="۴۸۰,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_834d8e" 
@@ -473,7 +475,6 @@
                     <a href="https://t.me/SanjabVPN2_Bot?start=B_834d8e" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10">خرید سرویس</a>
                 </div>
 
-                <!-- Plan 75GB -->
                 <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden"
                      data-base-price="۹۰۰,۰۰۰" data-discount-price="۷۲۰,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_1779d5" 
@@ -489,7 +490,6 @@
                     <a href="https://t.me/SanjabVPN2_Bot?start=B_1779d5" target="_blank" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10">خرید سرویس</a>
                 </div>
 
-                <!-- Plan 100GB -->
                 <div class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden border border-blue-500/30"
                      data-base-price="۱,۲۰۰,۰۰۰" data-discount-price="۹۶۰,۰۰۰" 
                      data-base-link="https://t.me/SanjabVPN2_Bot?start=B_118db3" 
@@ -634,7 +634,7 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // THREE.JS 3D CANVAS (MOBILE LIGHTWEIGHT OPTIMIZED)
+        // THREE.JS 3D CANVAS
         function init3DHero() {
             const container = document.getElementById('hero');
             const canvas = document.getElementById('webgl-hero-canvas');
@@ -647,7 +647,6 @@
             renderer.setSize(container.clientWidth, container.clientHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
-            // Mobile-optimized lighter particle globe
             const particlesCount = 450;
             const geometry = new THREE.BufferGeometry();
             const positions = new Float32Array(particlesCount * 3);
@@ -718,8 +717,89 @@
                 renderer.setSize(container.clientWidth, container.clientHeight);
             });
         }
+
+        // GSAP & SCROLLTRIGGER MOTION ENGINE
+        function initGSAPAnimations() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // 1. Hero Entrance Timeline
+            const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
+            
+            heroTl.from("#hero-badge", { y: -20, opacity: 0, duration: 0.6, delay: 0.1 })
+                  .from("#hero-mascot", { scale: 0.3, opacity: 0, duration: 0.9, ease: "back.out(1.8)" }, "-=0.3")
+                  .from("#hero-title", { y: 25, opacity: 0, duration: 0.7 }, "-=0.5")
+                  .from("#hero-subtitle", { y: 20, opacity: 0, duration: 0.6 }, "-=0.4")
+                  .from("#hero-cta-box > *", { y: 20, opacity: 0, duration: 0.5, stagger: 0.12 }, "-=0.4");
+
+            // 2. Status Checker Reveal
+            gsap.from("#status-checker .glass-card", {
+                scrollTrigger: {
+                    trigger: "#status-checker",
+                    start: "top 88%",
+                },
+                y: 35,
+                opacity: 0,
+                duration: 0.7,
+                ease: "power2.out"
+            });
+
+            // 3. Features Stagger Reveal
+            gsap.from("#features .glass-card", {
+                scrollTrigger: {
+                    trigger: "#features",
+                    start: "top 82%",
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.12,
+                ease: "power2.out"
+            });
+
+            // 4. Pricing Cards & Discount Box Reveal
+            gsap.from("#pricing .glass-card, #pricing .glass-card-glow", {
+                scrollTrigger: {
+                    trigger: "#pricing",
+                    start: "top 80%",
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.7,
+                stagger: 0.1,
+                ease: "power3.out"
+            });
+
+            // 5. Apps Download Cards Stagger Reveal
+            gsap.from("#apps a.glass-card", {
+                scrollTrigger: {
+                    trigger: "#apps",
+                    start: "top 85%",
+                },
+                x: -30,
+                opacity: 0,
+                duration: 0.55,
+                stagger: 0.08,
+                ease: "power2.out"
+            });
+
+            // 6. FAQ Stagger Reveal
+            gsap.from("#faq .glass-card", {
+                scrollTrigger: {
+                    trigger: "#faq",
+                    start: "top 88%",
+                },
+                y: 20,
+                opacity: 0,
+                duration: 0.5,
+                stagger: 0.1,
+                ease: "power2.out"
+            });
+        }
         
-        window.addEventListener('DOMContentLoaded', init3DHero);
+        window.addEventListener('DOMContentLoaded', () => {
+            init3DHero();
+            initGSAPAnimations();
+        });
 
         // 1. Mobile Menu Logic
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
