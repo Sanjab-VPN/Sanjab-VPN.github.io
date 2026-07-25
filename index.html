@@ -39,6 +39,11 @@
             overflow-x: hidden;
         }
 
+        /* Prevent Flash of Unanimated Content (FOUC) */
+        #hero-badge, #hero-mascot, #hero-title, #hero-subtitle, #hero-cta-box > * {
+            opacity: 0;
+        }
+
         /* 3D Mobile Canvas */
         #webgl-hero-canvas {
             position: absolute;
@@ -849,11 +854,11 @@
 
             const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
             
-            heroTl.from("#hero-badge", { y: -20, opacity: 0, duration: 0.6, delay: 0.1 })
-                  .from("#hero-mascot", { scale: 0.3, opacity: 0, duration: 0.9, ease: "back.out(1.8)" }, "-=0.3")
-                  .from("#hero-title", { y: 25, opacity: 0, duration: 0.7 }, "-=0.5")
-                  .from("#hero-subtitle", { y: 20, opacity: 0, duration: 0.6 }, "-=0.4")
-                  .from("#hero-cta-box > *", { y: 20, opacity: 0, duration: 0.5, stagger: 0.12 }, "-=0.4");
+            heroTl.fromTo("#hero-badge", { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, delay: 0.1 })
+                  .fromTo("#hero-mascot", { scale: 0.3, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.9, ease: "back.out(1.8)" }, "-=0.3")
+                  .fromTo("#hero-title", { y: 25, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, "-=0.5")
+                  .fromTo("#hero-subtitle", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, "-=0.4")
+                  .fromTo("#hero-cta-box > *", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, stagger: 0.12 }, "-=0.4");
 
             gsap.from("#status-checker .glass-card", {
                 scrollTrigger: {
