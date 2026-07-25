@@ -7,6 +7,12 @@
     <meta name="description" content="سنجاب VPN: سرورهای اختصاصی ضد فیلتر با ارسال سریع. بدون قطعی روی تمامی اپراتورهای همراه و خانگی.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
     
+    <!-- Speed Optimization: Resource Preconnecting -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -17,8 +23,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
@@ -33,18 +37,21 @@
             padding-bottom: 76px;
             background-color: #070a11;
             color: #f3f4f6;
+            text-rendering: optimizeLegibility;
         }
         
         html {
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         /* Prevent Flash of Unanimated Content (FOUC) */
         #hero-badge, #hero-mascot, #hero-title, #hero-subtitle, #hero-cta-box > * {
             opacity: 0;
+            will-change: transform, opacity;
         }
 
-        /* 3D Mobile Canvas */
+        /* High Quality 3D Mobile Canvas */
         #webgl-hero-canvas {
             position: absolute;
             top: 0;
@@ -57,37 +64,43 @@
 
         /* Mobile Glassmorphism Cards */
         .glass-card {
-            background: rgba(18, 24, 38, 0.88);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            background: rgba(18, 24, 38, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.5);
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(249, 115, 22, 0.3);
         }
 
         .glass-card-glow {
-            background: linear-gradient(145deg, rgba(249, 115, 22, 0.22), rgba(18, 24, 38, 0.92));
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1.5px solid rgba(249, 115, 22, 0.6);
-            box-shadow: 0 0 30px rgba(249, 115, 22, 0.25);
+            background: linear-gradient(145deg, rgba(249, 115, 22, 0.22), rgba(18, 24, 38, 0.95));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(249, 115, 22, 0.65);
+            box-shadow: 0 0 35px rgba(249, 115, 22, 0.3);
         }
 
         /* Animations */
         .float-animation {
-            animation: float 3.5s ease-in-out infinite;
+            animation: float 3.8s ease-in-out infinite;
+            will-change: transform;
         }
         @keyframes float {
             0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(1.5deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
             100% { transform: translateY(0px) rotate(0deg); }
         }
 
         .pulse-glow {
-            animation: pulse-glow 2s infinite;
+            animation: pulse-glow 2.5s infinite;
         }
         @keyframes pulse-glow {
             0%, 100% { box-shadow: 0 0 15px rgba(37, 99, 235, 0.5); }
-            50% { box-shadow: 0 0 25px rgba(37, 99, 235, 0.9); }
+            50% { box-shadow: 0 0 30px rgba(37, 99, 235, 0.9); }
         }
 
         /* Highlight animation for recommended card */
@@ -112,7 +125,7 @@
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+            transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
         }
 
         /* Mobile Toast UI */
@@ -218,7 +231,7 @@
         }
 
         .text-glow-contrast {
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 20px rgba(7, 10, 17, 0.8);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 25px rgba(7, 10, 17, 0.9);
         }
     </style>
 </head>
@@ -764,20 +777,48 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // THREE.JS 3D CANVAS
+        // ULTRA HIGH-QUALITY HIGH-PERFORMANCE THREE.JS CANVAS
         function init3DHero() {
             const container = document.getElementById('hero');
             const canvas = document.getElementById('webgl-hero-canvas');
             
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-            camera.position.z = 4.3;
+            camera.position.z = 4.0;
 
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
             renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            const particlesCount = 280;
+            // Generate In-Memory Soft Glowing Radial Particle Texture (Zero Bandwidth Cost)
+            function createGlowParticleTexture() {
+                const canvas = document.createElement('canvas');
+                canvas.width = 64;
+                canvas.height = 64;
+                const ctx = canvas.getContext('2d');
+                const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+                gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+                gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.8)');
+                gradient.addColorStop(0.6, 'rgba(249, 115, 22, 0.4)');
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, 64, 64);
+                return new THREE.CanvasTexture(canvas);
+            }
+
+            // 1. Central Wireframe Geometry Sphere (Modern Tech Mesh)
+            const icoGeometry = new THREE.IcosahedronGeometry(1.6, 2);
+            const icoMaterial = new THREE.MeshBasicMaterial({
+                color: 0xf97316,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.18
+            });
+            const icoMesh = new THREE.Mesh(icoGeometry, icoMaterial);
+            scene.add(icoMesh);
+
+            // 2. High Density Soft Glowing Floating Particles
+            const particlesCount = 380;
             const geometry = new THREE.BufferGeometry();
             const positions = new Float32Array(particlesCount * 3);
             const colors = new Float32Array(particlesCount * 3);
@@ -790,13 +831,13 @@
                 const v = Math.random();
                 const theta = u * 2.0 * Math.PI;
                 const phi = Math.acos(2.0 * v - 1.0);
-                const r = 2.2 + (Math.random() - 0.5) * 0.4;
+                const r = 2.0 + Math.random() * 0.9;
 
                 positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
                 positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
                 positions[i * 3 + 2] = r * Math.cos(phi);
 
-                const mixedColor = Math.random() > 0.5 ? colorOrange : colorBlue;
+                const mixedColor = Math.random() > 0.4 ? colorOrange : colorBlue;
                 colors[i * 3] = mixedColor.r;
                 colors[i * 3 + 1] = mixedColor.g;
                 colors[i * 3 + 2] = mixedColor.b;
@@ -806,36 +847,53 @@
             geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
             const material = new THREE.PointsMaterial({
-                size: 0.03,
+                size: 0.08,
+                map: createGlowParticleTexture(),
                 vertexColors: true,
                 transparent: true,
-                opacity: 0.4
+                opacity: 0.65,
+                depthWrite: false,
+                blending: THREE.AdditiveBlending
             });
 
             const pointCloud = new THREE.Points(geometry, material);
             scene.add(pointCloud);
 
+            let targetMouseX = 0;
+            let targetMouseY = 0;
             let mouseX = 0;
             let mouseY = 0;
+
             function onPointerMove(event) {
                 const x = event.clientX !== undefined ? event.clientX : (event.touches && event.touches[0] ? event.touches[0].clientX : undefined);
                 const y = event.clientY !== undefined ? event.clientY : (event.touches && event.touches[0] ? event.touches[0].clientY : undefined);
                 if (x !== undefined && y !== undefined) {
-                    mouseX = (x / window.innerWidth - 0.5) * 0.3;
-                    mouseY = (y / window.innerHeight - 0.5) * 0.3;
+                    targetMouseX = (x / window.innerWidth - 0.5) * 0.4;
+                    targetMouseY = (y / window.innerHeight - 0.5) * 0.4;
                 }
             }
-            window.addEventListener('mousemove', onPointerMove);
+            window.addEventListener('mousemove', onPointerMove, { passive: true });
             window.addEventListener('touchmove', onPointerMove, { passive: true });
 
             function animate() {
                 requestAnimationFrame(animate);
 
-                pointCloud.rotation.y += 0.0018;
+                // Lerp smooth mouse physics
+                mouseX += (targetMouseX - mouseX) * 0.05;
+                mouseY += (targetMouseY - mouseY) * 0.05;
+
+                // Rotating 3D Object & Cloud
+                icoMesh.rotation.y += 0.0025;
+                icoMesh.rotation.x += 0.0015;
+
+                pointCloud.rotation.y += 0.0015;
                 pointCloud.rotation.x += 0.0008;
 
-                pointCloud.rotation.y += (mouseX - pointCloud.rotation.y) * 0.02;
-                pointCloud.rotation.x += (mouseY - pointCloud.rotation.x) * 0.02;
+                icoMesh.rotation.y += mouseX * 0.03;
+                icoMesh.rotation.x += mouseY * 0.03;
+
+                pointCloud.rotation.y += mouseX * 0.02;
+                pointCloud.rotation.x += mouseY * 0.02;
 
                 renderer.render(scene, camera);
             }
@@ -845,7 +903,7 @@
                 camera.aspect = container.clientWidth / container.clientHeight;
                 camera.updateProjectionMatrix();
                 renderer.setSize(container.clientWidth, container.clientHeight);
-            });
+            }, { passive: true });
         }
 
         // GSAP MOTION ENGINE
