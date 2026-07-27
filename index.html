@@ -1106,7 +1106,6 @@
 
         // 4. STRICT DISCOUNT ENGINE & ACCURATE NON-LAG TIMER
         let isDiscountApplied = false;
-        let isTimerExpired = false;
         let timerInterval = null;
 
         function startDiscountTimer() {
@@ -1133,7 +1132,10 @@
                 const remainingMs = endTime - now;
 
                 if (remainingMs <= 0) {
-                    if (timerInterval) clearInterval(timerInterval);
+                    if (timerInterval) {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                    }
                     display.textContent = "00:00:00";
                     expireDiscountProcess();
                     return;
@@ -1153,23 +1155,38 @@
         }
 
         function expireDiscountProcess() {
-            isTimerExpired = true;
+            isDiscountApplied = false;
+
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+
             localStorage.removeItem('sanjab_discount');
+            localStorage.removeItem('sanjab_timer_end');
+
+            const container = document.getElementById('countdown-container');
+            if (container) {
+                container.classList.add('hidden');
+                container.classList.remove('flex');
+            }
 
             const widget = document.getElementById('discount-widget');
             if (widget) {
                 const desc = document.getElementById('discount-desc');
-                if (desc) desc.innerText = 'مهلت ۲۴ ساعته استفاده از تخفیف به پایان رسید.';
+                if (desc) desc.innerText = 'اگر کد تخفیف دارید، آن را در کادر زیر وارد کنید تا ۱۰٪ از قیمت کسر شود.';
                 
                 const btn = document.getElementById('apply-btn');
                 if (btn) {
-                    btn.disabled = true;
-                    btn.innerText = 'مهلت تخفیف منقضی شد';
-                    btn.classList.replace('bg-orange-500', 'bg-gray-700');
-                    btn.classList.replace('hover:bg-orange-600', 'hover:bg-gray-700');
+                    btn.disabled = false;
+                    btn.innerText = 'اعمال کد تخفیف';
+                    btn.className = 'w-full bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-black py-2.5 rounded-xl text-xs transition-transform shadow-lg shadow-orange-500/30';
                 }
                 const input = document.getElementById('promo-input');
-                if (input) input.disabled = true;
+                if (input) {
+                    input.disabled = false;
+                    input.value = '';
+                }
             }
 
             document.querySelectorAll('.pricing-card').forEach(card => {
@@ -1177,22 +1194,33 @@
                 const newPriceEl = card.querySelector('.price-new');
                 const buyBtn = card.querySelector('.buy-btn');
 
-                origPriceEl.classList.remove('striked');
-                origPriceEl.innerHTML = card.getAttribute('data-base-price') + ' <span class="text-[10px] font-bold text-gray-400">تومان</span>';
-                newPriceEl.classList.remove('active');
+                if (origPriceEl) {
+                    origPriceEl.classList.remove('striked');
+                    origPriceEl.innerHTML = card.getAttribute('data-base-price') + ' <span class="text-[10px] font-bold text-gray-400">تومان</span>';
+                }
+                if (newPriceEl) {
+                    newPriceEl.classList.remove('active');
+                }
 
-                buyBtn.href = card.getAttribute('data-base-link');
-                buyBtn.innerText = 'خرید سرویس';
-                buyBtn.classList.replace('bg-orange-500', 'bg-white/10');
+                if (buyBtn) {
+                    buyBtn.href = card.getAttribute('data-base-link');
+                    buyBtn.innerText = 'خرید سرویس';
+
+                    if (card.id === 'plan-30gb') {
+                        buyBtn.className = 'buy-btn w-full block text-center bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black py-3.5 rounded-xl active:scale-[0.97] transition-transform text-sm shadow-lg shadow-orange-500/40 border border-orange-400/30';
+                    } else if (card.id === 'plan-100gb') {
+                        buyBtn.className = 'buy-btn w-full block text-center bg-white text-gray-900 font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs shadow-md';
+                    } else {
+                        buyBtn.className = 'buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10';
+                    }
+                }
             });
         }
 
         function applyDiscountEngine(isSilent = false) {
             let endTime = localStorage.getItem('sanjab_timer_end');
             if (endTime && Date.now() > parseInt(endTime, 10)) {
-                if(!isSilent) showToast('مهلت ۲۴ ساعته تخفیف شما به پایان رسیده است.', 'error');
                 expireDiscountProcess();
-                return;
             }
 
             const input = document.getElementById('promo-input').value.trim().toUpperCase();
@@ -1215,13 +1243,17 @@
                     const newPriceEl = card.querySelector('.price-new');
                     const buyBtn = card.querySelector('.buy-btn');
                     
-                    origPriceEl.classList.add('striked');
-                    newPriceEl.innerHTML = card.getAttribute('data-discount-price') + ' <span class="text-[10px] font-bold text-gray-400">تومان</span>';
-                    newPriceEl.classList.add('active');
+                    if (origPriceEl) origPriceEl.classList.add('striked');
+                    if (newPriceEl) {
+                        newPriceEl.innerHTML = card.getAttribute('data-discount-price') + ' <span class="text-[10px] font-bold text-gray-400">تومان</span>';
+                        newPriceEl.classList.add('active');
+                    }
                     
-                    buyBtn.href = card.getAttribute('data-discount-link');
-                    buyBtn.innerHTML = '🚀 خرید با تخفیف';
-                    buyBtn.classList.replace('bg-white/10', 'bg-orange-500');
+                    if (buyBtn) {
+                        buyBtn.href = card.getAttribute('data-discount-link');
+                        buyBtn.innerHTML = '🚀 خرید با تخفیف';
+                        buyBtn.classList.replace('bg-white/10', 'bg-orange-500');
+                    }
                 });
                 isDiscountApplied = true;
             } else {
