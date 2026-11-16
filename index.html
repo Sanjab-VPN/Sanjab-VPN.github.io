@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>سنجاب VPN | اینترنت پرسرعت، بدون قطعی و آزاد</title>
     <meta name="description" content="سنجاب VPN: سرورهای اختصاصی ضد فیلتر با ارسال سریع. بدون قطعی روی تمامی اپراتورهای همراه و خانگی.">
+    <meta name="theme-color" content="#070a11">
+    <meta property="og:title" content="سنجاب VPN | اینترنت پرسرعت، بدون قطعی و آزاد">
+    <meta property="og:description" content="سرورهای اختصاصی ضد فیلتر با ارسال سریع، سازگار با تمامی اپراتورها.">
+    <meta property="og:type" content="website">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐿️</text></svg>">
     
     <!-- Speed Optimization: Resource Preconnecting -->
@@ -17,11 +21,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Three.js Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 
     <!-- GSAP Animation Engine & ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     
@@ -232,6 +236,11 @@
 
         .text-glow-contrast {
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 25px rgba(7, 10, 17, 0.9);
+        }
+        input, textarea { -webkit-user-select: text; user-select: text; }
+        @media (prefers-reduced-motion: reduce) {
+            .float-animation, .pulse-glow, .animate-pulse, .highlight-card { animation: none !important; }
+            html { scroll-behavior: auto; }
         }
     </style>
 </head>
@@ -470,10 +479,10 @@
                     <div class="h-px bg-white/10 my-1"></div>
                     
                     <div class="text-[10px] text-gray-300 font-bold">🎯 پلن پیشنهادی برای شما:</div>
-                    <div id="recommended-plan-name" class="text-base font-black text-emerald-400">۵۰ گیگابایت (۱ ماهه)</div>
+                    <div id="recommended-plan-name" class="text-base font-black text-emerald-400">۴۰ گیگابایت (۱ ماهه)</div>
                     
                     <button onclick="scrollToRecommendedPlan()" id="calc-cta-btn" class="mt-1 w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black py-3 rounded-xl text-xs shadow-lg shadow-orange-500/30 active:scale-95 transition-all border border-orange-400/30">
-                        مشاهده و خرید پلن ۵۰ گیگ 🚀
+                        مشاهده و خرید پلن ۴۰ گیگ 🚀
                     </button>
                 </div>
             </div>
@@ -554,20 +563,35 @@
                     <a href="https://t.me/SanjabVPN2_Bot?start=B_abd37b" target="_blank" rel="noopener noreferrer" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10">خرید سرویس</a>
                 </div>
 
-                <!-- 30GB (POPULAR) -->
-                <div id="plan-30gb" class="pricing-card glass-card-glow rounded-2xl p-5 relative overflow-hidden transform scale-[1.02] transition-all duration-300"
-                     data-base-price="۲۷۹,۰۰۰" data-discount-price="۲۵۱,۰۰۰" 
-                     data-base-link="https://t.me/SanjabVPN2_Bot?start=B_0ba29a" 
+                <!-- 30GB -->
+                <div id="plan-30gb" class="pricing-card glass-card rounded-2xl p-4 relative overflow-hidden transition-all duration-300"
+                     data-base-price="۲۷۹,۰۰۰" data-discount-price="۲۵۱,۰۰۰"
+                     data-base-link="https://t.me/SanjabVPN2_Bot?start=B_e08438"
                      data-discount-link="https://t.me/SanjabVPN2_Bot?start=B_6bf96a">
-                    <div class="absolute top-0 left-0 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-[9px] font-black px-2.5 py-0.5 rounded-br-xl shadow-md">⭐ پرفروش‌ترین</div>
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-2xl font-black text-white">۳۰ <span class="text-sm font-bold text-gray-400">گیگ</span></span>
+                        <span class="bg-white/5 border border-white/10 px-2.5 py-0.5 rounded-full text-[10px] font-bold text-gray-300">۱ ماهه</span>
+                    </div>
+                    <p class="text-[10px] text-gray-400 mb-3">مناسب اینستاگرام و یوتیوب</p>
+                    <div class="mb-4">
+                        <div class="text-xl font-black text-white price-original">۲۷۹,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                        <div class="text-xl font-black text-orange-500 price-new">۲۵۱,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                    </div>
+                    <a href="https://t.me/SanjabVPN2_Bot?start=B_e08438" target="_blank" rel="noopener noreferrer" class="buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10">خرید سرویس</a>
+                </div>
+
+                <!-- 40GB (RECOMMENDED) -->
+                <div id="plan-40gb" class="pricing-card glass-card-glow rounded-2xl p-5 relative overflow-hidden transform scale-[1.02] transition-all duration-300"
+                     data-base-price="۳۵۹,۰۰۰"
+                     data-base-link="https://t.me/SanjabVPN2_Bot?start=B_0ba29a">
+                    <div class="absolute top-0 left-0 bg-gradient-to-r from-orange-500 to-amber-500 text-white text-[9px] font-black px-2.5 py-0.5 rounded-br-xl shadow-md">⭐ پیشنهادی</div>
                     <div class="flex justify-between items-center mb-1 mt-1">
-                        <span class="text-3xl font-black text-white">۳۰ <span class="text-sm font-bold text-orange-400">گیگ</span></span>
+                        <span class="text-3xl font-black text-white">۴۰ <span class="text-sm font-bold text-orange-400">گیگ</span></span>
                         <span class="bg-orange-500/20 border border-orange-500/30 text-orange-300 px-2.5 py-0.5 rounded-full text-[10px] font-bold">۱ ماهه</span>
                     </div>
-                    <p class="text-[10px] text-orange-200/80 mb-3">عالی برای اینستاگرام و یوتیوب</p>
+                    <p class="text-[10px] text-orange-200/80 mb-3">عالی برای اینستاگرام، یوتیوب و استفاده روزمره</p>
                     <div class="mb-4">
-                        <div class="text-2xl font-black text-white price-original">۲۷۹,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
-                        <div class="text-2xl font-black text-orange-400 price-new">۲۵۱,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
+                        <div class="text-2xl font-black text-white price-original">۳۵۹,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
                     </div>
                     <a href="https://t.me/SanjabVPN2_Bot?start=B_0ba29a" target="_blank" rel="noopener noreferrer" class="buy-btn w-full block text-center bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black py-3.5 rounded-xl active:scale-[0.97] transition-transform text-sm shadow-lg shadow-orange-500/40 border border-orange-400/30">خرید این پلن</a>
                 </div>
@@ -652,7 +676,7 @@
                     <div class="h-px bg-white/10 flex-1"></div>
                 </div>
 
-                <a href="https://play.google.com/store/apps/details?id=com.happproxy" target="_blank" rel="noopener noreferrer" class="app-card flex items-center justify-between p-3.5 glass-card border border-emerald-500/30 rounded-2xl active:scale-[0.98] transition-transform w-full">
+                <a href="https://github.com/Happ-proxy/happ-android/releases/latest/download/Happ.apk" target="_blank" rel="noopener noreferrer" class="app-card flex items-center justify-between p-3.5 glass-card border border-emerald-500/30 rounded-2xl active:scale-[0.98] transition-transform w-full">
                     <div class="flex items-center gap-3">
                         <div class="w-9 h-9 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-xl flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5"><use href="#icon-android-logo"></use></svg>
@@ -664,7 +688,7 @@
                     <span class="text-blue-400 text-xs font-bold shrink-0">دانلود</span>
                 </a>
 
-                <a href="https://github.com/2dust/v2rayNG/releases" target="_blank" rel="noopener noreferrer" class="app-card flex items-center justify-between p-3.5 glass-card rounded-2xl active:scale-[0.98] transition-transform w-full">
+                <a href="https://github.com/2dust/v2rayNG/releases/latest" target="_blank" rel="noopener noreferrer" class="app-card flex items-center justify-between p-3.5 glass-card rounded-2xl active:scale-[0.98] transition-transform w-full">
                     <div class="flex items-center gap-3">
                         <div class="w-9 h-9 bg-white/5 text-gray-400 border border-white/10 rounded-xl flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5"><use href="#icon-android-logo"></use></svg>
@@ -734,7 +758,7 @@
                     </button>
                     <div class="accordion-content">
                         <div class="px-4 py-3.5 text-gray-300 text-[11px] leading-relaxed border-t border-white/10 bg-black/20">
-                            بله، سرورهای سنجاب به گونه‌ای کانفیگ شده‌اند که با تمامی اپراتورهای همراه و اینترنت‌های خانگی (وای‌فای، ADSL، فیبر) سازگاری کامل دارند.
+                            بله، سرورهای سنجاب به گونه‌ای کانفیگ شده‌اند که با تمامی اپراتورهای سیم‌کارت (همراه اول، ایرانسل، رایتل، سامانتل، شاتل موبایل و ...) و اینترنت‌های خانگی (وای‌فای، ADSL، فیبر) سازگاری کامل دارند.
                         </div>
                     </div>
                 </div>
@@ -788,7 +812,7 @@
 
             const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
             renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
             // Generate In-Memory Soft Glowing Radial Particle Texture (Zero Bandwidth Cost)
             function createGlowParticleTexture() {
@@ -875,7 +899,9 @@
             window.addEventListener('mousemove', onPointerMove, { passive: true });
             window.addEventListener('touchmove', onPointerMove, { passive: true });
 
+            let running = false, inView = true;
             function animate() {
+                if (!running) return;
                 requestAnimationFrame(animate);
 
                 // Lerp smooth mouse physics
@@ -897,7 +923,16 @@
 
                 renderer.render(scene, camera);
             }
-            animate();
+            function syncLoop() {
+                const shouldRun = inView && !document.hidden;
+                if (shouldRun && !running) { running = true; animate(); }
+                else if (!shouldRun) { running = false; }
+            }
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(([e]) => { inView = e.isIntersecting; syncLoop(); }).observe(container);
+            }
+            document.addEventListener('visibilitychange', syncLoop);
+            syncLoop();
 
             window.addEventListener('resize', () => {
                 camera.aspect = container.clientWidth / container.clientHeight;
@@ -1042,8 +1077,19 @@
             }, 800);
         }
 
+        const store = {
+            get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+            set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+            del(k) { try { localStorage.removeItem(k); } catch (e) {} }
+        };
+
         // 3. RE-CALIBRATED ACCURATE CALCULATOR LOGIC
-        let recommendedPlanId = 'plan-50gb';
+        const PLAN_TIERS = [
+            { gb: 10, max: 14 }, { gb: 20, max: 24 }, { gb: 30, max: 34 }, { gb: 40, max: 46 },
+            { gb: 50, max: 60 }, { gb: 75, max: 85 }, { gb: 100, max: Infinity }
+        ];
+        const fa = (n, d) => Number(n).toLocaleString('fa-IR', d ? { minimumFractionDigits: d, maximumFractionDigits: d } : undefined);
+        let recommendedPlanId = 'plan-40gb';
 
         function updateUsageCalculation() {
             const instaHours = parseFloat(document.getElementById('insta-slider').value);
@@ -1051,47 +1097,20 @@
             const webHours = parseFloat(document.getElementById('web-slider').value);
             const dlGbWeekly = parseFloat(document.getElementById('dl-slider').value);
 
-            document.getElementById('insta-val').innerText = `${instaHours} ساعت / روز`;
-            document.getElementById('yt-val').innerText = `${ytHours} ساعت / روز`;
-            document.getElementById('web-val').innerText = `${webHours} ساعت / روز`;
-            document.getElementById('dl-val').innerText = `${dlGbWeekly} گیگ / هفته`;
+            document.getElementById('insta-val').innerText = `${fa(instaHours)} ساعت / روز`;
+            document.getElementById('yt-val').innerText = `${fa(ytHours)} ساعت / روز`;
+            document.getElementById('web-val').innerText = `${fa(webHours)} ساعت / روز`;
+            document.getElementById('dl-val').innerText = `${fa(dlGbWeekly)} گیگ / هفته`;
 
             const totalGb = (instaHours * 0.4 * 30) + (ytHours * 0.6 * 30) + (webHours * 0.05 * 30) + (dlGbWeekly * 4.3);
-            const formattedTotal = totalGb.toFixed(1);
+            const formattedTotal = fa(totalGb, 1);
 
             document.getElementById('calc-total-gb').innerText = formattedTotal;
 
-            let planName = '';
-            let btnText = '';
-
-            if (totalGb <= 14) {
-                recommendedPlanId = 'plan-10gb';
-                planName = '۱۰ گیگابایت (۱ ماهه)';
-                btnText = 'مشاهده و خرید پلن ۱۰ گیگ 🚀';
-            } else if (totalGb <= 24) {
-                recommendedPlanId = 'plan-20gb';
-                planName = '۲۰ گیگابایت (۱ ماهه)';
-                btnText = 'مشاهده و خرید پلن ۲۰ گیگ 🚀';
-            } else if (totalGb <= 38) {
-                recommendedPlanId = 'plan-30gb';
-                planName = '۳۰ گیگابایت (۱ ماهه)';
-                btnText = 'مشاهده و خرید پلن ۳۰ گیگ 🚀';
-            } else if (totalGb <= 60) {
-                recommendedPlanId = 'plan-50gb';
-                planName = '۵۰ گیگابایت (۱ ماهه)';
-                btnText = 'مشاهده و خرید پلن ۵۰ گیگ 🚀';
-            } else if (totalGb <= 85) {
-                recommendedPlanId = 'plan-75gb';
-                planName = '۷۵ گیگابایت (۱ ماهه)';
-                btnText = 'مشاهده و خرید پلن ۷۵ گیگ 🚀';
-            } else {
-                recommendedPlanId = 'plan-100gb';
-                planName = '+۱۰۰ گیگابایت (پرمصرف)';
-                btnText = 'مشاهده و خرید پلن ۱۰۰ گیگ 🚀';
-            }
-
-            document.getElementById('recommended-plan-name').innerText = planName;
-            document.getElementById('calc-cta-btn').innerText = btnText;
+            const tier = PLAN_TIERS.find(t => totalGb <= t.max);
+            recommendedPlanId = `plan-${tier.gb}gb`;
+            document.getElementById('recommended-plan-name').innerText = tier.gb === 100 ? '+۱۰۰ گیگابایت (پرمصرف)' : `${fa(tier.gb)} گیگابایت (۱ ماهه)`;
+            document.getElementById('calc-cta-btn').innerText = `مشاهده و خرید پلن ${fa(tier.gb)} گیگ 🚀`;
         }
 
         function scrollToRecommendedPlan() {
@@ -1118,11 +1137,11 @@
             }
 
             const timerDuration = 24 * 60 * 60 * 1000; 
-            let endTime = localStorage.getItem('sanjab_timer_end');
+            let endTime = store.get('sanjab_timer_end');
 
             if (!endTime) {
                 endTime = Date.now() + timerDuration;
-                localStorage.setItem('sanjab_timer_end', endTime.toString());
+                store.set('sanjab_timer_end', endTime.toString());
             } else {
                 endTime = parseInt(endTime, 10);
             }
@@ -1162,8 +1181,8 @@
                 timerInterval = null;
             }
 
-            localStorage.removeItem('sanjab_discount');
-            localStorage.removeItem('sanjab_timer_end');
+            store.del('sanjab_discount');
+            store.del('sanjab_timer_end');
 
             const container = document.getElementById('countdown-container');
             if (container) {
@@ -1189,36 +1208,29 @@
                 }
             }
 
+            resetPricingCards();
+        }
+
+        function resetPricingCards() {
             document.querySelectorAll('.pricing-card').forEach(card => {
-                const origPriceEl = card.querySelector('.price-original');
-                const newPriceEl = card.querySelector('.price-new');
-                const buyBtn = card.querySelector('.buy-btn');
-
-                if (origPriceEl) {
-                    origPriceEl.classList.remove('striked');
-                    origPriceEl.innerHTML = card.getAttribute('data-base-price') + ' <span class="text-[10px] font-bold text-gray-400">تومان</span>';
+                const orig = card.querySelector('.price-original');
+                const fresh = card.querySelector('.price-new');
+                const btn = card.querySelector('.buy-btn');
+                if (orig) {
+                    orig.classList.remove('striked');
+                    orig.innerHTML = card.dataset.basePrice + ' <span class="text-[10px] font-bold text-gray-400">تومان</span>';
                 }
-                if (newPriceEl) {
-                    newPriceEl.classList.remove('active');
-                }
-
-                if (buyBtn) {
-                    buyBtn.href = card.getAttribute('data-base-link');
-                    buyBtn.innerText = 'خرید سرویس';
-
-                    if (card.id === 'plan-30gb') {
-                        buyBtn.className = 'buy-btn w-full block text-center bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black py-3.5 rounded-xl active:scale-[0.97] transition-transform text-sm shadow-lg shadow-orange-500/40 border border-orange-400/30';
-                    } else if (card.id === 'plan-100gb') {
-                        buyBtn.className = 'buy-btn w-full block text-center bg-white text-gray-900 font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs shadow-md';
-                    } else {
-                        buyBtn.className = 'buy-btn w-full block text-center bg-white/10 text-white font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs border border-white/10';
-                    }
+                if (fresh) fresh.classList.remove('active');
+                if (btn) {
+                    btn.href = card.dataset.baseLink;
+                    btn.innerText = btn.dataset.baseLabel || 'خرید سرویس';
+                    if (btn.dataset.baseClass) btn.className = btn.dataset.baseClass;
                 }
             });
         }
 
         function applyDiscountEngine(isSilent = false) {
-            let endTime = localStorage.getItem('sanjab_timer_end');
+            let endTime = store.get('sanjab_timer_end');
             if (endTime && Date.now() > parseInt(endTime, 10)) {
                 expireDiscountProcess();
             }
@@ -1231,7 +1243,7 @@
                 
                 if(!isSilent) showToast('تخفیف ۱۰٪ با موفقیت اعمال شد! 🎁', 'success');
                 
-                localStorage.setItem('sanjab_discount', 'active');
+                store.set('sanjab_discount', 'active');
                 startDiscountTimer();
 
                 btn.innerHTML = '✔️ تخفیف ۱۰٪ فعال شد';
@@ -1239,20 +1251,19 @@
                 document.getElementById('promo-input').disabled = true;
 
                 document.querySelectorAll('.pricing-card').forEach(card => {
-                    const origPriceEl = card.querySelector('.price-original');
-                    const newPriceEl = card.querySelector('.price-new');
-                    const buyBtn = card.querySelector('.buy-btn');
-                    
-                    if (origPriceEl) origPriceEl.classList.add('striked');
-                    if (newPriceEl) {
-                        newPriceEl.innerHTML = card.getAttribute('data-discount-price') + ' <span class="text-[10px] font-bold text-gray-400">تومان</span>';
-                        newPriceEl.classList.add('active');
+                    if (!card.dataset.discountLink || !card.dataset.discountPrice) return; // plan without a discount
+                    const orig = card.querySelector('.price-original');
+                    const fresh = card.querySelector('.price-new');
+                    const btn = card.querySelector('.buy-btn');
+                    if (orig) orig.classList.add('striked');
+                    if (fresh) {
+                        fresh.innerHTML = card.dataset.discountPrice + ' <span class="text-[10px] font-bold text-gray-400">تومان</span>';
+                        fresh.classList.add('active');
                     }
-                    
-                    if (buyBtn) {
-                        buyBtn.href = card.getAttribute('data-discount-link');
-                        buyBtn.innerHTML = '🚀 خرید با تخفیف';
-                        buyBtn.classList.replace('bg-white/10', 'bg-orange-500');
+                    if (btn) {
+                        btn.href = card.dataset.discountLink;
+                        btn.innerHTML = '🚀 خرید با تخفیف';
+                        btn.classList.replace('bg-white/10', 'bg-orange-500');
                     }
                 });
                 isDiscountApplied = true;
@@ -1262,14 +1273,21 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            init3DHero();
-            initGSAPAnimations();
+            document.querySelectorAll('.buy-btn').forEach(b => { b.dataset.baseClass = b.className; b.dataset.baseLabel = b.textContent.trim(); });
+            document.getElementById('service-name').addEventListener('keydown', e => { if (e.key === 'Enter') checkServiceStatus(); });
             updateUsageCalculation();
+            try {
+                initGSAPAnimations();
+            } catch (e) {
+                // CDN blocked/slow: never leave the hero invisible
+                document.querySelectorAll('#hero-badge, #hero-mascot, #hero-title, #hero-subtitle, #hero-cta-box > *').forEach(el => { el.style.opacity = 1; });
+            }
+            try { init3DHero(); } catch (e) {}
 
-            let endTime = localStorage.getItem('sanjab_timer_end');
+            let endTime = store.get('sanjab_timer_end');
             if (endTime && Date.now() > parseInt(endTime, 10)) {
                 expireDiscountProcess();
-            } else if (localStorage.getItem('sanjab_discount') === 'active') {
+            } else if (store.get('sanjab_discount') === 'active') {
                 document.getElementById('promo-input').value = 'SANJAB_OFFER';
                 applyDiscountEngine(true);
             } else {
