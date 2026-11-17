@@ -2,7 +2,8 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <style>html{background:#070a11}</style>
+    <style>html{background:#070a11}html[data-theme=light]{background:#f3f6fb}</style>
+    <script>(function(){var d=document.documentElement,t=null,n=navigator,c=n.connection||{};try{t=localStorage.getItem('sanjab_theme')}catch(e){}d.setAttribute('data-theme',t==='light'?'light':'dark');if((n.deviceMemory||4)<=2||c.saveData||/2g/.test(c.effectiveType||'')||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches))d.classList.add('lite');else if((n.hardwareConcurrency||8)<=4)d.setAttribute('data-probe','1')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>سنجاب VPN | اینترنت پرسرعت، بدون قطعی و آزاد</title>
     <meta name="description" content="سنجاب VPN: سرورهای اختصاصی ضد فیلتر با ارسال سریع. بدون قطعی روی تمامی اپراتورهای همراه و خانگی.">
@@ -22,11 +23,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Three.js Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 
     <!-- GSAP Animation Engine & ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;900&display=swap" rel="stylesheet"></noscript>
@@ -259,6 +257,58 @@
         .shimmer-text { background-image: linear-gradient(90deg, #fb923c, #fde68a, #f97316, #fb923c) !important; background-size: 250% 100%; animation: shimmer 4s linear infinite; }
         @keyframes shimmer { to { background-position: -250% 0; } }
         @media (prefers-reduced-motion: reduce) { .shimmer-text, .splash-bar i, .splash-orbit::before { animation: none !important; } }
+
+        /* ===== LIGHT THEME ===== */
+        html[data-theme="light"] { color-scheme: light; }
+        html[data-theme="light"] body { background-color: #f3f6fb; color: #1e293b; background-image: radial-gradient(circle at 85% -5%, rgba(249,115,22,.10), transparent 45%), radial-gradient(circle at 5% 30%, rgba(59,130,246,.09), transparent 40%); }
+        html[data-theme="light"] #splash { background: radial-gradient(circle at 50% 40%, #fff 0%, #e8eef8 70%); }
+        html[data-theme="light"] .splash-title { color: #0f172a; }
+        html[data-theme="light"] .text-white { color: #0f172a; }
+        html[data-theme="light"] .text-gray-200 { color: #1e293b; }
+        html[data-theme="light"] .text-gray-300 { color: #334155; }
+        html[data-theme="light"] .text-gray-400 { color: #475569; }
+        html[data-theme="light"] .text-gray-500, html[data-theme="light"] .text-gray-600 { color: #64748b; }
+        html[data-theme="light"] .text-orange-300, html[data-theme="light"] .text-orange-400, html[data-theme="light"] .text-orange-500 { color: #ea580c; }
+        html[data-theme="light"] .text-emerald-400 { color: #059669; }
+        html[data-theme="light"] .text-blue-300, html[data-theme="light"] .text-blue-400 { color: #2563eb; }
+        html[data-theme="light"] .text-red-400 { color: #dc2626; }
+        html[data-theme="light"] :is(.bg-orange-500, .bg-blue-600, [class*="from-orange-500"], [class*="from-blue-"], [class*="from-emerald-"]).text-white,
+        html[data-theme="light"] :is(.bg-orange-500, .bg-blue-600, [class*="from-orange-500"], [class*="from-blue-"], [class*="from-emerald-"]) .text-white { color: #fff; }
+        html[data-theme="light"] [class~="border-white/5"], html[data-theme="light"] [class~="border-white/10"], html[data-theme="light"] [class~="border-white/15"] { border-color: rgba(15,23,42,.10); }
+        html[data-theme="light"] [class~="bg-white/5"], html[data-theme="light"] [class~="bg-black/20"] { background-color: rgba(15,23,42,.045); }
+        html[data-theme="light"] [class~="bg-white/10"], html[data-theme="light"] [class~="bg-black/40"] { background-color: rgba(15,23,42,.07); }
+        html[data-theme="light"] [class~="active:bg-white/10"]:active, html[data-theme="light"] [class~="active:bg-white/20"]:active { background-color: rgba(15,23,42,.12); }
+        html[data-theme="light"] [class~="bg-[#070a11]/85"] { background-color: rgba(255,255,255,.88); }
+        html[data-theme="light"] [class~="bg-[#070a11]"] { background-color: #fff; }
+        html[data-theme="light"] [class~="bg-[#070a11]/60"], html[data-theme="light"] [class~="bg-[#070a11]/40"] { background-color: rgba(255,255,255,.65); }
+        html[data-theme="light"] .glass-card { background: rgba(255,255,255,.92); backdrop-filter: none; -webkit-backdrop-filter: none; border-color: rgba(15,23,42,.08); box-shadow: 0 8px 28px -10px rgba(30,64,175,.22); }
+        html[data-theme="light"] .glass-card:hover { border-color: rgba(249,115,22,.45); }
+        html[data-theme="light"] .glass-card-glow { background: linear-gradient(145deg, rgba(249,115,22,.15), rgba(255,255,255,.97)); backdrop-filter: none; -webkit-backdrop-filter: none; border-color: rgba(249,115,22,.6); box-shadow: 0 8px 30px rgba(249,115,22,.25); }
+        html[data-theme="light"] .toast, html[data-theme="light"] .social-proof-toast { background: rgba(255,255,255,.97); color: #0f172a; border-color: rgba(15,23,42,.1); box-shadow: 0 8px 24px rgba(15,23,42,.14); }
+        html[data-theme="light"] .sticky-cta { background: rgba(255,255,255,.95); border-top-color: rgba(15,23,42,.08); box-shadow: 0 -4px 20px rgba(15,23,42,.10); }
+        html[data-theme="light"] .price-original.striked { color: #94a3b8; }
+        html[data-theme="light"] .text-glow-contrast { text-shadow: none; }
+        html[data-theme="light"] #webgl-hero-canvas { filter: invert(1) hue-rotate(180deg); }
+
+        /* ===== LITE MODE (weak / old / data-saver devices) ===== */
+        html.lite *, html.lite *::before, html.lite *::after { animation: none !important; transition: none !important; }
+        html.lite .highlight-card { animation: borderHighlight 1.5s ease-in-out 2 !important; }
+        html.lite .glass-card, html.lite .glass-card-glow, html.lite .toast, html.lite .social-proof-toast, html.lite .sticky-cta, html.lite header { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+        html.lite .glass-card, html.lite .glass-card-glow { box-shadow: none; }
+        html.lite #webgl-hero-canvas, html.lite [class*="blur-["], html.lite .blur-xl { display: none !important; }
+        html.lite #hero-badge, html.lite #hero-mascot, html.lite #hero-title, html.lite #hero-subtitle, html.lite #hero-cta-box > * { opacity: 1 !important; will-change: auto; }
+        html.lite #splash { display: none; }
+        .social-proof-toast.show { pointer-events: auto; cursor: pointer; }
+        /* perf: cards are ~90% opaque, so the costly blur is invisible; keep blur only on overlays */
+        .glass-card, .glass-card-glow { backdrop-filter: none; -webkit-backdrop-filter: none; }
+        .glass-card { background: rgba(18, 24, 38, 0.9); }
+        /* perf: animate opacity (compositor) instead of box-shadow (repaints every frame) */
+        .pulse-glow { animation: none; box-shadow: 0 0 18px rgba(37,99,235,.6); position: relative; }
+        .pulse-glow::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 0 32px rgba(37,99,235,.95); opacity: 0; animation: pulseOp 2.5s ease-in-out infinite; pointer-events: none; }
+        @keyframes pulseOp { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+        /* smooth theme switch: no per-element transitions while the page cross-fades */
+        html.theme-switching *, html.theme-switching *::before, html.theme-switching *::after { transition: none !important; }
+        ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
         input, textarea { -webkit-user-select: text; user-select: text; }
         @media (prefers-reduced-motion: reduce) {
             .float-animation, .pulse-glow, .animate-pulse, .highlight-card { animation: none !important; }
@@ -288,9 +338,7 @@
 
     <div id="toast-container"></div>
     
-    <div id="social-proof" class="social-proof-toast">
-        <span class="text-sm">⚡</span> <span id="social-proof-text">یک کاربر اشتراک ۳۰ گیگ را تمدید کرد</span>
-    </div>
+    <div id="social-proof" class="social-proof-toast"><span class="text-sm">🐿️</span><span id="social-proof-text"></span></div>
 
     <!-- Sticky Bottom CTA -->
     <div id="sticky-cta" class="sticky-cta">
@@ -319,9 +367,14 @@
                 <span>سنجاب <span class="text-orange-500">VPN</span></span>
             </a>
             
+            <div class="flex items-center gap-2">
+            <button id="theme-btn" type="button" aria-label="تغییر تم" class="text-gray-200 p-1.5 focus:outline-none rounded-xl bg-white/5 border border-white/10 active:scale-90 transition-transform">
+                <span id="theme-icon" class="block w-6 h-6 text-center leading-6 text-lg">☀️</span>
+            </button>
             <button id="mobile-menu-btn" class="text-gray-200 p-1.5 focus:outline-none rounded-xl bg-white/5 border border-white/10" aria-label="Toggle Menu">
                 <svg id="menu-icon" class="w-6 h-6"><use href="#icon-menu"></use></svg>
             </button>
+            </div>
         </nav>
 
         <!-- Fullscreen Mobile Navigation -->
@@ -481,7 +534,7 @@
                         <div class="text-xl font-black text-white price-original">۷۴۹,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
                         <div class="text-xl font-black text-orange-400 price-new">۶۷۴,۰۰۰ <span class="text-[10px] font-bold text-gray-400">تومان</span></div>
                     </div>
-                    <a href="https://t.me/SanjabVPN2_Bot?start=B_118db3" target="_blank" rel="noopener noreferrer" class="buy-btn w-full block text-center bg-white text-gray-900 font-bold py-3 rounded-xl active:scale-[0.97] transition-transform text-xs shadow-md">خرید سرویس</a>
+                    <a href="https://t.me/SanjabVPN2_Bot?start=B_118db3" target="_blank" rel="noopener noreferrer" class="buy-btn w-full block text-center bg-gradient-to-r from-blue-500 to-blue-700 text-white font-black py-3 rounded-xl active:scale-[0.97] transition-transform text-xs shadow-lg shadow-blue-600/30 border border-blue-400/30">خرید سرویس</a>
                 </div>
 
             </div>
@@ -854,7 +907,7 @@
             const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
             camera.position.z = 4.0;
 
-            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, powerPreference: "high-performance" });
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: window.devicePixelRatio < 2, powerPreference: "high-performance" });
             renderer.setSize(container.clientWidth, container.clientHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
@@ -971,7 +1024,7 @@
             window.addEventListener('mousemove', onPointerMove, { passive: true });
             window.addEventListener('touchmove', onPointerMove, { passive: true });
 
-            let running = false, inView = true, intro = 0;
+            let running = false, inView = true, intro = 0, dead = false;
             function animate() {
                 if (!running) return;
                 requestAnimationFrame(animate);
@@ -1004,7 +1057,7 @@
                 renderer.render(scene, camera);
             }
             function syncLoop() {
-                const shouldRun = inView && !document.hidden;
+                const shouldRun = !dead && inView && !document.hidden;
                 if (shouldRun && !running) { running = true; animate(); }
                 else if (!shouldRun) { running = false; }
             }
@@ -1012,32 +1065,100 @@
                 new IntersectionObserver(([e]) => { inView = e.isIntersecting; syncLoop(); }).observe(container);
             }
             document.addEventListener('visibilitychange', syncLoop);
+            window.__stop3D = () => { dead = true; running = false; renderer.dispose(); };
             syncLoop();
 
+            let resizeTimer, lastW = container.clientWidth, lastH = container.clientHeight;
             window.addEventListener('resize', () => {
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth, container.clientHeight);
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    const w = container.clientWidth, h = container.clientHeight;
+                    if (w === lastW && h === lastH) return; // mobile URL-bar show/hide: skip costly resize
+                    lastW = w; lastH = h;
+                    camera.aspect = w / h;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(w, h);
+                }, 150);
             }, { passive: true });
         }
 
         // SPLASH -> REVEAL (runs once; falls back after 2.5s if a CDN is slow)
         const splashStart = performance.now();
+        let LITE = document.documentElement.classList.contains('lite');
+        // Smoothness probe for borderline phones: samples frames during the splash (no extra wait)
+        const PROBE = document.documentElement.hasAttribute('data-probe');
+        const frames = [];
+        let sampling = PROBE;
+        if (PROBE) requestAnimationFrame(function sample(t) { frames.push(t); if (frames.length > 40) frames.shift(); if (sampling) requestAnimationFrame(sample); });
+        const loadScript = src => new Promise((ok, fail) => {
+            const el = document.createElement('script');
+            el.src = 'https://cdnjs.cloudflare.com/ajax/libs/' + src;
+            el.onload = ok; el.onerror = fail;
+            document.head.appendChild(el);
+        });
+
+        // THEME (dark / light)
+        function syncThemeUI() {
+            const light = document.documentElement.getAttribute('data-theme') === 'light';
+            document.getElementById('theme-icon').textContent = light ? '🌙' : '☀️';
+            const m = document.querySelector('meta[name="theme-color"]');
+            if (m) m.content = light ? '#f3f6fb' : '#070a11';
+        }
+        function toggleTheme() {
+            const root = document.documentElement;
+            const prev = root.getAttribute('data-theme');
+            const next = prev === 'light' ? 'dark' : 'light';
+            const apply = () => { root.setAttribute('data-theme', next); store.set('sanjab_theme', next); syncThemeUI(); };
+            if (LITE) { apply(); return; }
+            root.classList.add('theme-switching');
+            if (document.startViewTransition) {
+                // GPU cross-fade of the whole page: no per-element repaint, no lag
+                document.startViewTransition(apply).finished.finally(() => root.classList.remove('theme-switching'));
+            } else {
+                // fallback: fade a solid cover of the old background away (compositor only)
+                const o = document.createElement('div');
+                o.style.cssText = 'position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:1;transition:opacity .35s ease;background:' + (prev === 'light' ? '#f3f6fb' : '#070a11');
+                document.body.appendChild(o);
+                apply();
+                requestAnimationFrame(() => requestAnimationFrame(() => { o.style.opacity = 0; }));
+                setTimeout(() => { o.remove(); root.classList.remove('theme-switching'); }, 420);
+            }
+        }
         function revealApp() {
             if (revealApp.done) return;
             revealApp.done = true;
             setTimeout(() => {
+                sampling = false;
+                if (PROBE && !LITE && frames.length > 8) {
+                    const f = frames.slice(-16);
+                    if ((f[f.length - 1] - f[0]) / (f.length - 1) > 34) { document.documentElement.classList.add('lite'); LITE = true; }
+                }
                 const sp = document.getElementById('splash');
                 if (sp) { sp.classList.add('hide'); setTimeout(() => sp.remove(), 800); }
-                try {
-                    initGSAPAnimations();
-                } catch (e) {
-                    // CDN blocked/slow: never leave the hero invisible
-                    document.querySelectorAll('#hero-badge, #hero-mascot, #hero-title, #hero-subtitle, #hero-cta-box > *').forEach(el => { el.style.opacity = 1; });
-                }
+                const showHero = () => document.querySelectorAll('#hero-badge, #hero-mascot, #hero-title, #hero-subtitle, #hero-cta-box > *').forEach(el => { el.style.opacity = 1; });
+                setTimeout(() => document.querySelectorAll('#hero-badge, #hero-mascot, #hero-title, #hero-subtitle, #hero-cta-box > *').forEach(el => { el.style.willChange = 'auto'; }), 5000);
+                if (LITE) { showHero(); return; }
+                loadScript('gsap/3.12.5/gsap.min.js')
+                    .then(() => loadScript('gsap/3.12.5/ScrollTrigger.min.js'))
+                    .then(initGSAPAnimations)
+                    .catch(showHero);
                 setTimeout(() => {
-                    try { init3DHero(); document.getElementById('webgl-hero-canvas').classList.add('ready'); } catch (e) {}
-                }, 150);
+                    loadScript('three.js/r128/three.min.js')
+                        .then(() => {
+                            init3DHero();
+                            const cv = document.getElementById('webgl-hero-canvas');
+                            const ts = [];
+                            requestAnimationFrame(function gate(t) {
+                                ts.push(t);
+                                if (ts.length < 40 && t - ts[0] < 1100) return requestAnimationFrame(gate);
+                                const d = ts.slice(6);
+                                const avg = d.length > 4 ? (d[d.length - 1] - d[0]) / (d.length - 1) : 0;
+                                if (avg > 40) { window.__stop3D && window.__stop3D(); cv.remove(); } // still invisible: nobody sees it stop
+                                else cv.classList.add('ready');
+                            });
+                        })
+                        .catch(() => {});
+                }, 400);
             }, Math.max(0, 500 - (performance.now() - splashStart)));
         }
 
@@ -1422,6 +1543,8 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.buy-btn').forEach(b => { b.dataset.baseClass = b.className; b.dataset.baseLabel = b.textContent.trim(); });
+            document.getElementById('theme-btn').addEventListener('click', toggleTheme);
+            syncThemeUI();
             document.getElementById('service-name').addEventListener('keydown', e => { if (e.key === 'Enter') checkServiceStatus(); });
             updateUsageCalculation();
             if (document.readyState === 'complete') revealApp();
@@ -1447,76 +1570,54 @@
 
         window.addEventListener('load', () => {
             if (typeof ScrollTrigger !== 'undefined') {
-                ScrollTrigger.refresh();
+                if (window.ScrollTrigger) ScrollTrigger.refresh();
             }
         });
 
         // 5. Subtle Social Proof Notifications
-        const fakeEvents = [
-            'یک کاربر اشتراک ۳۰ گیگ را تمدید کرد',
-            'سرویس یک کاربر پس از تایید رسید فعال شد',
-            'یک کاربر اشتراک ۵۰ گیگ را خریداری کرد',
-            'اطلاعات اتصال برای یک کاربر ارسال شد'
+        const NUDGES = [
+            { t: () => 'پلن ۴۰ گیگ؛ پیشنهاد سنجاب برای مصرف روزمره', plan: 'plan-40gb' },
+            { t: () => 'پلن ۲۰ گیگ؛ شروعی اقتصادی برای مصرف سبک', plan: 'plan-20gb' },
+            { t: () => 'پلن ۳۰ گیگ؛ مناسب اینستاگرام و یوتیوب', plan: 'plan-30gb' },
+            { t: () => 'پلن ۵۰ گیگ؛ مناسب مصرف متوسط تا زیاد', plan: 'plan-50gb' },
+            { t: () => 'پلن ۷۵ گیگ؛ مناسب مصرف زیاد', plan: 'plan-75gb' },
+            { t: () => 'پلن ۱۰ گیگ؛ مناسب شروع و مصرف کم', plan: 'plan-10gb' },
+            { t: () => 'پلن‌های حجم بالاتر هزینهٔ کمتری برای هر گیگ دارند', hot: true },
+            { t: () => 'برای مصرف زیاد، پلن ۱۰۰ گیگ به‌صرفه‌ترین انتخاب است', plan: 'plan-100gb' },
+            { t: () => 'بعد از تأیید رسید، اطلاعات اتصال برایتان ارسال می‌شود' },
+            { t: () => 'برای خرید یا تمدید سرویس، پشتیبانی تلگرام پاسخگوست' },
+            { t: () => 'روی همهٔ اپراتورها و اینترنت‌های خانگی کار می‌کند' },
+            { t: () => 'سرورهای اختصاصی ضد فیلتر برای اینستاگرام و یوتیوب' },
+            { t: () => 'حجم و زمان باقی‌ماندهٔ سرویس را هر لحظه از بخش استعلام ببینید', go: '#status-checker' },
+            { t: () => 'مصرفتان را نمی‌دانید؟ با ماشین‌حساب، پلن مناسب را پیدا کنید', go: '#calculator' }
         ];
+        const proofToast = document.getElementById('social-proof');
+        let proofShown = 0, proofStopped = false, proofSeen = new Set(), lastScroll = 0;
+
+        function pickNudge() {
+            // first two notices of a visit are plan/value tips; from the third on, random among all unseen
+            const pool = NUDGES.filter(n => !proofSeen.has(n) && (proofShown >= 2 || n.plan || n.hot));
+            return pool[Math.floor(Math.random() * pool.length)];
+        }
         function triggerSocialProof() {
-            const toast = document.getElementById('social-proof');
-            const text = document.getElementById('social-proof-text');
-            text.innerText = fakeEvents[Math.floor(Math.random() * fakeEvents.length)];
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); }, 3500);
-
-            const nextDelay = 40000 + Math.random() * 20000;
-            setTimeout(triggerSocialProof, nextDelay);
+            if (proofStopped || proofShown >= 8) return; // max 8 per visit
+            const ae = document.activeElement;
+            const busy = document.hidden || (ae && /INPUT|TEXTAREA/.test(ae.tagName)) || document.getElementById('mobile-menu').classList.contains('open') || Date.now() - lastScroll < 2500;
+            const n = busy ? null : pickNudge();
+            if (!n) { setTimeout(triggerSocialProof, 5000); return; }
+            proofShown++;
+            proofSeen.add(n);
+            proofToast.dataset.plan = n.plan || '';
+            proofToast.dataset.go = n.go || '';
+            document.getElementById('social-proof-text').innerText = n.t();
+            proofToast.classList.add('show');
+            setTimeout(() => proofToast.classList.remove('show'), 5500);
+            setTimeout(triggerSocialProof, 25000 + Math.random() * 15000);
         }
-        setTimeout(triggerSocialProof, 15000);
-
-        // 6. Sticky CTA Scroll Logic
-        const stickyCta = document.getElementById('sticky-cta');
-        const heroSection = document.getElementById('hero');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > heroSection.offsetHeight - 100) {
-                stickyCta.classList.add('visible');
-            } else {
-                stickyCta.classList.remove('visible');
-            }
-        }, { passive: true });
-
-        // Toast Helper
-        function showToast(message, type = 'success') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerText = message;
-            container.appendChild(toast);
-            setTimeout(() => toast.classList.add('show'), 10);
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        // 7. Accordion Logic
-        document.querySelectorAll('.accordion-header').forEach(acc => {
-            acc.addEventListener('click', function() {
-                const content = this.nextElementSibling;
-                const icon = this.querySelector('span:last-child');
-                
-                document.querySelectorAll('.accordion-content').forEach(otherContent => {
-                    if (otherContent !== content) {
-                        otherContent.style.maxHeight = null;
-                        otherContent.previousElementSibling.querySelector('span:last-child').style.transform = 'rotate(0deg)';
-                    }
-                });
-
-                if (content.style.maxHeight) {
-                    content.style.maxHeight = null;
-                    icon.style.transform = 'rotate(0deg)';
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                    icon.style.transform = 'rotate(180deg)';
-                }
-            });
+        proofToast.addEventListener('click', () => {
+            proofToast.classList.remove('show');
+            if (proofToast.dataset.plan) focusPlan(proofToast.dataset.plan); else scrollToElementWithOffset(proofToast.dataset.go || '#pricing');
         });
-    </script>
-</body>
-</html>
+        document.addEventListener('click', e => { if (e.target.closest('.buy-btn, #sticky-cta-btn')) proofStopped = true; });
+        window.addEventListener('scroll', () => { lastScroll = Date.now(); }, { passive: true });
+        if ('IntersectionObserver' in window) new Intersection
