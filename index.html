@@ -12,11 +12,11 @@
     window.toggleTheme=function(){if(d.classList.contains('theme-switching'))return;var next=d.getAttribute('data-theme')==='light'?'dark':'light';
     function apply(){d.setAttribute('data-theme',next);try{localStorage.setItem('sanjab_theme',next)}catch(e){}window.syncThemeUI()}
     if(d.classList.contains('lite')){apply();return}
-    var c=document.createElement('div');c.style.cssText='position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:0;transition:opacity .15s ease;background:'+(next==='light'?'#f3f6fb':'#070a11');
+    var c=document.createElement('div');c.style.cssText='position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:0;transition:opacity .1s linear;will-change:opacity;background:'+(next==='light'?'#f3f6fb':'#070a11');
     d.classList.add('theme-switching');document.body.appendChild(c);
-    requestAnimationFrame(function(){requestAnimationFrame(function(){c.style.opacity=1})});
-    setTimeout(function(){apply();c.style.transition='opacity .28s ease';c.style.opacity=0},180);
-    setTimeout(function(){c.remove();d.classList.remove('theme-switching')},520)};
+    c.offsetWidth;c.style.opacity=1;
+    setTimeout(function(){apply();c.style.transition='opacity .18s ease';c.style.opacity=0},110);
+    setTimeout(function(){c.remove();d.classList.remove('theme-switching')},330)};
     document.addEventListener('DOMContentLoaded',window.syncThemeUI);})();
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -1154,15 +1154,16 @@
                         .then(() => {
                             init3DHero();
                             const cv = document.getElementById('webgl-hero-canvas');
-                            const ts = [];
-                            requestAnimationFrame(function gate(t) {
-                                ts.push(t);
-                                if (ts.length < 40 && t - ts[0] < 1100) return requestAnimationFrame(gate);
-                                const d = ts.slice(6);
-                                const avg = d.length > 4 ? (d[d.length - 1] - d[0]) / (d.length - 1) : 0;
-                                if (avg > 40) { window.__stop3D && window.__stop3D(); cv.remove(); } // still invisible: nobody sees it stop
-                                else cv.classList.add('ready');
-                            });
+                            setTimeout(() => {
+                                const ts = [];
+                                requestAnimationFrame(function gate(t) {
+                                    ts.push(t);
+                                    if (ts.length < 24) return requestAnimationFrame(gate);
+                                    const d = ts.slice(1).map((v, i) => v - ts[i]).sort((x, y) => x - y);
+                                    if (d[d.length >> 1] > 55) { window.__stop3D && window.__stop3D(); cv.remove(); } // under ~18fps: skip it, never visible
+                                    else cv.classList.add('ready');
+                                });
+                            }, 800);
                         })
                         .catch(() => {});
                 }, 400);
@@ -1601,4 +1602,4 @@
 
         function pickNudge() {
             // first two notices of a visit are plan/value tips; from the third on, random among all unseen
-            const pool = NUDGES.filter(n => !proofSeen.has(n) && (proofShown >= 2 || n.
+            const pool = NUDGES.filter(n => !proofSeen.has(n) && (proofS
