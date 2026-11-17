@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <style>html{background:#070a11}html[data-theme=light]{background:#f3f6fb}</style>
     <script>(function(){var d=document.documentElement,t=null,n=navigator,c=n.connection||{};try{t=localStorage.getItem('sanjab_theme')}catch(e){}d.setAttribute('data-theme',t==='light'?'light':'dark');if((n.deviceMemory||4)<=2||c.saveData||/2g/.test(c.effectiveType||'')||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches))d.classList.add('lite');else if((n.hardwareConcurrency||8)<=4)d.setAttribute('data-probe','1')})();</script>
+    <script>
+    (function(){var d=document.documentElement;
+    window.addEventListener('error',function(){d.classList.add('force-show')});
+    setTimeout(function(){d.classList.add('force-show')},4500);
+    window.syncThemeUI=function(){var l=d.getAttribute('data-theme')==='light',i=document.getElementById('theme-icon'),m=document.querySelector('meta[name="theme-color"]');if(i)i.textContent=l?'\ud83c\udf19':'\u2600\ufe0f';if(m)m.content=l?'#f3f6fb':'#070a11'};
+    window.toggleTheme=function(){if(d.classList.contains('theme-switching'))return;var next=d.getAttribute('data-theme')==='light'?'dark':'light';
+    function apply(){d.setAttribute('data-theme',next);try{localStorage.setItem('sanjab_theme',next)}catch(e){}window.syncThemeUI()}
+    if(d.classList.contains('lite')){apply();return}
+    var c=document.createElement('div');c.style.cssText='position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:0;transition:opacity .15s ease;background:'+(next==='light'?'#f3f6fb':'#070a11');
+    d.classList.add('theme-switching');document.body.appendChild(c);
+    requestAnimationFrame(function(){requestAnimationFrame(function(){c.style.opacity=1})});
+    setTimeout(function(){apply();c.style.transition='opacity .28s ease';c.style.opacity=0},180);
+    setTimeout(function(){c.remove();d.classList.remove('theme-switching')},520)};
+    document.addEventListener('DOMContentLoaded',window.syncThemeUI);})();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>سنجاب VPN | اینترنت پرسرعت، بدون قطعی و آزاد</title>
     <meta name="description" content="سنجاب VPN: سرورهای اختصاصی ضد فیلتر با ارسال سریع. بدون قطعی روی تمامی اپراتورهای همراه و خانگی.">
@@ -315,6 +330,8 @@
         html[data-theme="light"] .text-emerald-300, html[data-theme="light"] .text-emerald-400 { color: #047857; }
         html[data-theme="light"] .text-blue-300 { color: #1d4ed8; }
 
+        html.force-show #splash { display: none; }
+        html.force-show #hero-badge, html.force-show #hero-mascot, html.force-show #hero-title, html.force-show #hero-subtitle, html.force-show #hero-cta-box > * { opacity: 1 !important; }
         input, textarea { -webkit-user-select: text; user-select: text; }
         @media (prefers-reduced-motion: reduce) {
             .float-animation, .pulse-glow, .animate-pulse, .highlight-card { animation: none !important; }
@@ -374,7 +391,7 @@
             </a>
             
             <div class="flex items-center gap-2">
-            <button id="theme-btn" type="button" aria-label="تغییر تم" class="text-gray-200 p-1.5 focus:outline-none rounded-xl bg-white/5 border border-white/10 active:scale-90 transition-transform">
+            <button id="theme-btn" type="button" onclick="toggleTheme()" aria-label="تغییر تم" class="text-gray-200 p-1.5 focus:outline-none rounded-xl bg-white/5 border border-white/10 active:scale-90 transition-transform">
                 <span id="theme-icon" class="block w-6 h-6 text-center leading-6 text-lg">☀️</span>
             </button>
             <button id="mobile-menu-btn" class="text-gray-200 p-1.5 focus:outline-none rounded-xl bg-white/5 border border-white/10" aria-label="Toggle Menu">
@@ -1096,35 +1113,22 @@
         const frames = [];
         let sampling = PROBE;
         if (PROBE) requestAnimationFrame(function sample(t) { frames.push(t); if (frames.length > 40) frames.shift(); if (sampling) requestAnimationFrame(sample); });
-        const loadScript = src => new Promise((ok, fail) => {
+        const LIBS = {
+            gsap: ['https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js'],
+            st: ['https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js'],
+            three: ['https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', 'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js']
+        };
+        // tries each mirror in turn; a mirror that hangs is abandoned after 5s
+        const loadLib = urls => urls.reduce((chain, u) => chain.catch(() => new Promise((ok, fail) => {
             const el = document.createElement('script');
-            el.src = 'https://cdnjs.cloudflare.com/ajax/libs/' + src;
-            el.onload = ok; el.onerror = fail;
+            const t = setTimeout(() => { el.remove(); fail(); }, 5000);
+            el.src = u;
+            el.onload = () => { clearTimeout(t); ok(); };
+            el.onerror = () => { clearTimeout(t); fail(); };
             document.head.appendChild(el);
-        });
+        })), Promise.reject());
 
-        // THEME (dark / light)
-        function syncThemeUI() {
-            const light = document.documentElement.getAttribute('data-theme') === 'light';
-            document.getElementById('theme-icon').textContent = light ? '🌙' : '☀️';
-            const m = document.querySelector('meta[name="theme-color"]');
-            if (m) m.content = light ? '#f3f6fb' : '#070a11';
-        }
-        function toggleTheme() {
-            const root = document.documentElement;
-            if (root.classList.contains('theme-switching')) return;
-            const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-            const apply = () => { root.setAttribute('data-theme', next); store.set('sanjab_theme', next); syncThemeUI(); };
-            if (LITE) { apply(); return; }
-            // cover (in the NEW theme's colour) fades in, theme swaps unseen, cover fades out: opacity-only, no black flash
-            const cover = document.createElement('div');
-            cover.style.cssText = 'position:fixed;inset:0;z-index:99999;pointer-events:none;opacity:0;transition:opacity .15s ease;background:' + (next === 'light' ? '#f3f6fb' : '#070a11');
-            root.classList.add('theme-switching');
-            document.body.appendChild(cover);
-            requestAnimationFrame(() => requestAnimationFrame(() => { cover.style.opacity = 1; }));
-            setTimeout(() => { apply(); cover.style.transition = 'opacity .28s ease'; cover.style.opacity = 0; }, 180);
-            setTimeout(() => { cover.remove(); root.classList.remove('theme-switching'); }, 520);
-        }
+
         function revealApp() {
             if (revealApp.done) return;
             revealApp.done = true;
@@ -1139,12 +1143,14 @@
                 const showHero = () => document.querySelectorAll('#hero-badge, #hero-mascot, #hero-title, #hero-subtitle, #hero-cta-box > *').forEach(el => { el.style.opacity = 1; });
                 setTimeout(() => document.querySelectorAll('#hero-badge, #hero-mascot, #hero-title, #hero-subtitle, #hero-cta-box > *').forEach(el => { el.style.willChange = 'auto'; }), 5000);
                 if (LITE) { showHero(); return; }
-                loadScript('gsap/3.12.5/gsap.min.js')
-                    .then(() => loadScript('gsap/3.12.5/ScrollTrigger.min.js'))
-                    .then(initGSAPAnimations)
-                    .catch(showHero);
+                let heroSettled = false;
+                const heroTimer = setTimeout(() => { heroSettled = true; showHero(); }, 3000); // slow CDN: show hero as-is
+                loadLib(LIBS.gsap)
+                    .then(() => loadLib(LIBS.st))
+                    .then(() => { if (heroSettled) return; clearTimeout(heroTimer); heroSettled = true; initGSAPAnimations(); })
+                    .catch(() => { clearTimeout(heroTimer); showHero(); });
                 setTimeout(() => {
-                    loadScript('three.js/r128/three.min.js')
+                    loadLib(LIBS.three)
                         .then(() => {
                             init3DHero();
                             const cv = document.getElementById('webgl-hero-canvas');
@@ -1544,8 +1550,6 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.buy-btn').forEach(b => { b.dataset.baseClass = b.className; b.dataset.baseLabel = b.textContent.trim(); });
-            document.getElementById('theme-btn').addEventListener('click', toggleTheme);
-            syncThemeUI();
             document.getElementById('service-name').addEventListener('keydown', e => { if (e.key === 'Enter') checkServiceStatus(); });
             updateUsageCalculation();
             if (document.readyState === 'complete') revealApp();
@@ -1597,20 +1601,4 @@
 
         function pickNudge() {
             // first two notices of a visit are plan/value tips; from the third on, random among all unseen
-            const pool = NUDGES.filter(n => !proofSeen.has(n) && (proofShown >= 2 || n.plan || n.hot));
-            return pool[Math.floor(Math.random() * pool.length)];
-        }
-        function triggerSocialProof() {
-            if (proofStopped || proofShown >= 8) return; // max 8 per visit
-            const ae = document.activeElement;
-            const busy = document.hidden || (ae && /INPUT|TEXTAREA/.test(ae.tagName)) || document.getElementById('mobile-menu').classList.contains('open') || Date.now() - lastScroll < 2500;
-            const n = busy ? null : pickNudge();
-            if (!n) { setTimeout(triggerSocialProof, 5000); return; }
-            proofShown++;
-            proofSeen.add(n);
-            proofToast.dataset.plan = n.plan || '';
-            proofToast.dataset.go = n.go || '';
-            document.getElementById('social-proof-text').innerText = n.t();
-            proofToast.classList.add('show');
-            setTimeout(() => proofToast.classList.remove('show'), 5500);
-            setTimeout(triggerSo
+            const pool = NUDGES.filter(n => !proofSeen.has(n) && (proofShown >= 2 || n.
