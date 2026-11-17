@@ -263,10 +263,10 @@
         .splash-orbit span { animation: float 2.2s ease-in-out infinite; }
         .splash-title { font-weight: 900; font-size: 1.25rem; color: #fff; }
         .splash-title b { color: #f97316; }
-        .splash-bar { width: 140px; height: 3px; border-radius: 3px; background: rgba(255,255,255,.1); overflow: hidden; }
+        .splash-bar { width: 140px; height: 3px; border-radius: 3px; background: rgba(255,255,255,.1); overflow: hidden; direction: ltr; }
         .splash-bar i { display: block; height: 100%; width: 40%; background: linear-gradient(90deg, #f97316, #3b82f6); border-radius: 3px; animation: slide 1.1s ease-in-out infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(350%); } }
+        @keyframes slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
         #webgl-hero-canvas { opacity: 0; transition: opacity 1.4s ease; }
         #webgl-hero-canvas.ready { opacity: 1; }
         .shimmer-text { background-image: linear-gradient(90deg, #fb923c, #fde68a, #f97316, #fb923c) !important; background-size: 250% 100%; animation: shimmer 4s linear infinite; }
@@ -1118,10 +1118,10 @@
             st: ['https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js'],
             three: ['https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', 'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js']
         };
-        // tries each mirror in turn; a mirror that hangs is abandoned after 5s
-        const loadLib = urls => urls.reduce((chain, u) => chain.catch(() => new Promise((ok, fail) => {
+        // tries each mirror in turn; a mirror that hangs is abandoned after 12s
+        const loadLib = (urls, ready) => urls.reduce((chain, u) => chain.catch(() => ready() ? 0 : new Promise((ok, fail) => {
             const el = document.createElement('script');
-            const t = setTimeout(() => { el.remove(); fail(); }, 5000);
+            const t = setTimeout(() => { el.remove(); fail(); }, 12000);
             el.src = u;
             el.onload = () => { clearTimeout(t); ok(); };
             el.onerror = () => { clearTimeout(t); fail(); };
@@ -1145,25 +1145,15 @@
                 if (LITE) { showHero(); return; }
                 let heroSettled = false;
                 const heroTimer = setTimeout(() => { heroSettled = true; showHero(); }, 3000); // slow CDN: show hero as-is
-                loadLib(LIBS.gsap)
-                    .then(() => loadLib(LIBS.st))
+                loadLib(LIBS.gsap, () => window.gsap)
+                    .then(() => loadLib(LIBS.st, () => window.ScrollTrigger))
                     .then(() => { if (heroSettled) return; clearTimeout(heroTimer); heroSettled = true; initGSAPAnimations(); })
                     .catch(() => { clearTimeout(heroTimer); showHero(); });
                 setTimeout(() => {
-                    loadLib(LIBS.three)
+                    loadLib(LIBS.three, () => window.THREE)
                         .then(() => {
                             init3DHero();
-                            const cv = document.getElementById('webgl-hero-canvas');
-                            setTimeout(() => {
-                                const ts = [];
-                                requestAnimationFrame(function gate(t) {
-                                    ts.push(t);
-                                    if (ts.length < 24) return requestAnimationFrame(gate);
-                                    const d = ts.slice(1).map((v, i) => v - ts[i]).sort((x, y) => x - y);
-                                    if (d[d.length >> 1] > 55) { window.__stop3D && window.__stop3D(); cv.remove(); } // under ~18fps: skip it, never visible
-                                    else cv.classList.add('ready');
-                                });
-                            }, 800);
+                            document.getElementById('webgl-hero-canvas').classList.add('ready');
                         })
                         .catch(() => {});
                 }, 400);
@@ -1602,4 +1592,13 @@
 
         function pickNudge() {
             // first two notices of a visit are plan/value tips; from the third on, random among all unseen
-            const pool = NUDGES.filter(n => !proofSeen.has(n) && (proofS
+            const pool = NUDGES.filter(n => !proofSeen.has(n) && (proofShown >= 2 || n.plan || n.hot));
+            return pool[Math.floor(Math.random() * pool.length)];
+        }
+        function triggerSocialProof() {
+            if (proofStopped || proofShown >= 8) return; // max 8 per visit
+            const ae = document.activeElement;
+            const busy = document.hidden || (ae && /INPUT|TEXTAREA/.test(ae.tagName)) || document.getElementById('mobile-menu').classList.contains('open') || Date.now() - lastScroll < 2500;
+            const n = busy ? null : pickNudge();
+            if (!n) { setTimeout(triggerSocialProof, 5000); return; }
+            
