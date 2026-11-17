@@ -258,9 +258,10 @@
         #splash { position: fixed; inset: 0; z-index: 10000; background: radial-gradient(circle at 50% 40%, #101a2e 0%, #070a11 70%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; transition: opacity .6s ease, visibility 0s .6s; animation: splashFailsafe 0s 6s forwards; }
         #splash.hide { opacity: 0; visibility: hidden; pointer-events: none; }
         @keyframes splashFailsafe { to { opacity: 0; visibility: hidden; pointer-events: none; } }
-        .splash-orbit { position: relative; width: 104px; height: 104px; display: flex; align-items: center; justify-content: center; font-size: 3.4rem; border-radius: 50%; border: 1px solid rgba(249,115,22,.25); }
+        .splash-orbit { position: relative; width: 104px; height: 104px; display: flex; align-items: center; justify-content: center; font-size: 3.4rem; line-height: 1; border-radius: 50%; border: 1px solid rgba(249,115,22,.25); }
         .splash-orbit::before { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid transparent; border-top-color: #f97316; border-right-color: #3b82f6; animation: spin 1.1s linear infinite; }
-        .splash-orbit span { animation: float 2.2s ease-in-out infinite; }
+        .splash-orbit span { display: block; animation: splashBob 2.2s ease-in-out infinite; }
+        @keyframes splashBob { 0%, 100% { transform: translateY(4px); } 50% { transform: translateY(0); } }
         .splash-title { font-weight: 900; font-size: 1.25rem; color: #fff; }
         .splash-title b { color: #f97316; }
         .splash-bar { width: 140px; height: 3px; border-radius: 3px; background: rgba(255,255,255,.1); overflow: hidden; direction: ltr; }
@@ -1113,6 +1114,20 @@
         const frames = [];
         let sampling = PROBE;
         if (PROBE) requestAnimationFrame(function sample(t) { frames.push(t); if (frames.length > 40) frames.shift(); if (sampling) requestAnimationFrame(sample); });
+        const DEBUG = /[?&]debug/.test(location.search);
+        let dbgBox;
+        function dbg(m) {
+            try { console.log('[sanjab]', m); } catch (e) {}
+            if (!DEBUG) return;
+            if (!dbgBox) {
+                dbgBox = document.createElement('pre');
+                dbgBox.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:100000;max-height:45vh;overflow:auto;margin:0;padding:6px;background:rgba(0,0,0,.88);color:#4ade80;font:10px/1.5 monospace;direction:ltr;text-align:left;white-space:pre-wrap;user-select:text;-webkit-user-select:text';
+                document.body.appendChild(dbgBox);
+            }
+            dbgBox.textContent += m + '\n';
+        }
+        window.addEventListener('error', e => dbg('ERROR: ' + e.message + (e.filename ? ' @ ' + e.filename.split('/').pop() + ':' + e.lineno : '')));
+        dbg('lite=' + document.documentElement.classList.contains('lite') + ' cores=' + navigator.hardwareConcurrency + ' mem=' + navigator.deviceMemory);
         const LIBS = {
             gsap: ['https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js'],
             st: ['https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js', 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js'],
@@ -1148,14 +1163,16 @@
                 loadLib(LIBS.gsap, () => window.gsap)
                     .then(() => loadLib(LIBS.st, () => window.ScrollTrigger))
                     .then(() => { if (heroSettled) return; clearTimeout(heroTimer); heroSettled = true; initGSAPAnimations(); })
-                    .catch(() => { clearTimeout(heroTimer); showHero(); });
+                    .catch(e => { dbg('GSAP failed: ' + (e && e.message ? e.message : 'library did not load')); clearTimeout(heroTimer); showHero(); });
                 setTimeout(() => {
                     loadLib(LIBS.three, () => window.THREE)
                         .then(() => {
+                            dbg('three loaded');
                             init3DHero();
                             document.getElementById('webgl-hero-canvas').classList.add('ready');
+                            dbg('3D started');
                         })
-                        .catch(() => {});
+                        .catch(e => dbg('3D failed: ' + (e && e.message ? e.message : 'library did not load')));
                 }, 400);
             }, Math.max(0, 500 - (performance.now() - splashStart)));
         }
@@ -1581,24 +1598,4 @@
             { t: () => 'پلن‌های حجم بالاتر هزینهٔ کمتری برای هر گیگ دارند', hot: true },
             { t: () => 'برای مصرف زیاد، پلن ۱۰۰ گیگ به‌صرفه‌ترین انتخاب است', plan: 'plan-100gb' },
             { t: () => 'بعد از تأیید رسید، اطلاعات اتصال برایتان ارسال می‌شود' },
-            { t: () => 'برای خرید یا تمدید سرویس، پشتیبانی تلگرام پاسخگوست' },
-            { t: () => 'روی همهٔ اپراتورها و اینترنت‌های خانگی کار می‌کند' },
-            { t: () => 'سرورهای اختصاصی ضد فیلتر برای اینستاگرام و یوتیوب' },
-            { t: () => 'حجم و زمان باقی‌ماندهٔ سرویس را هر لحظه از بخش استعلام ببینید', go: '#status-checker' },
-            { t: () => 'مصرفتان را نمی‌دانید؟ با ماشین‌حساب، پلن مناسب را پیدا کنید', go: '#calculator' }
-        ];
-        const proofToast = document.getElementById('social-proof');
-        let proofShown = 0, proofStopped = false, proofSeen = new Set(), lastScroll = 0;
-
-        function pickNudge() {
-            // first two notices of a visit are plan/value tips; from the third on, random among all unseen
-            const pool = NUDGES.filter(n => !proofSeen.has(n) && (proofShown >= 2 || n.plan || n.hot));
-            return pool[Math.floor(Math.random() * pool.length)];
-        }
-        function triggerSocialProof() {
-            if (proofStopped || proofShown >= 8) return; // max 8 per visit
-            const ae = document.activeElement;
-            const busy = document.hidden || (ae && /INPUT|TEXTAREA/.test(ae.tagName)) || document.getElementById('mobile-menu').classList.contains('open') || Date.now() - lastScroll < 2500;
-            const n = busy ? null : pickNudge();
-            if (!n) { setTimeout(triggerSocialProof, 5000); return; }
-            
+            { t: () => 'برای خ
