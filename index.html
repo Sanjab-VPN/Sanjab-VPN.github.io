@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <style>html{background:#070a11}html[data-theme=light]{background:#f3f6fb}</style>
-    <script>(function(){var d=document.documentElement,t=null,n=navigator,c=n.connection||{};try{t=localStorage.getItem('sanjab_theme')}catch(e){}d.setAttribute('data-theme',t==='light'?'light':'dark');if((n.deviceMemory||4)<=2||c.saveData||/2g/.test(c.effectiveType||'')||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches))d.classList.add('lite');else if((n.hardwareConcurrency||8)<=4)d.setAttribute('data-probe','1')})();</script>
+    <script>(function(){var d=document.documentElement,t=null,n=navigator,c=n.connection||{};try{t=localStorage.getItem('sanjab_theme')}catch(e){}d.setAttribute('data-theme',t==='light'?'light':'dark');var weak=(n.deviceMemory||4)<=2||c.saveData||/2g/.test(c.effectiveType||''),rm=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);if(weak||rm)d.classList.add('lite');if(weak)d.classList.add('no3d');if(rm)d.classList.add('still3d')})();</script>
     <script>
     (function(){var d=document.documentElement;
     window.addEventListener('error',function(){d.classList.add('force-show')});
@@ -37,7 +37,8 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Three.js Library -->
+    <!-- Three.js Library (preloaded so the 3D hero can start immediately) -->
+    <link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
 
     <!-- GSAP Animation Engine & ScrollTrigger -->
 
@@ -231,6 +232,8 @@
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .sticky-cta.visible { transform: translateY(0); }
+        html.force-show .sticky-cta { transform: translateY(0); }
+        .sticky-cta.menu-hidden { transform: translateY(100%) !important; }
 
         .price-original.striked {
             text-decoration: line-through;
@@ -311,7 +314,7 @@
         html.lite .highlight-card { animation: borderHighlight 1.5s ease-in-out 2 !important; }
         html.lite .glass-card, html.lite .glass-card-glow, html.lite .toast, html.lite .social-proof-toast, html.lite .sticky-cta, html.lite header { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
         html.lite .glass-card, html.lite .glass-card-glow { box-shadow: none; }
-        html.lite #webgl-hero-canvas, html.lite [class*="blur-["], html.lite .blur-xl { display: none !important; }
+        html.no3d #webgl-hero-canvas, html.lite [class*="blur-["], html.lite .blur-xl { display: none !important; }
         html.lite #hero-badge, html.lite #hero-mascot, html.lite #hero-title, html.lite #hero-subtitle, html.lite #hero-cta-box > * { opacity: 1 !important; will-change: auto; }
         html.lite #splash { display: none; }
         .social-proof-toast.show { pointer-events: auto; cursor: pointer; }
@@ -926,14 +929,15 @@
         function init3DHero() {
             const container = document.getElementById('hero');
             const canvas = document.getElementById('webgl-hero-canvas');
+            const STILL = document.documentElement.classList.contains('still3d'); // reduced-motion: one static frame
             
             const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const camera = new THREE.PerspectiveCamera(75, (container.clientWidth || 360) / (container.clientHeight || 520), 0.1, 1000);
             camera.position.z = 4.0;
 
             const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: window.devicePixelRatio < 2, powerPreference: "high-performance" });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, (navigator.hardwareConcurrency || 8) <= 4 ? 1 : 1.5));
+            renderer.setSize(container.clientWidth || 360, container.clientHeight || 520);
 
             // Generate In-Memory Soft Glowing Radial Particle Texture (Zero Bandwidth Cost)
             function createGlowParticleTexture() {
@@ -1081,6 +1085,7 @@
                 renderer.render(scene, camera);
             }
             function syncLoop() {
+                if (STILL) { renderer.render(scene, camera); return; }
                 const shouldRun = !dead && inView && !document.hidden;
                 if (shouldRun && !running) { running = true; animate(); }
                 else if (!shouldRun) { running = false; }
@@ -1092,28 +1097,26 @@
             window.__stop3D = () => { dead = true; running = false; renderer.dispose(); };
             syncLoop();
 
-            let resizeTimer, lastW = container.clientWidth, lastH = container.clientHeight;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    const w = container.clientWidth, h = container.clientHeight;
-                    if (w === lastW && h === lastH) return; // mobile URL-bar show/hide: skip costly resize
-                    lastW = w; lastH = h;
-                    camera.aspect = w / h;
-                    camera.updateProjectionMatrix();
-                    renderer.setSize(w, h);
-                }, 150);
-            }, { passive: true });
+            // keep canvas matched to the hero even if Tailwind finishes styling after 3D starts
+            let resizeTimer, lastW = 0, lastH = 0;
+            function fit() {
+                const w = container.clientWidth, h = container.clientHeight;
+                if (!w || !h || (w === lastW && h === lastH)) return; // skip mobile URL-bar show/hide jitter
+                lastW = w; lastH = h;
+                camera.aspect = w / h;
+                camera.updateProjectionMatrix();
+                renderer.setSize(w, h);
+                if (STILL) renderer.render(scene, camera);
+            }
+            const fitSoon = () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(fit, 120); };
+            window.addEventListener('resize', fitSoon, { passive: true });
+            if ('ResizeObserver' in window) new ResizeObserver(fitSoon).observe(container);
+            fit();
         }
 
         // SPLASH -> REVEAL (runs once; falls back after 2.5s if a CDN is slow)
         const splashStart = performance.now();
         let LITE = document.documentElement.classList.contains('lite');
-        // Smoothness probe for borderline phones: samples frames during the splash (no extra wait)
-        const PROBE = document.documentElement.hasAttribute('data-probe');
-        const frames = [];
-        let sampling = PROBE;
-        if (PROBE) requestAnimationFrame(function sample(t) { frames.push(t); if (frames.length > 40) frames.shift(); if (sampling) requestAnimationFrame(sample); });
         const DEBUG = /[?&]debug/.test(location.search);
         let dbgBox;
         function dbg(m) {
@@ -1143,16 +1146,26 @@
             document.head.appendChild(el);
         })), Promise.reject());
 
+        // 3D hero starts immediately (not after window.load / splash) so it is ready when the splash fades
+        function start3D() {
+            if (document.documentElement.classList.contains('no3d')) { dbg('3D skipped (weak device / data saver)'); return; }
+            loadLib(LIBS.three, () => window.THREE)
+                .then(() => {
+                    dbg('three loaded');
+                    init3DHero();
+                    document.getElementById('webgl-hero-canvas').classList.add('ready');
+                    dbg('3D started');
+                })
+                .catch(e => dbg('3D failed: ' + (e && e.message ? e.message : 'library did not load')));
+        }
+        start3D();
+
 
         function revealApp() {
             if (revealApp.done) return;
             revealApp.done = true;
             setTimeout(() => {
-                sampling = false;
-                if (PROBE && !LITE && frames.length > 8) {
-                    const f = frames.slice(-16);
-                    if ((f[f.length - 1] - f[0]) / (f.length - 1) > 34) { document.documentElement.classList.add('lite'); LITE = true; }
-                }
+                const bar = document.getElementById('sticky-cta'); if (bar) bar.classList.add('visible');
                 const sp = document.getElementById('splash');
                 if (sp) { sp.classList.add('hide'); setTimeout(() => sp.remove(), 800); }
                 const showHero = () => document.querySelectorAll('#hero-badge, #hero-mascot, #hero-title, #hero-subtitle, #hero-cta-box > *').forEach(el => { el.style.opacity = 1; });
@@ -1164,16 +1177,6 @@
                     .then(() => loadLib(LIBS.st, () => window.ScrollTrigger))
                     .then(() => { if (heroSettled) return; clearTimeout(heroTimer); heroSettled = true; initGSAPAnimations(); })
                     .catch(e => { dbg('GSAP failed: ' + (e && e.message ? e.message : 'library did not load')); clearTimeout(heroTimer); showHero(); });
-                setTimeout(() => {
-                    loadLib(LIBS.three, () => window.THREE)
-                        .then(() => {
-                            dbg('three loaded');
-                            init3DHero();
-                            document.getElementById('webgl-hero-canvas').classList.add('ready');
-                            dbg('3D started');
-                        })
-                        .catch(e => dbg('3D failed: ' + (e && e.message ? e.message : 'library did not load')));
-                }, 400);
             }, Math.max(0, 500 - (performance.now() - splashStart)));
         }
 
@@ -1288,6 +1291,7 @@
 
         function toggleMenu() {
             isMenuOpen = !isMenuOpen;
+            const sb = document.getElementById('sticky-cta'); if (sb) sb.classList.toggle('menu-hidden', isMenuOpen);
             if (isMenuOpen) {
                 mobileMenu.classList.add('open');
                 menuIcon.innerHTML = '<use href="#icon-close"></use>';
@@ -1592,10 +1596,4 @@
             { t: () => 'پلن ۴۰ گیگ؛ پیشنهاد سنجاب برای مصرف روزمره', plan: 'plan-40gb' },
             { t: () => 'پلن ۲۰ گیگ؛ شروعی اقتصادی برای مصرف سبک', plan: 'plan-20gb' },
             { t: () => 'پلن ۳۰ گیگ؛ مناسب اینستاگرام و یوتیوب', plan: 'plan-30gb' },
-            { t: () => 'پلن ۵۰ گیگ؛ مناسب مصرف متوسط تا زیاد', plan: 'plan-50gb' },
-            { t: () => 'پلن ۷۵ گیگ؛ مناسب مصرف زیاد', plan: 'plan-75gb' },
-            { t: () => 'پلن ۱۰ گیگ؛ مناسب شروع و مصرف کم', plan: 'plan-10gb' },
-            { t: () => 'پلن‌های حجم بالاتر هزینهٔ کمتری برای هر گیگ دارند', hot: true },
-            { t: () => 'برای مصرف زیاد، پلن ۱۰۰ گیگ به‌صرفه‌ترین انتخاب است', plan: 'plan-100gb' },
-            { t: () => 'بعد از تأیید رسید، اطلاعات اتصال برایتان ارسال می‌شود' },
-            { t: () => 'برای خ
+            { t: () => 'پلن ۵
