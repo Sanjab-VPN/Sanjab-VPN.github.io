@@ -125,16 +125,18 @@
         body.menu-open .fab-container { display: none; }
 
         .social-proof-toast {
-            position: fixed; bottom: 88px; right: 16px; left: 16px;
+            position: fixed; bottom: 16px; right: 16px; left: 84px; height: 56px; box-sizing: border-box; max-width: 420px; line-height: 1.55;
             background: rgba(18, 24, 38, 0.95); color: #f3f4f6;
-            padding: 9px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+            padding: 0 16px; border-radius: 28px; font-size: 0.75rem; font-weight: 600;
             box-shadow: 0 8px 25px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.12);
-            z-index: 9990; opacity: 0; transform: translateY(15px);
-            transition: opacity .4s ease, transform .4s ease, bottom .3s ease;
+            z-index: 49; opacity: 0; transform: translateX(-10px);
+            transition: opacity .4s ease, transform .4s ease, bottom .3s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none; display: flex; align-items: center; gap: 8px;
         }
-        body.cta-on .social-proof-toast { bottom: 156px; }
-        .social-proof-toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; cursor: pointer; }
+        body.cta-on .social-proof-toast { bottom: 86px; }
+        .social-proof-toast #social-proof-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        body.menu-open .social-proof-toast { display: none; }
+        .social-proof-toast.show { opacity: 1; transform: translateX(0); pointer-events: auto; cursor: pointer; }
 
         /* Bottom bar: hidden by default, JS shows it only after the user scrolls past pricing + calculator */
         .sticky-cta {
@@ -1167,7 +1169,7 @@
             try {
                 renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: !LOWQ && dpr < 2, powerPreference: 'high-performance' });
             } catch (e) { dbg('WebGL unavailable: ' + e.message); return false; }
-            renderer.setPixelRatio(Math.min(dpr, (LOWQ || (navigator.hardwareConcurrency || 8) <= 4) ? 1 : 1.5));
+            renderer.setPixelRatio(Math.min(dpr, (LOWQ || (navigator.hardwareConcurrency || 8) <= 6) ? 1 : 1.25));
             renderer.setClearColor(0x000000, 0);
             var W = container.clientWidth || window.innerWidth || 360, Hh = container.clientHeight || 520;
             renderer.setSize(W, Hh, false);
@@ -1192,7 +1194,7 @@
             );
             scene.add(icoMesh);
 
-            var count = LOWQ ? 180 : 380;
+            var count = LOWQ ? 140 : 260;
             var geometry = new THREE.BufferGeometry(), positions = new Float32Array(count * 3), colors = new Float32Array(count * 3);
             var cO = new THREE.Color(0xf97316), cB = new THREE.Color(0x3b82f6);
             for (var i = 0; i < count; i++) {
@@ -1210,10 +1212,10 @@
 
             if (!LOWQ) {
                 var lp = [];
-                for (var a = 0; a < count && lp.length < 6000; a++) {
-                    for (var b = a + 1; b < count && lp.length < 6000; b++) {
+                for (var a = 0; a < count && lp.length < 2400; a++) {
+                    for (var b = a + 1; b < count && lp.length < 2400; b++) {
                         var dx = positions[a*3] - positions[b*3], dy = positions[a*3+1] - positions[b*3+1], dz = positions[a*3+2] - positions[b*3+2];
-                        if (dx*dx + dy*dy + dz*dz < 0.32) lp.push(positions[a*3], positions[a*3+1], positions[a*3+2], positions[b*3], positions[b*3+1], positions[b*3+2]);
+                        if (dx*dx + dy*dy + dz*dz < 0.42) lp.push(positions[a*3], positions[a*3+1], positions[a*3+2], positions[b*3], positions[b*3+1], positions[b*3+2]);
                     }
                 }
                 var lg = new THREE.BufferGeometry();
@@ -1241,14 +1243,19 @@
             window.addEventListener('touchmove', onMove, { passive: true });
 
             var running = false, inView = true, intro = 0, dead = false;
-            function animate() {
+            var lastT = 0;
+            function animate(t) {
                 if (!running) return;
                 requestAnimationFrame(animate);
-                mx += (tx - mx) * 0.05; my += (ty - my) * 0.05;
-                icoMesh.rotation.y += 0.0025 + mx * 0.03; icoMesh.rotation.x += 0.0015 + my * 0.03;
-                net.rotation.y += 0.0015 + mx * 0.02 + Math.min(window.scrollY, 600) * 0.000004; net.rotation.x += 0.0008 + my * 0.02;
-                rings[0].rotation.z += 0.006; rings[1].rotation.z -= 0.004;
-                intro += (1 - intro) * 0.035;
+                t = t || performance.now();
+                if (t - lastT < 30) return;            // ~30fps cap: lighter on the GPU, motion stays smooth
+                var dt = lastT ? Math.min((t - lastT) / 16.667, 3) : 1;   // time-based, so speed is the same at any fps
+                lastT = t;
+                mx += (tx - mx) * Math.min(0.05 * dt, 1); my += (ty - my) * Math.min(0.05 * dt, 1);
+                icoMesh.rotation.y += (0.0025 + mx * 0.03) * dt; icoMesh.rotation.x += (0.0015 + my * 0.03) * dt;
+                net.rotation.y += (0.0015 + mx * 0.02 + Math.min(window.scrollY, 600) * 0.000004) * dt; net.rotation.x += (0.0008 + my * 0.02) * dt;
+                rings[0].rotation.z += 0.006 * dt; rings[1].rotation.z -= 0.004 * dt;
+                intro += (1 - intro) * Math.min(0.035 * dt, 1);
                 var sc = 0.55 + 0.45 * intro;
                 icoMesh.scale.setScalar(sc); net.scale.setScalar(sc);
                 renderer.render(scene, camera);
@@ -1256,7 +1263,7 @@
             function syncLoop() {
                 if (STILL) { renderer.render(scene, camera); return; }
                 var should = !dead && inView && !document.hidden;
-                if (should && !running) { running = true; animate(); }
+                if (should && !running) { running = true; lastT = 0; requestAnimationFrame(animate); }
                 else if (!should) running = false;
             }
             if ('IntersectionObserver' in window) {
