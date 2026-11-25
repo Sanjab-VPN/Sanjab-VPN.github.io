@@ -10,7 +10,7 @@
     var weak=(n.deviceMemory||4)<=2||c.saveData||/2g/.test(c.effectiveType||''),
         rm=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
     if(weak||rm)d.classList.add('lite');   // fewer animations
-    if(weak)d.classList.add('lowq');       // lighter 3D (NOT disabled)
+    if(weak||(n.hardwareConcurrency||8)<=6)d.classList.add('lowq');       // lighter 3D (NOT disabled)
     if(rm)d.classList.add('still3d');      // one static 3D frame
     })();
     </script>
@@ -56,7 +56,7 @@
         * { -webkit-tap-highlight-color: transparent; user-select: none; box-sizing: border-box; }
         body {
             font-family: 'Vazirmatn', sans-serif;
-            padding-bottom: 76px;
+            padding-bottom: 140px;
             background-color: #070a11;
             color: #f3f4f6;
             text-rendering: optimizeLegibility;
@@ -120,12 +120,12 @@
         .toast.error { border-color: rgba(239, 68, 68, 0.5); color: #f87171; }
 
         /* Floating bits sit higher only while the bottom bar is showing (body.cta-on) */
-        .fab-container { position: fixed; bottom: 16px; left: 16px; z-index: 50; transition: bottom .3s cubic-bezier(0.16, 1, 0.3, 1); }
-        body.cta-on .fab-container { bottom: 86px; }
+        .fab-container { position: fixed; bottom: 82px; left: 16px; z-index: 50; transition: bottom .3s cubic-bezier(0.16, 1, 0.3, 1); }
+        body.cta-on .fab-container { bottom: 146px; }
         body.menu-open .fab-container { display: none; }
 
         .social-proof-toast {
-            position: fixed; bottom: 16px; right: 16px; left: 84px; height: 56px; box-sizing: border-box; max-width: 420px; line-height: 1.55;
+            position: fixed; bottom: 82px; right: 12px; left: 12px; height: 56px; box-sizing: border-box; max-width: 420px; line-height: 1.55;
             background: rgba(18, 24, 38, 0.95); color: #f3f4f6;
             padding: 0 16px; border-radius: 28px; font-size: 0.75rem; font-weight: 600;
             box-shadow: 0 8px 25px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.12);
@@ -133,18 +133,18 @@
             transition: opacity .4s ease, transform .4s ease, bottom .3s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none; display: flex; align-items: center; gap: 8px;
         }
-        body.cta-on .social-proof-toast { bottom: 86px; }
+        body.cta-on .social-proof-toast { bottom: 146px; }
         .social-proof-toast #social-proof-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         body.menu-open .social-proof-toast { display: none; }
         .social-proof-toast.show { opacity: 1; transform: translateX(0); pointer-events: auto; cursor: pointer; }
 
         /* Bottom bar: hidden by default, JS shows it only after the user scrolls past pricing + calculator */
         .sticky-cta {
-            position: fixed; bottom: 0; left: 0; width: 100%;
+            position: fixed; bottom: 74px; left: 12px; right: 12px;
             background: rgba(11, 15, 23, 0.94); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(255,255,255,0.1); padding: 10px 16px;
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; padding: 8px 14px;
             display: flex; justify-content: space-between; align-items: center;
-            z-index: 9998; box-shadow: 0 -4px 20px rgba(0,0,0,0.6);
+            z-index: 9997; box-shadow: 0 8px 24px rgba(0,0,0,0.55);
             transform: translateY(110%); visibility: hidden;
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s .3s;
         }
@@ -181,6 +181,43 @@
 
         input, textarea { -webkit-user-select: text; user-select: text; }
 
+
+        /* ===== Discount badge ===== */
+        .disc-badge { display: none; align-items: center; vertical-align: middle; margin-inline-start: .45rem; background: #ef4444; color: #fff; font-size: 10px; font-weight: 900; line-height: 1; padding: 3px 7px; border-radius: 999px; box-shadow: 0 2px 8px rgba(239,68,68,.35); }
+        .price-new.active + .disc-badge { display: inline-flex; animation: fadeIn .4s ease forwards; }
+
+        /* ===== Chip bar (inside header) ===== */
+        .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        #chip-bar { position: relative; display: flex; gap: 8px; overflow-x: auto; padding: 0 16px 10px; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+        .chip { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 4px; padding: 6px 13px; border-radius: 12px; font-size: 11px; font-weight: 800; white-space: nowrap; color: #d1d5db; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .15s ease; }
+        .chip:active { transform: scale(.94); }
+        .chip.active { background: #f97316; border-color: #f97316; color: #fff; box-shadow: 0 4px 14px rgba(249,115,22,.35); }
+        html[data-theme="light"] .chip { color: #334155; background: rgba(15,23,42,.045); border-color: rgba(15,23,42,.1); }
+        html[data-theme="light"] .chip.active { background: #f97316; border-color: #f97316; color: #fff; }
+        body.menu-open #chip-bar { visibility: hidden; }
+
+        /* ===== Bottom tab bar (floating pill) ===== */
+        .tabbar { position: fixed; left: 12px; right: 12px; bottom: 10px; height: 56px; z-index: 9998; display: flex; align-items: stretch; justify-content: space-around; padding: 5px 6px; border-radius: 22px; background: rgba(11,15,23,.94); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,.1); box-shadow: 0 8px 28px rgba(0,0,0,.6); }
+        .tab-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-radius: 16px; color: #9ca3af; font-size: 10px; font-weight: 800; transition: color .2s ease, background-color .2s ease, transform .15s ease; }
+        .tab-item svg { width: 22px; height: 22px; }
+        .tab-item:active { transform: scale(.92); }
+        .tab-item.active { color: #f97316; background: rgba(249,115,22,.14); }
+        .tab-item.tab-support { color: #60a5fa; }
+        body.menu-open .tabbar { display: none; }
+        html[data-theme="light"] .tabbar { background: rgba(255,255,255,.96); border-color: rgba(15,23,42,.08); box-shadow: 0 8px 28px rgba(15,23,42,.16); }
+        html[data-theme="light"] .tab-item { color: #64748b; }
+        html[data-theme="light"] .tab-item.active { color: #ea580c; background: rgba(249,115,22,.12); }
+        html[data-theme="light"] .tab-item.tab-support { color: #2563eb; }
+        html.lite .tabbar { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+
+        /* ===== App download banner ===== */
+        #app-banner { position: relative; display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 18px; }
+        .app-ico { width: 42px; height: 42px; flex: 0 0 auto; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 21px; background: linear-gradient(135deg,#10b981,#059669); box-shadow: 0 4px 12px rgba(16,185,129,.3); }
+        #app-banner.gone { display: none; }
+        #app-banner-close { position: absolute; top: -10px; left: -5px; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 999px; font-size: 12px; line-height: 1; color: #d1d5db; background: #1f2937; border: 1px solid rgba(255,255,255,.15); }
+        html[data-theme="light"] #app-banner-close { color: #475569; background: #fff; border-color: rgba(15,23,42,.15); }
+
         /* ===== LIGHT THEME ===== */
         html[data-theme="light"] { color-scheme: light; }
         html[data-theme="light"] body { background-color: #f3f6fb; color: #1e293b; background-image: radial-gradient(circle at 85% -5%, rgba(249,115,22,.10), transparent 45%), radial-gradient(circle at 5% 30%, rgba(59,130,246,.09), transparent 40%); }
@@ -208,7 +245,7 @@
         html[data-theme="light"] .glass-card:hover { border-color: rgba(249,115,22,.45); }
         html[data-theme="light"] .glass-card-glow { background: linear-gradient(145deg, rgba(249,115,22,.15), rgba(255,255,255,.97)); border-color: rgba(249,115,22,.6); box-shadow: 0 8px 30px rgba(249,115,22,.25); }
         html[data-theme="light"] .toast, html[data-theme="light"] .social-proof-toast { background: rgba(255,255,255,.97); color: #0f172a; border-color: rgba(15,23,42,.1); box-shadow: 0 8px 24px rgba(15,23,42,.14); }
-        html[data-theme="light"] .sticky-cta { background: rgba(255,255,255,.95); border-top-color: rgba(15,23,42,.08); box-shadow: 0 -4px 20px rgba(15,23,42,.10); }
+        html[data-theme="light"] .sticky-cta { background: rgba(255,255,255,.96); border-color: rgba(15,23,42,.08); box-shadow: 0 8px 24px rgba(15,23,42,.14); }
         html[data-theme="light"] .price-original.striked { color: #94a3b8; }
         html[data-theme="light"] .text-glow-contrast { text-shadow: none; }
         html[data-theme="light"] #webgl-hero-canvas { filter: invert(1) hue-rotate(180deg); }
@@ -216,6 +253,15 @@
         html[data-theme="light"] [class~="bg-black/50"][class~="rounded-2xl"] { background-color: rgba(255,255,255,.78); }
         html[data-theme="light"] [class~="text-orange-200/80"] { color: #c2410c; }
         html[data-theme="light"] .text-emerald-300 { color: #047857; }
+
+        /* ===== PERF: nothing that re-blurs / repaints on every 3D frame ===== */
+        #main-header, .tabbar, .sticky-cta, .toast, .social-proof-toast, #hero [class*="backdrop-blur"] { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+        html:not([data-theme="light"]) #main-header { background-color: rgba(7,10,17,.96); }
+        html[data-theme="light"] #main-header { background-color: rgba(255,255,255,.96); }
+        #hero-mascot .float-animation { filter: none !important; }
+        .shimmer-text { animation: none !important; background-position: 0 0; }
+        #hero-badge span.animate-pulse { animation: none; }
+        .fab-container { display: none !important; }
 
         /* ===== LITE MODE (weak / data-saver / reduced-motion): fewer animations, 3D stays on ===== */
         html.lite *, html.lite *::before, html.lite *::after { animation: none !important; transition: none !important; }
@@ -257,6 +303,10 @@
         <symbol id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></symbol>
         <symbol id="icon-android-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4483-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993.0004.5511-.4482.9997-.9993.9997zm-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997zm11.4045-6.02l1.9973-3.4592c.1158-.2014.0471-.4587-.1546-.5745-.2017-.1158-.4586-.0468-.5744.1546l-2.0369 3.527c-1.4651-.6644-3.141-.1165-5.1129-.1165-1.9715 0-3.6474-.5479-5.1125.1165l-2.0373-3.527c-.1158-.2014-.3727-.2704-.5744-.1546-.2017.1158-.2704.3731-.1546.5745l1.9973 3.4592C2.658 11.2035.1915 15.2284.0322 19.866h23.9356c-.1593-4.6376-2.6258-8.6625-6.0403-10.5446z"/></symbol>
         <symbol id="icon-apple-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701z"/></symbol>
+        <symbol id="icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"></path></symbol>
+        <symbol id="icon-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"></path><circle cx="7" cy="7" r="1.5"></circle></symbol>
+        <symbol id="icon-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="11" x2="8.01" y2="11"></line><line x1="12" y1="11" x2="12.01" y2="11"></line><line x1="16" y1="11" x2="16.01" y2="11"></line><line x1="8" y1="15" x2="8.01" y2="15"></line><line x1="12" y1="15" x2="12.01" y2="15"></line><line x1="16" y1="15" x2="16.01" y2="15"></line><line x1="8" y1="19" x2="12" y2="19"></line></symbol>
+        <symbol id="icon-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></symbol>
     </svg>
 
     <div id="toast-container"></div>
@@ -274,6 +324,15 @@
             <a id="sticky-cta-btn" href="https://t.me/SanjabVPN2_Bot?start=B_0ba29a" target="_blank" rel="noopener noreferrer" class="bg-gradient-to-r from-orange-500 to-orange-600 text-white font-black px-5 py-2.5 rounded-xl shadow-lg shadow-orange-500/30 active:scale-95 transition-all text-xs border border-orange-400/30">خرید سریع</a>
         </div>
     </div>
+
+    <!-- Bottom tab bar -->
+    <nav id="tabbar" class="tabbar" aria-label="ناوبری سریع">
+        <a href="#hero" class="tab-item" data-sec="hero"><svg><use href="#icon-home"></use></svg><span>خانه</span></a>
+        <a href="#pricing" class="tab-item" data-sec="pricing"><svg><use href="#icon-tag"></use></svg><span>تعرفه‌ها</span></a>
+        <a href="#calculator" class="tab-item" data-sec="calculator"><svg><use href="#icon-calc"></use></svg><span>محاسبه‌گر</span></a>
+        <a href="#status-checker" class="tab-item" data-sec="status-checker"><svg><use href="#icon-pulse"></use></svg><span>استعلام</span></a>
+        <a href="https://t.me/SanjabVPN2_Bot?start=B_b659b2" target="_blank" rel="noopener noreferrer" class="tab-item tab-support"><svg><use href="#icon-headset"></use></svg><span>پشتیبانی</span></a>
+    </nav>
 
     <!-- Support Floating Button -->
     <div class="fab-container">
@@ -299,6 +358,15 @@
             </div>
         </nav>
 
+        <div id="chip-bar" class="no-scrollbar" role="navigation" aria-label="بخش‌های صفحه">
+            <a href="#pricing" class="chip" data-sec="pricing">🛒 تعرفه‌ها</a>
+            <a href="#calculator" class="chip" data-sec="calculator">🧮 محاسبه‌گر</a>
+            <a href="#features" class="chip" data-sec="features">✨ چرا سنجاب</a>
+            <a href="#status-checker" class="chip" data-sec="status-checker">📡 استعلام</a>
+            <a href="#apps" class="chip" data-sec="apps">📲 برنامه‌ها</a>
+            <a href="#faq" class="chip" data-sec="faq">❓ سوالات</a>
+        </div>
+
         <div id="mobile-menu" class="fixed inset-0 bg-[#070a11] z-40 pt-20 px-6 flex flex-col space-y-4 h-screen">
             <a href="#calculator" class="text-gray-200 text-base py-3.5 rounded-2xl bg-white/5 border border-white/10 font-bold active:bg-white/10 text-center">🧮 محاسبه‌گر هوشمند حجم</a>
             <a href="#status-checker" class="text-gray-200 text-base py-3.5 rounded-2xl bg-white/5 border border-white/10 font-bold active:bg-white/10 text-center">📡 استعلام سریع حجم و زمان</a>
@@ -312,11 +380,11 @@
     </header>
 
     <!-- HERO SECTION -->
-    <section id="hero" class="relative pt-24 pb-8 flex flex-col items-center justify-center overflow-hidden min-h-[62vh]">
+    <section id="hero" class="relative pt-36 pb-8 flex flex-col items-center justify-center overflow-hidden min-h-[62vh]">
         <canvas id="webgl-hero-canvas"></canvas>
 
-        <div class="absolute top-1/3 -right-10 w-48 h-48 bg-orange-500/15 rounded-full blur-[90px] pointer-events-none"></div>
-        <div class="absolute bottom-10 -left-10 w-48 h-48 bg-blue-500/15 rounded-full blur-[90px] pointer-events-none"></div>
+        <div class="absolute top-1/4 -right-20 w-72 h-72 rounded-full pointer-events-none" style="background:radial-gradient(circle,rgba(249,115,22,.20),transparent 68%)"></div>
+        <div class="absolute bottom-6 -left-20 w-72 h-72 rounded-full pointer-events-none" style="background:radial-gradient(circle,rgba(59,130,246,.18),transparent 68%)"></div>
 
         <div class="px-4 flex flex-col items-center text-center relative z-10 w-full max-w-sm">
             <div id="hero-badge" class="inline-flex items-center gap-2 bg-[#070a11]/60 backdrop-blur-md border border-white/15 text-orange-400 px-3.5 py-1.5 rounded-full text-xs font-bold mb-5 shadow-xl">
@@ -325,7 +393,7 @@
             </div>
 
             <div id="hero-mascot" class="relative mb-3 select-none">
-                <div class="absolute -inset-3 bg-gradient-to-r from-orange-500 to-blue-600 rounded-full blur-xl opacity-30 animate-pulse"></div>
+                <div class="absolute -inset-7 rounded-full pointer-events-none" style="background:radial-gradient(circle,rgba(249,115,22,.26),rgba(59,130,246,.10) 55%,transparent 72%)"></div>
                 <div class="relative text-[5.5rem] float-animation filter drop-shadow-[0_8px_16px_rgba(249,115,22,0.3)]">🐿️</div>
             </div>
 
@@ -346,6 +414,19 @@
             </div>
         </div>
     </section>
+
+    <!-- APP BANNER (dismissible) -->
+    <div class="px-4 w-full max-w-sm mx-auto -mt-2 mb-2">
+        <div id="app-banner" class="glass-card border border-emerald-500/30">
+            <button id="app-banner-close" type="button" aria-label="بستن">✕</button>
+            <div class="app-ico">📲</div>
+            <div class="min-w-0 flex-1 text-right">
+                <p class="text-xs font-black text-white leading-tight">برنامهٔ اتصال Happ</p>
+                <p class="text-[10px] text-gray-400 mt-0.5 leading-snug">برای وصل شدن به سرویس، نصبش کنید</p>
+            </div>
+            <a id="app-banner-btn" href="https://github.com/Happ-proxy/happ-android/releases/latest/download/Happ.apk" target="_blank" rel="noopener noreferrer" class="shrink-0 whitespace-nowrap bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-black px-4 py-2.5 rounded-xl text-[11px] shadow-lg shadow-emerald-500/25 active:scale-95 transition-transform">دانلود</a>
+        </div>
+    </div>
 
     <!-- PRICING SECTION -->
     <section id="pricing" class="py-12 border-t border-white/10">
@@ -804,7 +885,7 @@
         document.querySelectorAll('a[href^="#"]').forEach(function (a) {
             a.addEventListener('click', function (e) {
                 var id = this.getAttribute('href');
-                if (id && id.length > 1) { e.preventDefault(); window.scrollToElementWithOffset(id); }
+                if (id && id.length > 1 && id.charAt(0) === '#') { e.preventDefault(); window.scrollToElementWithOffset(id); }
             });
         });
 
@@ -1167,9 +1248,9 @@
             var STILL = html.classList.contains('still3d'), LOWQ = html.classList.contains('lowq');
             var dpr = window.devicePixelRatio || 1, renderer;
             try {
-                renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: !LOWQ && dpr < 2, powerPreference: 'high-performance' });
+                renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false, powerPreference: 'default' });
             } catch (e) { dbg('WebGL unavailable: ' + e.message); return false; }
-            renderer.setPixelRatio(Math.min(dpr, (LOWQ || (navigator.hardwareConcurrency || 8) <= 6) ? 1 : 1.25));
+            renderer.setPixelRatio(1);
             renderer.setClearColor(0x000000, 0);
             var W = container.clientWidth || window.innerWidth || 360, Hh = container.clientHeight || 520;
             renderer.setSize(W, Hh, false);
@@ -1189,12 +1270,12 @@
             var glowTex = glowTexture();
 
             var icoMesh = new THREE.Mesh(
-                new THREE.IcosahedronGeometry(1.6, LOWQ ? 1 : 2),
+                new THREE.IcosahedronGeometry(1.6, 1),
                 new THREE.MeshBasicMaterial({ color: 0xf97316, wireframe: true, transparent: true, opacity: 0.18 })
             );
             scene.add(icoMesh);
 
-            var count = LOWQ ? 140 : 260;
+            var count = LOWQ ? 64 : 110;
             var geometry = new THREE.BufferGeometry(), positions = new Float32Array(count * 3), colors = new Float32Array(count * 3);
             var cO = new THREE.Color(0xf97316), cB = new THREE.Color(0x3b82f6);
             for (var i = 0; i < count; i++) {
@@ -1212,8 +1293,8 @@
 
             if (!LOWQ) {
                 var lp = [];
-                for (var a = 0; a < count && lp.length < 2400; a++) {
-                    for (var b = a + 1; b < count && lp.length < 2400; b++) {
+                for (var a = 0; a < count && lp.length < 900; a++) {
+                    for (var b = a + 1; b < count && lp.length < 900; b++) {
                         var dx = positions[a*3] - positions[b*3], dy = positions[a*3+1] - positions[b*3+1], dz = positions[a*3+2] - positions[b*3+2];
                         if (dx*dx + dy*dy + dz*dz < 0.42) lp.push(positions[a*3], positions[a*3+1], positions[a*3+2], positions[b*3], positions[b*3+1], positions[b*3+2]);
                     }
@@ -1243,12 +1324,14 @@
             window.addEventListener('touchmove', onMove, { passive: true });
 
             var running = false, inView = true, intro = 0, dead = false;
+            var scrolling = false, scrollT;
+            window.addEventListener('scroll', function () { scrolling = true; clearTimeout(scrollT); scrollT = setTimeout(function () { scrolling = false; }, 140); }, { passive: true });
             var lastT = 0;
             function animate(t) {
                 if (!running) return;
                 requestAnimationFrame(animate);
                 t = t || performance.now();
-                if (t - lastT < 30) return;            // ~30fps cap: lighter on the GPU, motion stays smooth
+                if (t - lastT < (LOWQ ? 45 : 30) || scrolling) return;            // ~30fps cap: lighter on the GPU, motion stays smooth
                 var dt = lastT ? Math.min((t - lastT) / 16.667, 3) : 1;   // time-based, so speed is the same at any fps
                 lastT = t;
                 mx += (tx - mx) * Math.min(0.05 * dt, 1); my += (ty - my) * Math.min(0.05 * dt, 1);
@@ -1328,6 +1411,100 @@
             })();
         }
         try { boot3D(); } catch (e) { dbg('3D boot error: ' + e.message); }
+    })();
+    </script>
+
+    <!-- =====================================================================
+         SCRIPT 5: discount badges, chip bar + tab bar scroll-spy, app banner.
+         Independent block: a failure here cannot affect the rest of the page.
+         ===================================================================== -->
+    <script>
+    (function () {
+        function onReady(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
+        function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+        function num(t) { return parseInt(String(t).replace(/[۰-۹]/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d); }).replace(/[^0-9]/g, ''), 10); }
+
+        onReady(function () {
+            try {
+                /* ---- 1) discount % badge next to the new price ---- */
+                document.querySelectorAll('.pricing-card').forEach(function (card) {
+                    var fresh = card.querySelector('.price-new');
+                    var b = num(card.dataset.basePrice), d = num(card.dataset.discountPrice);
+                    if (!fresh || !b || !d || d >= b) return;
+                    var pct = Math.round((1 - d / b) * 100);
+                    var badge = document.createElement('span');
+                    badge.className = 'disc-badge';
+                    badge.textContent = '٪' + pct.toLocaleString('fa-IR');
+                    fresh.insertAdjacentElement('afterend', badge);
+                });
+            } catch (e) { try { console.log('[sanjab] badge error', e); } catch (_) {} }
+
+            try {
+                /* ---- 4 + 5) scroll-spy for chip bar and tab bar ---- */
+                var header = document.getElementById('main-header'), bar = document.getElementById('chip-bar');
+                var chips = [].slice.call(document.querySelectorAll('#chip-bar .chip'));
+                var tabs = [].slice.call(document.querySelectorAll('#tabbar .tab-item[data-sec]'));
+                var chipIds = chips.map(function (c) { return c.dataset.sec; });
+                var tabIds = tabs.map(function (t) { return t.dataset.sec; });
+                var lastChip = null, lastTab = null, ticking = false;
+
+                function lastPassed(ids, line) {
+                    var found = null;
+                    ids.forEach(function (id) {
+                        var el = document.getElementById(id);
+                        if (el && el.getBoundingClientRect().top <= line) found = id;
+                    });
+                    return found;
+                }
+                function centerChip(chip) {
+                    if (!bar || !chip) return;
+                    var cr = chip.getBoundingClientRect(), br = bar.getBoundingClientRect();
+                    var delta = (cr.left + cr.width / 2) - (br.left + br.width / 2);
+                    if (Math.abs(delta) > 4) bar.scrollBy({ left: delta, behavior: 'smooth' });
+                }
+                function update() {
+                    ticking = false;
+                    var hh = (header && header.offsetHeight) || 100, line = hh + 60;
+                    var atEnd = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 4;
+
+                    var c = atEnd ? chipIds[chipIds.length - 1] : lastPassed(chipIds, line);
+                    if (c !== lastChip) {
+                        lastChip = c;
+                        chips.forEach(function (el) { el.classList.toggle('active', el.dataset.sec === c); });
+                        var act = chips.filter(function (el) { return el.dataset.sec === c; })[0];
+                        if (act) centerChip(act);
+                    }
+                    var t = lastPassed(tabIds, line) || 'hero';
+                    if (t !== lastTab) {
+                        lastTab = t;
+                        tabs.forEach(function (el) { el.classList.toggle('active', el.dataset.sec === t); });
+                    }
+                }
+                function req() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+                window.addEventListener('scroll', req, { passive: true });
+                window.addEventListener('resize', req, { passive: true });
+                window.addEventListener('load', req);
+                req();
+            } catch (e) { try { console.log('[sanjab] spy error', e); } catch (_) {} }
+
+            try {
+                /* ---- 6) dismissible Happ banner ---- */
+                var banner = document.getElementById('app-banner'), btn = document.getElementById('app-banner-btn'), close = document.getElementById('app-banner-close');
+                if (!banner) return;
+                if (store('sanjab_app_banner') === 'closed') { banner.parentNode.style.display = 'none'; return; }
+                var ua = navigator.userAgent || '';
+                var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+                var isAndroid = /Android/i.test(ua);
+                function ext(href, label) { btn.href = href; btn.target = '_blank'; btn.rel = 'noopener noreferrer'; btn.textContent = label; }
+                if (isIOS) ext('https://apps.apple.com/us/app/happ-proxy-utility/id6504287215', 'دریافت از App Store');
+                else if (isAndroid) ext('https://github.com/Happ-proxy/happ-android/releases/latest/download/Happ.apk', 'دانلود برای اندروید');
+                else { btn.href = '#apps'; btn.removeAttribute('target'); btn.textContent = 'انتخاب برنامه'; }
+                close.addEventListener('click', function () {
+                    store('sanjab_app_banner', 'closed');
+                    banner.parentNode.style.display = 'none';
+                });
+            } catch (e) { try { console.log('[sanjab] banner error', e); } catch (_) {} }
+        });
     })();
     </script>
 </body>
