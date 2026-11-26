@@ -10,7 +10,7 @@
     var weak=(n.deviceMemory||4)<=2||c.saveData||/2g/.test(c.effectiveType||''),
         rm=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
     if(weak||rm)d.classList.add('lite');   // fewer animations
-    if(weak||(n.hardwareConcurrency||8)<=6)d.classList.add('lowq');       // lighter 3D (NOT disabled)
+    if(weak)d.classList.add('lowq');       // lighter 3D (NOT disabled)
     if(rm)d.classList.add('still3d');      // one static 3D frame
     })();
     </script>
@@ -845,4 +845,4 @@
         function onReady(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
 
         var store = {
-            get: functio
+            get: function (k) { try { return localStora
